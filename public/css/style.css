@@ -550,7 +550,7 @@ main .container .left .profile {
 .noSave, .saved {
     display: none;
 }
-
+ 
 .middle .liked-by {
     display: flex;
 }
