@@ -1,12 +1,12 @@
 <template>
     <head>
-        <title>Админ панель | Пост</title>
+        <title>Админ панель | Қолданушылар</title>
     </head>
     <AdminLayout>
         <template #breadcrumbs>
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Посттар тізімі</h1>
+                    <h1 class="m-0">Қолданушылар тізімі</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -17,7 +17,7 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item active">
-                            Посттар тізімі
+                            Қолданушылар тізімі
                         </li>
                     </ol>
                 </div>
@@ -25,11 +25,11 @@
         </template>
         <template #header>
             <div class="buttons d-flex align-items-center">
-                <Link class="btn btn-primary mr-2" :href="route('admin.posts.create')">
+                <Link class="btn btn-primary mr-2" :href="route('admin.users.create')">
                 <i class="fa fa-plus"></i> Қосу
                 </Link>
 
-                <Link class="btn btn-danger" :href="route('admin.posts.index')">
+                <Link class="btn btn-danger" :href="route('admin.users.index')">
                 <i class="fa fa-trash"></i> Фильтрді тазалау
                 </Link>
                 <div v-if="loading" class="spinner-border text-primary mx-3" role="status">
@@ -47,10 +47,16 @@
                                     <tr role="row">
                                         <th>№</th>
                                         <th>Аты</th>
-                                        <th>Контент</th>
-                                        <th>Сипаттамасы</th>
-                                        <th>Суреті</th>
-                                        <th>Бейнебаяны</th>
+                                        <th>Әкесі</th>
+                                        <th>Фамилиясы</th>
+                                        <th>Псеводоним</th>
+                                        <th>Поштасы</th>
+                                        <th>Құпия сөз</th>
+                                        <th>Туған-күні</th>
+                                        <th>Облыс</th>
+                                        <th>Қала</th>
+                                        <th>Мамандық</th>
+                                        <th>Телефон нөмірі</th>
                                         <th>Әрекет</th>
                                     </tr>
                                     <tr class="filters">
@@ -58,34 +64,52 @@
                                         <!-- <td>
                                             <input v-model="filter.name" class="form-control" placeholder="Іздеу..."
                                                 @keyup.enter="search" />
+                                        </td>
+                                        <td>
+                                            <input v-model="filter.name" class="form-control" placeholder="Іздеу..."
+                                                @keyup.enter="search" />
+                                        </td>
+                                        <td>
+                                            <input v-model="filter.name" class="form-control" placeholder="Іздеу..."
+                                                @keyup.enter="search" />
+                                        </td>
+                                        <td>
+                                            <input v-model="filter.name" class="form-control" placeholder="Іздеу..."
+                                                @keyup.enter="search" />
                                         </td> -->
                                         <td></td>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="odd" v-for="(post, index) in posts.data" :key="'post' + post.id">
+                                    <tr class="odd" v-for="(user, index) in users.data" :key="'user' + user.id">
                                         <td>
                                             {{
-                                                post.from
-                                                ? post.from + index
+                                                user.from
+                                                ? user.from + index
                                                 : index + 1
                                             }}
                                         </td>
-                                        <td>{{ post.title }}</td>
-                                        <td>{{ post.content }}</td>
-                                        <td>{{ post.description }}</td>
-                                        <td>{{ post.image }}</td>
-                                        <td>{{ post.video }}</td>
+                                        <td>{{ user.name }}</td>
+                                        <td>{{ user.lastname }}</td>
+                                        <td>{{ user.surname }}</td>
+                                        <td>{{ user.nickname }}</td>
+                                        <td>{{ user.email }}</td>
+                                        <td>{{ user.real_password }}</td>
+                                        <td>{{ user.birthday }}</td>
+                                        <td>{{ user.oblys }}</td>
+                                        <td>{{ user.qala }}</td>
+                                        <td>{{ user.mamandyq }}</td>
+                                        <td>{{ user.phone }}</td>
                                         <td>
                                             <div class="btn-group btn-group-sm">
                                                 <Link :href="route(
-                                                    'admin.posts.edit',
-                                                    post)
+                                                    'admin.users.edit',
+                                                    user)
                                                     " class="btn btn-primary" title="Изменить">
                                                 <i class="fas fa-edit"></i>
                                                 </Link>
 
-                                                <button @click.prevent="deleteData(post.id)" class="btn btn-danger"
+                                                <button @click.prevent="deleteData(user.id)" class="btn btn-danger"
                                                     title="Жою">
                                                     <i class="fas fa-times"></i>
                                                 </button>
@@ -96,7 +120,7 @@
                             </table>
                         </div>
                     </div>
-                    <Pagination :links="posts.links" />
+                    <Pagination :links="users.links" />
                 </div>
             </div>
         </div>
@@ -113,7 +137,7 @@ export default {
         Pagination,
         Head
     },
-    props: ["posts"],
+    props: ["users"],
     data() {
         return {
             filter: {
@@ -135,7 +159,7 @@ export default {
                 cancelButtonText: "Жоқ",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.$inertia.delete(route('admin.posts.destroy', id))
+                    this.$inertia.delete(route('admin.users.destroy', id))
                 }
             });
 
@@ -144,7 +168,7 @@ export default {
         search() {
             this.loading = 1
             const params = this.clearParams(this.filter);
-            this.$inertia.get(route('admin.posts.index'), params)
+            this.$inertia.get(route('admin.users.index'), params)
         },
     }
 };

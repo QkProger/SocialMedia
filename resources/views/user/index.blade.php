@@ -11,8 +11,8 @@
                                 <h3>{{ $user->nickname }}</h3>
                                 <p class="text-muted mb-1">{{ $user->mamandyq }}</p>
                                 <p class="text-muted font-size-sm mb-3">{{ $user->oblys }}, {{ $user->qala }}</p>
-                                <button class="btn btn-primary">Follow</button>
-                                <button class="btn">Message</button>
+                                {{-- <button class="btn btn-primary">Follow</button>
+                                <button class="btn">Message</button> --}}
                             </div>
                         </div>
                         <br>
@@ -69,7 +69,7 @@
                         <hr>
                         <div class="row">
                             <a href="{{ route('user.edit', $user->id) }}" class="mt-2 mb-2"><button
-                                    class="btn btn-primary">Edit</button></a>
+                                    class="btn btn-primary">Өңдеу</button></a>
 
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                     <div class="head">
                         <div class="user">
                             <div class="profile-photo">
-                                <img src="{{ asset($user->avatar) }}">
+                                <img src="{{ asset($user->avatar) }}" class="avaChat">
                             </div>
                             <div class="info">
                                 @if (Auth::user())
@@ -136,7 +136,7 @@
                     <div class="photo">
                         <img src="{{ asset($post->image) }}">
                     </div>
-                    <div class="action-buttons">
+                    {{-- <div class="action-buttons">
                         <div class="interaction-buttons">
                             <span><i class="uil uil-heart"></i></span>
                             <span><i class="uil uil-comment-dots"></i></span>
@@ -145,8 +145,8 @@
                         <div class="bookmarks">
                             <span><i class="uil uil-bookmark-full"></i></span>
                         </div>
-                    </div>
-                    <div class="liked-by">
+                    </div> --}}
+                    {{-- <div class="liked-by">
                         <span>
                             <img src="{{ asset('images/profile-1.jpg') }}">
                         </span>
@@ -157,8 +157,8 @@
                             <img src="{{ asset('images/profile-1.jpg') }}">
                         </span>
                         <p>Liked by <b>Ernest Achiever</b> and <b>2,323 others</b></p>
-                    </div>
-                    <div class="caption">
+                    </div> --}}
+                    {{-- <div class="caption">
                         <p>
                             @if (Auth::user())
                                 <b>{{ Auth::user()->name }} {{ Auth::user()->surname }}</b> {{ $post->description }}
@@ -169,7 +169,7 @@
                         </p>
                     </div>
                     <div class="comments text-muted">View all 277 comments</div>
-                </div>
+                </div> --}}
             @endforeach
             {{-- END OF FEED --}}
         </div>

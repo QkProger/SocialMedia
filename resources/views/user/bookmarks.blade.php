@@ -106,13 +106,13 @@
                         </div>
                     </div>
                     <div class="liked-by">
-                        <p>Liked by
+                        <p>Лүпіл басқандар
                             @php
                                 $likedFriendCount = 0;
                                 $likedOtherCount = 0;
                             @endphp
                             @if ($liked)
-                                <b class="d-on">You, </b>
+                                <b class="d-on">Сіз, </b>
                             @endif
                             @if ($likedFriends->count() > 0)
                                 <b>
@@ -130,7 +130,7 @@
                                             @break;
                                         @endif
                                     @endforeach
-                                </b> and
+                                </b> және
                             @endif
                             
                             @if ($likedOthers->count() > 0)
@@ -148,9 +148,9 @@
                         @endphp
                         <b>{{ $likedRestOtherCount }}
                             @if ($likedRestOtherCount != $likedOtherCount)
-                                others
+                                басқалар
                             @else
-                                people
+                                адамдар 
                             @endif
                         </b>
                     </p>
@@ -158,10 +158,10 @@
                 <div class="caption">
                     <p>
                         <b>{{ $bookmark->post->user->name }} {{ $bookmark->post->user->surname }}</b> {{ $bookmark->post->description }}
-                        <span class="harsh-tag">#lifestyle</span>
+                        {{-- <span class="harsh-tag">#lifestyle</span> --}}
                     </p>
                 </div>
-                <div class="comments text-muted">View all 277 comments</div>
+                <div class="comments text-muted">Барлық пікірді көру</div>
             </div>
         @endforeach
         {{-- END OF FEED --}}
@@ -170,7 +170,7 @@
 </div>
 {{-- END OF MIDDLE --}}
 <script>
-    const displayView = 'You, ';
+    const displayView = 'Сіз, ';
     $('.likeSendForm').on('submit', function(event) {
         event.preventDefault();
         var form = $(this);

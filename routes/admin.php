@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\GroupController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\PostsController;
+use App\Http\Controllers\Admin\UsersController;
 use Inertia\Inertia;
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +24,5 @@ Route::get('/', function () {
 //});
 
 Route::resource('posts', PostsController::class)->except(['show'])->names('posts');
+Route::resource('users', UsersController::class)->except(['show'])->names('users');
+Route::post('/group/create', [GroupController::class, 'createGroup'])->name('group.createGroup');

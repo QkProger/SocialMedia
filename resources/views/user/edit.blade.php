@@ -95,7 +95,7 @@
                         </label>
                     </div>
                     <div class="col-75">
-                        <input type="text" name="birthday" value="{{ $user->birthday }}">
+                        <input type="date" name="birthday" value="{{ $user->birthday }}">
                     </div>
                 </div>
 

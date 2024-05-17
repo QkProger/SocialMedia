@@ -15,6 +15,6 @@
         </form>
     </div>
     <div>
-        <a href="{{route('post.index')}}" class="btn btn-danger mt-2">Back</a>
+        <a href="{{route('post.index')}}" class="btn btn-danger mt-2">Артқа</a>
     </div>
 @endsection

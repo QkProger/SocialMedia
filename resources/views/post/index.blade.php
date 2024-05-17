@@ -10,7 +10,7 @@
                     <div class="head">
                         <div class="user">
                             <div class="profile-photo">
-                                <img src="{{ asset($post->user->avatar) }}">
+                                <img src="{{ asset($post->user->avatar) }}" class="avaChat">
                             </div>
                             <div class="info">
                                 <h3>{{ $post->user->name }} {{ $post->user->surname }}</h3>
@@ -62,7 +62,7 @@
                                 @endif
                             </form>
                             <span><i class="uil uil-comment-dots"></i></span>
-                            <span><i class="uil uil-share-alt"></i></span>
+                            {{-- <span><i class="uil uil-share-alt"></i></span> --}}
                         </div>
                         <div class="bookmarks">
                             <span>
@@ -109,13 +109,13 @@
                         {{-- <span>
                             <img src="{{ asset('images/profile-1.jpg') }}">
                         </span> --}}
-                        <p>Liked by
+                        <p>Лүпіл басқандар
                             @php
                                 $likedFriendCount = 0;
                                 $likedOtherCount = 0;
                             @endphp
                             @if ($liked)
-                                <b class="d-on">You and</b>
+                                <b class="d-on">Сіз және</b>
                             @endif
                             @if ($likedFriends->count() > 0)
                                 <b>
@@ -140,9 +140,9 @@
                         @endphp
                         <b>{{ $likedRestOtherCount }}
                             @if ($likedRestOtherCount != $post->likes_count)
-                                others
+                                басқалар
                             @else
-                                people
+                                адам
                             @endif
                         </b>
                     </p>
@@ -150,10 +150,10 @@
                 <div class="caption">
                     <p>
                         <b>{{ $post->user->name }} {{ $post->user->surname }}</b> {{ $post->description }}
-                        <span class="harsh-tag">#lifestyle</span>
+                        {{-- <span class="harsh-tag">#lifestyle</span> --}}
                     </p>
                 </div>
-                <div class="comments text-muted">View all 277 comments</div>
+                <div class="comments text-muted">Барлық пікірді көру</div>
             </div>
         @endforeach
         {{-- END OF FEED --}}
@@ -162,7 +162,7 @@
 </div>
 {{-- END OF MIDDLE --}}
 <script>
-    const displayView = 'You and, ';
+    const displayView = 'Сіз және, ';
     $('.likeSendForm').on('submit', function(event) {
         event.preventDefault();
         var form = $(this);

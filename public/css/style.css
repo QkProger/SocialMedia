@@ -39,6 +39,15 @@
     border: none;
 }
 
+body::-webkit-scrollbar {
+    width: 12px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 20px;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     color: var(--color-dark);
@@ -128,6 +137,15 @@ img {
     color: white;
 }
 
+.btn-gray {
+    background: var(--color-gray);
+    color: white;
+}
+
+.btn-secondary {
+    background: var(--color-secondary);
+    color: white;
+}
 
 .text-bold {
     font-weight: 500;
@@ -179,6 +197,14 @@ img {
     display: none;
 }
 
+.a-c {
+    align-items: center;
+}
+
+.j-c {
+    justify-content: center;
+}
+
 .col-md-4 {
     flex: 0 0 auto;
     width: 33.33333333%;
@@ -204,6 +230,10 @@ img {
     border-radius: 50% !important;
 }
 
+.mt-1 {
+    margin-top: 0.3rem !important;
+}
+
 .mt-3 {
     margin-top: 1rem !important;
 }
@@ -227,6 +257,10 @@ img {
 
 .mb-0 {
     margin-bottom: 0 !important;
+}
+
+.c-p {
+    cursor: pointer;
 }
 
 /* NAVBAR */
@@ -547,10 +581,11 @@ main .container .left .profile {
     color: red;
 }
 
-.noSave, .saved {
+.noSave,
+.saved {
     display: none;
 }
- 
+
 .middle .liked-by {
     display: flex;
 }
@@ -1253,6 +1288,13 @@ hr {
     font-size: 13px;
 }
 
+.avaChat {
+    width: 44px !important;
+    height: 44px !important;
+    object-fit: cover;
+    object-position: top;
+}
+
 .chat .chat-header {
     padding: 15px 20px;
     border-bottom: 2px solid #f4f7f6;
@@ -1267,6 +1309,7 @@ hr {
 .chat .chat-header .chat-about {
     float: left;
     padding-left: 10px;
+    font-size: x-large;
 }
 
 .chat .chat-history {
@@ -1386,6 +1429,10 @@ hr {
     color: var(--color-gray);
 }
 
+.clearfix {
+    border-left: 0.5rem solid transparent;
+}
+
 .clearfix:after {
     visibility: hidden;
     display: block;
@@ -1448,6 +1495,63 @@ hr {
     right: 10px;
     transform: translateY(-50%);
     font-size: 20px;
+}
+
+.chat-active {
+    background: var(--color-light);
+    border-left: 0.5rem solid var(--color-primary);
+}
+
+.friendsList {
+    min-height: 297px;
+    max-height: 297px;
+    overflow: auto;
+}
+
+.friendsList::-webkit-scrollbar {
+    width: 10px;
+}
+
+#plist::-webkit-scrollbar,
+.chat-history::-webkit-scrollbar,
+#groupModal::-webkit-scrollbar,
+.messages.modal-messages::-webkit-scrollbar {
+    width: 5px;
+}
+
+.friendsList::-webkit-scrollbar-thumb,
+#plist::-webkit-scrollbar-thumb,
+.chat-history::-webkit-scrollbar-thumb,
+#groupModal::-webkit-scrollbar-thumb,
+.messages.modal-messages::-webkit-scrollbar-thumb {
+    background-color: var(--color-primary);
+    border-radius: 20px;
+}
+
+.message-card {
+    min-height: 646px;
+}
+
+.name {
+    font-weight: bold;
+}
+
+#plist {
+    overflow: auto;
+    max-height: 646px;
+}
+
+.chat-history {
+    overflow: auto;
+    max-height: 499px;
+}
+
+.message-input {
+    max-height: 35px;
+}
+
+.message-actions {
+    display: flex;
 }
 
 @media only screen and (max-width: 767px) {

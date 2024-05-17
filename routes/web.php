@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\FriendRequestController;
 use App\Http\Controllers\FriendSController;
 use App\Http\Controllers\UserPostRelationshipController;
+use App\Http\Controllers\GroupController;
 use App\Models\FriendRequests;
 use Illuminate\Support\Facades\Auth;
 
@@ -63,7 +64,9 @@ Route::delete('/courses/{course}', [CourseController::class, 'destroy'])->name('
 /*Messages*/
 Route::get('/chats/chat', [MessageController::class, 'create'])->name('chats.chat');
 Route::get('/chats/{id}/download', [MessageController::class, 'downloadFile'])->name('chats.download');
+Route::get('/audio/{filename}', [MessageController::class, 'getAudioFile'])->name('getAudioFile');
 Route::post('/chats/chat', [MessageController::class, 'store']);
+Route::put('/chats/chat/{message}', [MessageController::class, 'update'])->name('chats.chat.update');
 Route::delete('/chats/chat/{message}', [MessageController::class, 'destroy'])->name('chats.chat.delete');
 Route::get('/chats/chat/{user}', [MessageController::class, 'loadChat'])->name('chats.load-chat');
 
@@ -85,28 +88,30 @@ Route::post('/declineRequests/{id}', [FriendRequestController::class, 'decline_u
 
 /*Friends */
 Route::get('/chats/messanger', [FriendsController::class, 'messanger'])->name('chats.messanger');
+// Route::post('/chats/messanger', [FriendsController::class, 'search'])->name('chats.List');
+/*Создание группы */
+Route::post('/group/store', [GroupController::class, 'store'])->name('group.store');
+/*Загрузка всех груп */
+Route::get('/groups/chat', [GroupController::class, 'create'])->name('groups.chat');
+/*Загрузка чата группы*/
+Route::get('/groups/chat/{group}', [GroupController::class, 'loadChat'])->name('groups.load-chat');
+/*ОТправка сообщений в группу */
+Route::post('/groups/chat', [GroupController::class, 'groupMessageStore']);
+
+Route::get('/groups/{id}/download', [GroupController::class, 'downloadFile'])->name('groups.download');
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-// Route::middleware('guest')->group(function () {
-//     Route::view('/login', 'auth.login')->name('adminLoginShow');
-//     Route::post('/login', [AdminAuthController::class, 'adminLoginForm'])->name('adminLoginForm');
-// });
+Route::middleware('guest')->group(function () {
+    Route::view('/login', 'auth.login')->name('adminLoginShow');
+    Route::post('/login', [AdminAuthController::class, 'adminLoginForm'])->name('adminLoginForm');
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Auth::routes();
+Auth::routes(['login' => false]);
+Route::post('/login', [AdminAuthController::class, 'adminLoginForm'])->name('adminLoginForm');
+
 
 
 

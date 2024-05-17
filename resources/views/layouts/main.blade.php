@@ -28,23 +28,29 @@
             <form action="{{ route('user.usersList') }}" method="GET">
                 <div class="search-bar main-search">
                     <i class="uil uil-search"></i>
-                    <input type="search" name="query" placeholder="Search users...">
+                    <input type="search" name="query" placeholder="Қолданушыларды іздеу...">
                     <button type="submit"><i class="uil uil-search"></i></button>
                 </div>
             </form>
             <div class="create">
-                <a href="{{ route('home') }}">
-                    <label for="create-post" class="btn btn-primary">Create</label>
-                </a>
-                <a href="{{ route('user.index') }}">
-                    <div class="profile-photo">
-                        @if (Auth::user())
-                            <img src="{{ asset(Auth::user()->avatar) }}">
-                        @else
-                            <img src="{{ asset('images/default-avatar.jpg') }}">    
-                        @endif
-                    </div>
-                </a>
+                @if (!Auth::user())
+                    <a href="{{ route('register') }}">
+                        <label for="create-post" class="btn btn-primary">Тіркелу</label>
+                    </a>
+                @endif
+                @if (Auth::user())
+                    <a href="{{ route('user.index') }}">
+                        <div class="profile-photo">
+                            <img src="{{ asset(Auth::user()->avatar) }}" class="avaChat">
+                        </div>
+                    </a>
+                @else
+                    <a href="{{ route('adminLoginForm') }}">
+                        <div class="profile-photo">
+                            <img src="{{ asset('images/default-avatar.jpg') }}" class="avaChat">
+                        </div>
+                    </a>
+                @endif
             </div>
         </div>
     </nav>
@@ -58,21 +64,21 @@
                     <div class="profile-photo">
                         @if (Auth::user())
                             <a href="{{ route('user.index') }}">
-                                <img src="{{ asset(Auth::user()->avatar) }}">
+                                <img src="{{ asset(Auth::user()->avatar) }}" class="avaChat">
                             </a>
                         @else
-                            <img src="{{ asset('images/default-avatar.jpg') }}">
+                            <img src="{{ asset('images/default-avatar.jpg') }}" class="avaChat">
                         @endif
                     </div>
                     <div class="handle">
                         @if (Auth::user())
                             <h4>{{ Auth::user()->name }} {{ Auth::user()->surname }}</h4>
                         @else
-                            @if (Route::has('login'))
-                                <h4><a href="{{ route('login') }}">{{ __('Login') }}</a></h4>
+                            @if (Route::has('adminLoginForm'))
+                                <h4><a href="{{ route('adminLoginForm') }}">{{ __('Кіру') }}</a></h4>
                             @endif
                             @if (Route::has('register'))
-                                <h4><a href="{{ route('register') }}">{{ __('Register') }}</a></h4>
+                                <h4><a href="{{ route('register') }}">{{ __('Тіркелу') }}</a></h4>
                             @endif
                         @endif
                         <p class="text-muted">
@@ -88,16 +94,15 @@
                     <a href="{{ route('post.index') }}"
                         class="menu-item {{ request()->routeIs('post.index') ? 'active' : '' }}">
                         <span><i class="uil uil-home"></i></span>
-                        <h3>Home</h3>
+                        <h3>Басты бет</h3>
                     </a>
                     {{-- <a class="menu-item">
                         <span><i class="uil uil-compass"></i></span>
                         <h3>Explore</h3>
                     </a> --}}
-                    <a class="menu-item" id="notifications">
+                    {{-- <a class="menu-item" id="notifications">
                         <span><i class="uil uil-bell"><small class="notification-count">9+</small></i></span>
                         <h3>Notifications</h3>
-                        {{-- NOTIFICATION POPUP --}}
                         <div class="notifications-popup">
                             <div>
                                 <div class="profile-photo">
@@ -154,55 +159,64 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- END NOTIFICATION POPUP --}}
-                    </a>
-                    <a href="{{ route('chats.messanger') }}"
-                        class="menu-item {{ request()->routeIs('chats.messanger') ? 'active' : '' }}">
-                        <span><i class="uil uil-envelope-alt"><small class="notification-count">6</small></i></span>
-                        <h3>Достар</h3>
-                    </a>
-                    <a href="{{ route('chats.chat') }}" class="menu-item {{ request()->routeIs('chats.chat') ||  request()->is('chats/chat/*') ? 'active' : '' }}">
-                        <span><i class="uil uil-facebook-messenger-alt"></i></span>
-                        <h3>Жалпы чат</h3>
-                    </a>
-                    <a href="{{ route('user.bookmarks') }}" class="menu-item {{ request()->routeIs('user.bookmarks') ? 'active' : '' }}">
-                        <span><i class="uil uil-bookmark"></i></span>
-                        <h3>Bookmarks</h3>
-                    </a>
-                    <a href="{{ route('courses.index') }}" class="menu-item {{ request()->routeIs('courses.index') ? 'active' : '' }}">
+                    </a> --}}
+
+                    @if (Auth::user())
+                        <a href="{{ route('chats.messanger') }}"
+                            class="menu-item {{ request()->routeIs('chats.messanger') ? 'active' : '' }}">
+                            {{-- <span><i class="uil uil-envelope-alt"><small class="notification-count">6</small></i></span> --}}
+                            <span><i class="uil uil-envelope-alt"></i></span>
+                            <h3>Достар</h3>
+                        </a>
+                        <a href="{{ route('chats.chat') }}"
+                            class="menu-item {{ request()->routeIs('chats.chat') || request()->is('chats/chat/*') ? 'active' : '' }}">
+                            <span><i class="uil uil-facebook-messenger-alt"></i></span>
+                            <h3>Чаттар</h3>
+                        </a>
+                        <a href="/groups/chat/{{ $last_group_id }}"
+                            class="menu-item {{ request()->routeIs('groups.chat') || request()->is('groups/chat/*') ? 'active' : '' }}">
+                            <span><i class="uil uil-facebook-messenger-alt"></i></span>
+                            <h3>Группалар</h3>
+                        </a>
+                        <a href="{{ route('user.bookmarks') }}"
+                            class="menu-item {{ request()->routeIs('user.bookmarks') ? 'active' : '' }}">
+                            <span><i class="uil uil-bookmark"></i></span>
+                            <h3>Сақталғандар</h3>
+                        </a>
+                    @else
+                        <a href="{{ route('adminLoginForm') }}"
+                            class="menu-item {{ request()->routeIs('chats.messanger') ? 'active' : '' }}">
+                            {{-- <span><i class="uil uil-envelope-alt"><small class="notification-count">6</small></i></span> --}}
+                            <span><i class="uil uil-envelope-alt"></i></span>
+                            <h3>Достар</h3>
+                        </a>
+                        <a href="{{ route('adminLoginForm') }}"
+                            class="menu-item {{ request()->routeIs('chats.chat') || request()->is('chats/chat/*') ? 'active' : '' }}">
+                            <span><i class="uil uil-facebook-messenger-alt"></i></span>
+                            <h3>Чаттар</h3>
+                        </a>
+                        <a href="{{ route('adminLoginForm') }}"
+                            class="menu-item {{ request()->routeIs('groups.chat') || request()->is('groups/chat/*') ? 'active' : '' }}">
+                            <span><i class="uil uil-facebook-messenger-alt"></i></span>
+                            <h3>Группалар</h3>
+                        </a>
+                        <a href="{{ route('adminLoginForm') }}"
+                            class="menu-item {{ request()->routeIs('user.bookmarks') ? 'active' : '' }}">
+                            <span><i class="uil uil-bookmark"></i></span>
+                            <h3>Сақталғандар</h3>
+                        </a>
+                    @endif
+                    <a href="{{ route('courses.index') }}"
+                        class="menu-item {{ request()->routeIs('courses.index') ? 'active' : '' }}">
                         <span><i class="uil uil-book-open"></i></span>
                         <h3>Курстар</h3>
                     </a>
-                    <a href="#" class="menu-item">
-                        <span><i class="uil uil-book-open"></i></span>
-                        <h3>Жобалар</h3>
-                    </a>
-                    <a href="#" class="menu-item">
-                        <span><i class="uil uil-book-open"></i></span>
-                        <h3>Ғылыми жобалар</h3>
-                    </a>
-                    <a href="#" class="menu-item">
-                        <span><i class="uil uil-book-open"></i></span>
-                        <h3>Дипломдық жұмыстар</h3>
-                    </a>
-                    <a href="#" class="menu-item">
-                        <span><i class="uil uil-book-open"></i></span>
-                        <h3>Форум</h3>
-                    </a>
-                    <a class="menu-item" id="theme">
-                        <span><i class="uil uil-palette"></i></span>
-                        <h3>Theme</h3>
-                    </a>
-                    {{-- <a class="menu-item">
-                        <span><i class="uil uil-setting"></i></span>
-                        <h3>Settings</h3>
-                    </a> --}}
                     @if (Route::currentRouteName() == 'user.index')
                         <a href="{{ route('logout') }}" class="menu-item"
                             onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
                             <span><i class="uil uil-sign-out-alt"></i></span>
-                            <h3>Logout</h3>
+                            <h3>Шығу</h3>
                         </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
@@ -226,7 +240,9 @@
                     Route::currentRouteName() == 'user.edit' ||
                     Route::currentRouteName() == 'chats.chat' ||
                     Route::currentRouteName() == 'chats.load-chat' ||
-                    Route::currentRouteName() == 'user.usersList')
+                    Route::currentRouteName() == 'user.usersList' ||
+                    Route::currentRouteName() == 'groups.chat' ||
+                    Route::currentRouteName() == 'groups.load-chat')
                 <style>
                     main .container {
                         grid-template-columns: 18vw auto;
@@ -247,7 +263,7 @@
                         {{-- SEARCH BAR --}}
                         <div class="search-bar">
                             <i class="uil uil-search"></i>
-                            <input type="search" placeholder="Search messages" id="message-search">
+                            <input type="search" placeholder="Іздеу" id="message-search">
                         </div>
                         {{-- MESSAGES CATEGORY --}}
                         <div class="category">
@@ -262,7 +278,7 @@
                                 data-user-id="{{ $friendUser->id }}">
                                 <div class="message">
                                     <div class="profile-photo">
-                                        <img src="/{{ $friendUser->avatar }}">
+                                        <img src="/{{ $friendUser->avatar }}" class="avaChat">
                                         <div class="active"></div>
                                     </div>
                                     <div class="message-body">
@@ -284,35 +300,35 @@
                     </style>
                 @endif
                 <div class="friend-requests">
-                    <h4 style="margin-top: 0">Requests</h4>
+                    <h4 style="margin-top: 0">Сұраныстар</h4>
                     @php
                         $k = 0;
                     @endphp
                     @if (Auth::user())
                         @foreach ($user_requests as $ur)
                             @if ($ur->is_waiting == 1 && $ur->receiver_user_id == Auth::user()->id && $ur->user_id != Auth::user()->id)
-                                <div class="request">   
+                                <div class="request">
                                     <div class="info">
                                         <div class="profile-photo">
-                                            <img src="{{ asset('images/profile-1.jpg') }}">
+                                            <img src="{{ asset('images/profile-1.jpg') }}" class="avaChat">
                                         </div>
                                         <div>
                                             <h5>{{ $ur->user->surname }} {{ $ur->user->name }}</h5>
-                                            <p class="text-muted">
-                                                8 mutual friends
-                                            </p>
+                                            {{-- <p class="text-muted">
+                                                8 дос бірге
+                                            </p> --}}
                                         </div>
                                     </div>
                                     <div class="action">
                                         <form class="Accept" action="{{ route('accept_update', $ur->user_id) }}"
                                             method="post">
                                             @csrf
-                                            <button type="submit" class="btn btn-primary">Accept</button>
+                                            <button type="submit" class="btn btn-primary">Қабылдау</button>
                                         </form>
                                         <form class="Decline" action="{{ route('decline_update', $ur->user_id) }}"
                                             method="post">
                                             @csrf
-                                            <button type="submit" class="btn">Decline</button>
+                                            <button type="submit" class="btn">Қабылдамау</button>
                                         </form>
                                     </div>
                                 </div>
@@ -324,7 +340,7 @@
                     @endif
                     @if ($k == 0)
                         <div class="request">
-                            <p class="text-muted ml-3">No Requests</p>
+                            <p class="text-muted ml-3">Сұраныс жоқ</p>
                         </div>
                     @endif
                 </div>
@@ -332,61 +348,6 @@
             {{-- END OF RIGHT --}}
         </div>
     </main>
-
-    {{-- THEME CUSTOMZTION --}}
-    <div class="customize-theme">
-        <div class="card">
-            <h2>Customize your view</h2>
-            <p class="text-muted">Manage your font size, color and background.</p>
-
-            {{-- FONT SIZES --}}
-            <div class="font-size">
-                <h4>Font Size</h4>
-                <div>
-                    <h6>Aa</h6>
-                    <div class="choose-size">
-                        <span class="font-size-1"></span>
-                        <span class="font-size-2"></span>
-                        <span class="font-size-3 active"></span>
-                        <span class="font-size-4"></span>
-                        <span class="font-size-5"></span>
-                    </div>
-                    <h3>Aa</h3>
-                </div>
-            </div>
-
-            {{-- PRIMARY COLORS --}}
-            <div class="color">
-                <h4>Color</h4>
-                <div class="choose-color">
-                    <span class="color-1 active"></span>
-                    <span class="color-2"></span>
-                    <span class="color-3"></span>
-                    <span class="color-4"></span>
-                    <span class="color-5"></span>
-                </div>
-            </div>
-
-            {{-- BACKGOUND COLORS --}}
-            <div class="background">
-                <h4>Background</h4>
-                <div class="choose-bg">
-                    <div class="bg-1 active">
-                        <span></span>
-                        <h5 for="bg-1">Light</h5>
-                    </div>
-                    <div class="bg-2">
-                        <span></span>
-                        <h5>Dark</h5>
-                    </div>
-                    <div class="bg-3">
-                        <span></span>
-                        <h5 for="bg-3">Light Out</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <script src="{{ asset('js/index.js') }}"></script>
 </body>
 

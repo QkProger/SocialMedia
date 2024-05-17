@@ -14,7 +14,7 @@ class AdminLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'phone' => 'required',
+            'iin' => 'required',
             'password' => 'required',
         ];
     }
