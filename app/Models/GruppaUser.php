@@ -8,12 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class GruppaUser extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'gruppa_id',
-        'user_id',
-    ];
+    protected $guarded = [];
+    
     public function groups()
     {
         return $this->belongsToMany(Gruppa::class, 'gruppa_users', 'user_id', 'gruppa_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
 }

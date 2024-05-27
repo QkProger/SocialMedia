@@ -100,6 +100,8 @@ Route::post('/groups/chat', [GroupController::class, 'groupMessageStore']);
 
 Route::get('/groups/{id}/download', [GroupController::class, 'downloadFile'])->name('groups.download');
 
+Route::post('/group/update/{id}', [GroupController::class, 'update'])->name('group.update');
+
 
 
 

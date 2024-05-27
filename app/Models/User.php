@@ -12,6 +12,11 @@ class User extends Authenticatable
     use HasFactory;
     protected $guarded = [];
 
+    public function groups()
+    {
+        return $this->belongsToMany(Gruppa::class, 'gruppa_users', 'user_id', 'gruppa_id');
+    }
+
     public function posts()
     {
         return $this->hasMany(Post::class);

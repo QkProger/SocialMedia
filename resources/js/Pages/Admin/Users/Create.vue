@@ -59,6 +59,11 @@
                             <validation-error :field="'email'" />
                         </div>
                         <div class="form-group">
+                            <label for="">ИИН</label>
+                            <input type="text" class="form-control" v-model="user.iin" name="iin" placeholder="ИИН" />
+                            <validation-error :field="'iin'" />
+                        </div>
+                        <div class="form-group">
                             <label for="">Құпия сөзі</label>
                             <input type="text" class="form-control" v-model="user.real_password" name="real_password" placeholder="Құпия сөзі" />
                             <validation-error :field="'real_password'" />

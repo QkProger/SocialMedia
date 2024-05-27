@@ -58,6 +58,9 @@ class MessageController extends Controller
         $friends = Friend::where('user1_id', $me)
             ->with('user2')
             ->get();
+        foreach ($messages as $message) {
+            $message->svg = $message->getSvgIcon();
+        }
         return view('chats.chat', compact('messages', 'user', 'friends'));
     }
 

@@ -205,6 +205,10 @@ img {
     justify-content: center;
 }
 
+.w-100 {
+    width: 100%;
+}
+
 .col-md-4 {
     flex: 0 0 auto;
     width: 33.33333333%;
@@ -301,6 +305,18 @@ nav .create {
     display: flex;
     align-items: center;
     gap: 2rem;
+}
+
+input[type="checkbox"]:checked+label .message {
+    background-color: var(--color-light);
+}
+
+input[type="checkbox"]+label .message {
+    border: 2px solid transparent;
+}
+
+input[type="checkbox"]:checked+label .message {
+    border: 2px solid var(--color-primary);
 }
 
 /* MAIN */

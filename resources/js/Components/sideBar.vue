@@ -80,12 +80,6 @@
                         </a>
                     </li>
 -->
-                    <li class="nav-item c-p" @click="createGroup()">
-                        <a class="nav-link">
-                            <i class="nav-icon fas fa-play"></i>
-                            <p>Группа құру</p>
-                        </a>
-                    </li>
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -126,12 +120,6 @@ export default {
         });
     },
     methods: {
-        createGroup() {
-            this.$inertia.post(
-                route("admin.group.createGroup")
-            );
-            // window.location.href = '/admin/meeting';
-        },
     },
     computed: {
         currentRoute() {

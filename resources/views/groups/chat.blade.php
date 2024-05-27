@@ -17,7 +17,8 @@
                         @foreach ($groups->groups as $group)
                             <a href="{{ route('groups.load-chat', $group) }}" class="user-link"
                                 data-user-id="{{ $group->id }}">
-                                <li class="clearfix d-f a-c {{ $currentRouteName === 'groups.load-chat' && $currentId == $group->id ? ' chat-active' : '' }}">
+                                <li
+                                    class="clearfix d-f a-c {{ $currentRouteName === 'groups.load-chat' && $currentId == $group->id ? ' chat-active' : '' }}">
                                     <img src="/{{ $group->image }}" class="avaChat">
                                     <div class="about">
                                         <div class="name">
@@ -29,9 +30,36 @@
                         @endforeach
                     </ul>
                 </div>
+                <script>
+                    function openGroupModal(element) {
+                        var isAdmin = element.dataset.isAdmin;
+                        var groupp_id = element.dataset.group_id;
+                        if ((isAdmin == 1 && groupp_id == 1) || groupp_id != 1) {
+                            document.querySelector('.left').style.zIndex = '0';
+                            document.querySelector('nav').style.zIndex = '0';
+
+                            document.getElementById('groupModal').style.display = 'block';
+                            document.getElementById('overlay').style.display = 'block';
+                        }
+                    }
+
+                    function closeGroupModal() {
+                        document.querySelector('.left').style.zIndex = 'auto';
+                        document.querySelector('nav').style.zIndex = 'auto';
+
+                        document.getElementById('groupModal').style.display = 'none';
+                        document.getElementById('overlay').style.display = 'none';
+                    }
+
+                    function saveGroup() {
+                        event.preventDefault();
+                        document.getElementById('group').submit();
+                    }
+                </script>
                 <div class="chat" id="user-chat-container">
                     @if (!empty($messages))
-                        <div class="chat-header clearfix">
+                        <div class="chat-header clearfix c-p" data-is-admin="{{ $is_admin }}"
+                            data-group_id="{{ $groupp->id }}" onclick="openGroupModal(this)">
                             <div class="row">
                                 <div class="col-lg-6 d-f a-c">
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
@@ -41,6 +69,86 @@
                                         <h6 class="m-b-0">{{ $groupp->name }}</h6>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div id="overlay" onclick="closeGroupModal()"></div>
+                        <div class="create-container">
+                            <div id="groupModal">
+                                <span class="close-btn" onclick="closeGroupModal()">✖</span>
+                                <h2>Группаны өңдеу</h2>
+                                <form action="{{ route('group.update', $groupp->id) }}" method="post"
+                                    enctype="multipart/form-data" id="group">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-75">
+                                            <input type="text" id="name" name="name" placeholder="Аты.."
+                                                value="{{ $groupp->name }}">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-75">
+                                            <textarea id="description" name="description" placeholder="Сипаттамасы.." style="height:200px">{{ $groupp->description }}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="middle">
+                                        <div class="d-b">
+                                            <div class="filter-friend">
+                                                <div class="messages modal-messages">
+                                                    @if ($users->count() != 0)
+                                                        <h3 class="friend-title">Қолданушылар</h3>
+                                                    @endif
+                                                    <div class="user-list">
+                                                        @foreach ($users as $user)
+                                                            <div class="user-wrapper d-f">
+                                                                <input type="checkbox" name="selectedUsers[]"
+                                                                    value="{{ $user->id }}"
+                                                                    id="user-{{ $user->id }}" style="display: none">
+                                                                <label for="user-{{ $user->id }}"
+                                                                    class="user-link w-100">
+                                                                    <div class="message">
+                                                                        <div class="profile-photo">
+                                                                            <img src="/{{ $user->avatar }}"
+                                                                                class="avaChat">
+                                                                        </div>
+                                                                        <div class="message-body">
+                                                                            <h5>
+                                                                                {{ $user->name }} {{ $user->surname }}
+                                                                            </h5>
+                                                                        </div>
+                                                                    </div>
+                                                                </label>
+                                                            </div>
+                                                        @endforeach
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-25">
+                                            <label for="image">Суреті</label>
+                                            <img src="/{{ $groupp->image }}" class="avaChat">
+                                        </div>
+                                        <div class="col-75">
+                                            <input type="file" id="image" name="image">
+                                        </div>
+                                    </div>
+                                    <div class="d-f a-c j-b">
+                                        <div class="d-b">
+                                            @if ($is_admin == 1)
+                                                <h5 class="admin_message"><b>Админ чат</b></h5>
+                                                <input class="switch mb-2" type="checkbox" name="status" value="1"
+                                                    {{ $groupp->status ? 'checked' : '' }}>
+                                            @else
+                                                <input type="hidden" name="status" value="{{ $groupp->status }}">
+                                            @endif
+                                        </div>
+                                        <div class="row">
+                                            <input type="submit" value="Сақтау" onclick="saveGroup()">
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <div class="chat-history">
@@ -57,7 +165,11 @@
                                             <div
                                                 class="message-data {{ $message->user_id == Auth::id() ? 'text-right' : '' }}">
                                                 <span class="message-data-time">
-                                                    {{ $message->user->name }} {{ $message->user->surname }}
+                                                    @if ($groupp->id == 1 && Auth::user()->admin != 1)
+                                                        {{ $groupp->name }}
+                                                    @else
+                                                        {{ $message->user->name }} {{ $message->user->surname }}
+                                                    @endif
                                                 </span>
                                             </div>
                                             <div
@@ -65,7 +177,6 @@
                                                 {{ $message->message }}
                                             </div>
                                             <span class="edit edit-msg">
-                                                {{-- <i class="uil uil-ellipsis-h" id="post-popup-trigger"></i> --}}
                                                 <div class="post-popup" id="post-action-popup">
                                                     <form action="{{ route('chats.chat.delete', $message->id) }}"
                                                         method="post">
@@ -88,13 +199,26 @@
                                                 </span>
                                             </div>
                                             <div
+                                                class="message-data {{ $message->user_id == Auth::id() ? 'text-right' : '' }}">
+                                                <span class="message-data-time">
+                                                    @if ($groupp->id == 1 && Auth::user()->admin != 1)
+                                                        {{ $groupp->name }}
+                                                    @else
+                                                        {{ $message->user->name }} {{ $message->user->surname }}
+                                                    @endif
+                                                </span>
+                                            </div>
+                                            <div
                                                 class="message {{ $message->user_id == Auth::id() ? 'other-message float-right' : 'my-message' }}">
-                                                <a href="{{ route('groups.download', ['id' => $message->id]) }}">
-                                                    {{ $message->file_name }}
+                                                <a href="{{ route('groups.download', ['id' => $message->id]) }}"
+                                                    class="d-f file_input_message">
+                                                    {!! $message->svg !!}
+                                                    <div class="d-f a-e">
+                                                        {{ $message->file_name }}
+                                                    </div>
                                                 </a>
                                             </div>
                                             <span class="edit edit-msg">
-                                                {{-- <i class="uil uil-ellipsis-h" id="post-popup-trigger"></i> --}}
                                                 <div class="post-popup" id="post-action-popup">
                                                     <form action="{{ route('chats.chat.delete', $message->id) }}"
                                                         method="post">
@@ -117,42 +241,20 @@
                                         <span class="input-group-text"><i class="fa fa-send"></i></span>
                                     </div>
                                     <div class="message-input">
-                                        @if ($groupp->id === 1 && Auth::user()->admin == 1)
-                                            <form id="groupMessageForm" class="chat-form" enctype="multipart/form-data">
-                                                <label for="fileInput" class="file-label">
-                                                    <i class="uil uil-paperclip"></i>
-                                                    <input type="file" name="file_name" id="groupFileInput"
-                                                        class="file-input" style="display: none;">
-                                                </label>
-                                                <input type="text" name="message" id="groupMessage" class="chat-input"
-                                                    placeholder="Хат жіберіңіз...">
-                                                <button type="submit" id="submit">
-                                                    <i class="uil uil-message"></i>
-                                                </button>
-                                            </form>
-                                            <span id="groupFileNameDisplay"></span>
-                                            <br>
-                                            <span id="groupFileSizeDisplay"></span>
-                                        @elseif ($groupp->id !== 1)
-                                            <form id="groupMessageForm" class="chat-form" enctype="multipart/form-data">
-                                                <label for="fileInput" class="file-label">
-                                                    <i class="uil uil-paperclip"></i>
-                                                    <input type="file" name="file_name" id="groupFileInput"
-                                                        class="file-input" style="display: none;">
-                                                </label>
-                                                <input type="text" name="message" id="groupMessage" class="chat-input"
-                                                    placeholder="Хат жіберіңіз...">
-                                                <button type="submit" id="submit">
-                                                    <i class="uil uil-message"></i>
-                                                </button>
-                                            </form>
-                                            <span id="groupFileNameDisplay"></span>
-                                            <br>
-                                            <span id="groupFileSizeDisplay"></span>
+                                        @if (
+                                            ($groupp->id !== 1 && ($groupp->status == 0 || ($groupp->status == 1 && $is_admin == 1))) ||
+                                                ($groupp->id === 1 && Auth::user()->admin == 1))
+                                            @include('groups.includes.group_form')
                                         @else
-                                            <div class="no-message d-f j-c">
-                                                Хабарламаны тек eduSocial ғана жібере алады
-                                            </div>
+                                            @if ($groupp->id == 1)
+                                                <div class="no-message d-f j-c">
+                                                    Хабарламаны тек eduSocial ғана жібере алады.
+                                                </div>
+                                            @else
+                                                <div class="no-message d-f j-c">
+                                                    Хабарламаны тек админдар ғана жібере алады.
+                                                </div>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>
@@ -169,7 +271,6 @@
         const fileInput = $('#groupFileInput');
         $(document).ready(function() {
             const paperclipIcon = $('.uil-paperclip');
-
             paperclipIcon.on('click', function(e) {
                 e.preventDefault();
                 if (!fileInput.is(':focus')) {
@@ -261,10 +362,114 @@
             fileInput.val('');
         });
     </script>
-
 @endsection
 <style>
+    .admin_message {
+        padding-top: 12px;
+    }
+
+    input.switch {
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        -o-appearance: none;
+        appearance: none;
+        height: 1em;
+        width: 2em;
+        border-radius: 1em;
+        box-shadow: inset -1em 0px 0px 0px rgba(192, 192, 192, 1);
+        background-color: white;
+        border: 1px solid rgba(192, 192, 192, 1);
+        outline: none;
+        -webkit-transition: 0.2s;
+        transition: 0.2s;
+    }
+
+    input.switch:checked {
+        box-shadow: inset 1em 0px 0px 0px rgba(33, 150, 243, 0.5);
+        border: 1px solid rgba(33, 150, 243, 1);
+    }
+
+    input.switch:focus {
+        outline-width: 0;
+    }
+
+    .file_input_message {
+        gap: 5px;
+    }
+
+    .a-e {
+        align-items: flex-end;
+    }
+
+    .a-c {
+        align-items: center;
+    }
+
+    .j-b {
+        justify-content: space-between;
+    }
+
+    .c-p {
+        cursor: pointer;
+    }
+
     .no-message {
         color: var(--color-gray);
+    }
+</style>
+
+<style>
+    #groupModal {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 30px;
+        background: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        max-height: 500px;
+        overflow: scroll;
+    }
+
+    #overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    .group-btn {
+        right: 17px;
+        position: absolute;
+    }
+
+    .col-75 {
+        width: 75%;
+        margin: 0 auto;
+    }
+
+    .col-75 input[type="file"] {
+        width: 100%;
+        padding: 5px;
+        box-sizing: border-box;
+        margin-top: 9px;
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        cursor: pointer;
+    }
+
+    .modal-messages {
+        max-height: 300px;
+        overflow-y: scroll;
     }
 </style>

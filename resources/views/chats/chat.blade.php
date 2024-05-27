@@ -136,8 +136,12 @@
                                             </div>
                                             <div
                                                 class="message {{ $message->user_id == Auth::id() ? 'other-message float-right' : 'my-message' }}">
-                                                <a href="{{ route('chats.download', ['id' => $message->id]) }}">
-                                                    {{ $message->file_name }}
+                                                <a href="{{ route('chats.download', ['id' => $message->id]) }}"
+                                                    class="d-f file_input_message">
+                                                    {!! $message->svg !!}
+                                                    <div class="d-f a-e">
+                                                        {{ $message->file_name }}
+                                                    </div>
                                                 </a>
                                             </div>
                                         </li>
@@ -224,6 +228,14 @@
                         <div class="create-container">
                             <div class="clearfix">
                                 <div class="input-group mb-0">
+                                    <div class="d-f j-b micro_active">
+                                        <div id="recording-timer" style="display: none">
+                                            00:00</div>
+                                        <div class="audio_recording_txt" id="audioActiveTxt">
+                                            Аудио хабарлама жазылуда...
+                                        </div>
+                                    </div>
+
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="fa fa-send"></i></span>
                                     </div>
@@ -280,10 +292,14 @@
         const fileSizeDisplay = $('#fileSizeDisplay');
         const fileInput = $('#fileInput');
         const microphoneIcon = $('#microphone-icon');
+        const recordingTimer = $('#recording-timer');
+        const audioActiveTxt = $('#audioActiveTxt');
         let isRecording = false;
         let audioContext;
         let mediaRecorder;
         let audioChunks = [];
+        let recordingInterval;
+        let startTime;
         microphoneIcon.on('click', async () => {
             if (!isRecording) {
                 try {
@@ -328,10 +344,16 @@
                         });
 
                         audioChunks = [];
+                        clearInterval(recordingInterval);
+                        recordingTimer.hide();
+                        recordingTimer.text("00:00");
                     };
 
                     mediaRecorder.start();
                     isRecording = true;
+                    microphoneIcon.addClass('recording');
+                    startRecordingTimer();
+                    audioActiveTxt.addClass('audio_recording_txt_active');
                 } catch (error) {
                     console.error('Ошибка при получении доступа к микрофону:', error);
                 }
@@ -339,9 +361,26 @@
                 if (mediaRecorder && mediaRecorder.state !== 'inactive') {
                     mediaRecorder.stop();
                     isRecording = false;
+                    microphoneIcon.removeClass('recording');
+                    audioActiveTxt.removeClass('audio_recording_txt_active');
                 }
             }
         });
+
+        function startRecordingTimer() {
+            startTime = Date.now();
+            recordingTimer.show();
+
+            recordingInterval = setInterval(() => {
+                const elapsedTime = Date.now() - startTime;
+                const minutes = Math.floor(elapsedTime / 60000);
+                const seconds = Math.floor((elapsedTime % 60000) / 1000);
+
+                recordingTimer.text(
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+                );
+            }, 1000);
+        }
         $(document).ready(function() {
             const paperclipIcon = $('.uil-paperclip');
 
@@ -439,6 +478,48 @@
 
 @endsection
 <style>
+    .file_input_message {
+        gap: 5px;
+    }
+
+    .micro_active {
+        padding-bottom: 5px;
+    }
+
+    #recording-timer {
+        font-size: 16px;
+        color: #1fcf1f;
+    }
+
+    .a-e {
+        align-items: flex-end;
+    }
+
+    .a-c {
+        align-items: center;
+    }
+
+    .j-b {
+        justify-content: space-between;
+    }
+
+    .audio_recording_txt {
+        text-align: right;
+        color: transparent;
+    }
+
+    .audio_recording_txt_active {
+        color: #1fcf1f;
+    }
+
+    .micro-svg {
+        transition: fill 0.3s ease;
+    }
+
+    .micro-svg.recording {
+        fill: #ff7676;
+    }
+
     .uil-trash:before {
         cursor: pointer;
     }

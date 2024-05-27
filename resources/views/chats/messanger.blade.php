@@ -96,19 +96,22 @@
                                                     @php
                                                         $friendUser = $friend->user2;
                                                     @endphp
-                                                    <input type="checkbox" name="selectedUsers[]"
-                                                        value="{{ $friend->user2->id }}">
-                                                    <a class="user-link" data-user-id="{{ $friendUser->id }}">
-                                                        <div class="message">
-                                                            <div class="profile-photo">
-                                                                <img src="/{{ $friendUser->avatar }}" class="avaChat">
-                                                                {{-- <div class="active"></div> --}}
+                                                    <div class="user-wrapper">
+                                                        <input type="checkbox" name="selectedUsers[]"
+                                                            value="{{ $friendUser->id }}" id="friend-{{ $friendUser->id }}">
+                                                        <label for="friend-{{ $friendUser->id }}" class="user-link">
+                                                            <div class="message">
+                                                                <div class="profile-photo">
+                                                                    <img src="/{{ $friendUser->avatar }}" class="avaChat">
+                                                                    {{-- <div class="active"></div> --}}
+                                                                </div>
+                                                                <div class="message-body">
+                                                                    <h5>{{ $friendUser->name }} {{ $friendUser->surname }}
+                                                                    </h5>
+                                                                </div>
                                                             </div>
-                                                            <div class="message-body">
-                                                                <h5>{{ $friendUser->name }} {{ $friendUser->surname }}</h5>
-                                                            </div>
-                                                        </div>
-                                                    </a>
+                                                        </label>
+                                                    </div>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -119,20 +122,25 @@
                                             <h3 class="friend-title">Ғаламдық іздеу</h3>
                                             <div class="user-list">
                                                 @foreach ($otherUsers as $otherUser)
-                                                    <input type="checkbox" name="selectedUsers[]"
-                                                        value="{{ $otherUser->id }}">
-                                                    <a class="user-link" data-user-id="{{ $otherUser->id }}">
-                                                        <div class="message">
-                                                            <div class="profile-photo">
-                                                                <img src="/{{ $otherUser->avatar }}" class="avaChat">
-                                                                {{-- <div class="active"></div> --}}
+                                                    <div class="user-wrapper">
+                                                        <input type="checkbox" name="selectedUsers[]"
+                                                            value="{{ $otherUser->id }}"
+                                                            id="otherUser-{{ $otherUser->id }}">
+                                                        <label for="otherUser-{{ $otherUser->id }}" class="user-link">
+                                                            <div class="message">
+                                                                <div class="profile-photo">
+                                                                    <img src="/{{ $otherUser->avatar }}" class="avaChat">
+                                                                    {{-- <div class="active"></div> --}}
+                                                                </div>
+                                                                <div class="message-body">
+                                                                    <h5>{{ $otherUser->name }} {{ $otherUser->surname }}
+                                                                    </h5>
+                                                                </div>
                                                             </div>
-                                                            <div class="message-body">
-                                                                <h5>{{ $otherUser->name }} {{ $otherUser->surname }}</h5>
-                                                            </div>
-                                                        </div>
-                                                    </a>
+                                                        </label>
+                                                    </div>
                                                 @endforeach
+
                                             </div>
                                         </div>
                                     </div>
@@ -170,14 +178,7 @@
                     }
 
                     function saveGroup() {
-                        // Дополнительные действия, если необходимо
-
-                        // Запретить стандартное поведение формы (отправку через submit)
                         event.preventDefault();
-
-                        // Возможно, здесь вы хотите выполнить дополнительные действия перед отправкой формы
-
-                        // Затем отправьте форму через JavaScript (или выполните другие действия)
                         document.getElementById('group').submit();
                     }
                 </script>
