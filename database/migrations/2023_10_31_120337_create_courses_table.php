@@ -18,10 +18,6 @@ return new class extends Migration
             $table->string('title');
             $table->string('file_name')->nullable();
             $table->string('file_mime')->nullable();
-            $table->string('description');
-            $table->string('type')->nullable();
-            $table->string('language')->default('Орысша');
-            $table->integer('price')->default(0);
             $table->timestamps();
         });
     }

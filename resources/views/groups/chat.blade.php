@@ -6,7 +6,7 @@
                 <div id="plist" class="people-list">
                     <div class="search-bar d-f mb-2">
                         <i class="uil uil-search"></i>
-                        <input type="search" placeholder="Гурппаны іздеу..." id="message-search-general">
+                        <input type="search" placeholder="Группаны іздеу..." id="message-search-general">
                     </div>
                     <ul class="list-unstyled chat-list mt-2 mb-0">
                         @php
@@ -123,6 +123,91 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @if ($is_admin == 1)
+                                                <div class="testblock">
+                                                    <input type="radio" id="delete-radio" name="block-toggle">
+                                                    <label class="selectButton" for="delete-radio">Жою</label>
+                                                    <div class="block">
+                                                        <div class="filter-friend mt-1 mb-3">
+                                                            <div class="messages modal-messages">
+                                                                @if ($group_users->count() != 0)
+                                                                    <h3 class="friend-title">Группа мүшелерін жою</h3>
+                                                                @endif
+                                                                <div class="user-list">
+                                                                    @foreach ($group_users as $groupUser)
+                                                                        @if ($groupUser->is_admin == 0 && $groupUser->user->id != Auth::id())
+                                                                            <div class="user-wrapper d-f">
+                                                                                <input type="checkbox"
+                                                                                    name="toDeleteSelectedGroupUsers[]"
+                                                                                    value="{{ $groupUser->user->id }}"
+                                                                                    id="userDelete-{{ $groupUser->user->id }}"
+                                                                                    style="display: none">
+                                                                                <label
+                                                                                    for="userDelete-{{ $groupUser->user->id }}"
+                                                                                    class="user-link w-100">
+                                                                                    <div class="message">
+                                                                                        <div class="profile-photo">
+                                                                                            <img src="/{{ $groupUser->user->avatar }}"
+                                                                                                class="avaChat">
+                                                                                        </div>
+                                                                                        <div class="message-body">
+                                                                                            <h5>
+                                                                                                {{ $groupUser->user->name }}
+                                                                                                {{ $groupUser->user->surname }}
+                                                                                            </h5>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </label>
+                                                                            </div>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <input type="radio" id="admin-radio" name="block-toggle">
+                                                    <label class="selectButton" for="admin-radio">Админ</label>
+                                                    <div class="block">
+                                                        <div class="filter-friend">
+                                                            <div class="messages modal-messages">
+                                                                @if ($group_users->count() != 0)
+                                                                    <h3 class="friend-title">Админ рөлін беру</h3>
+                                                                @endif
+                                                                <div class="user-list">
+                                                                    @foreach ($group_users as $groupUser)
+                                                                        @if ($groupUser->is_admin == 0 && $groupUser->user->id != Auth::id())
+                                                                            <div class="user-wrapper d-f">
+                                                                                <input type="checkbox"
+                                                                                    name="toAdminSelectedGroupUsers[]"
+                                                                                    value="{{ $groupUser->user->id }}"
+                                                                                    id="useradmin-{{ $groupUser->user->id }}"
+                                                                                    style="display: none">
+                                                                                <label
+                                                                                    for="useradmin-{{ $groupUser->user->id }}"
+                                                                                    class="user-link w-100">
+                                                                                    <div class="message">
+                                                                                        <div class="profile-photo">
+                                                                                            <img src="/{{ $groupUser->user->avatar }}"
+                                                                                                class="avaChat">
+                                                                                        </div>
+                                                                                        <div class="message-body">
+                                                                                            <h5>
+                                                                                                {{ $groupUser->user->name }}
+                                                                                                {{ $groupUser->user->surname }}
+                                                                                            </h5>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </label>
+                                                                            </div>
+                                                                        @endif
+                                                                    @endforeach
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="row">
@@ -364,6 +449,39 @@
     </script>
 @endsection
 <style>
+    .testblock {
+        flex-direction: column;
+        margin-top: 50px;
+    }
+
+    .block {
+        display: none;
+    }
+
+    .testblock input[type="radio"] {
+        display: none;
+    }
+
+    .testblock input[type="radio"]:checked+.selectButton+.block {
+        display: block;
+    }
+
+    .testblock .selectButton {
+        cursor: pointer;
+        margin: 5px;
+        padding: 1px 10px;
+        border: 1px solid #007BFF;
+        border-radius: 5px;
+        background-color: var(--color-primary);
+        color: white;
+        cursor: pointer;
+        transition: 0.3s all ease;
+    }
+
+    .testblock .selectButton:hover {
+        text-decoration: underline;
+    }
+
     .admin_message {
         padding-top: 12px;
     }

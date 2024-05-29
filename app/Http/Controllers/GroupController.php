@@ -160,6 +160,18 @@ class GroupController extends Controller
                 ]);
             }
         }
+        if ($request->input('toDeleteSelectedGroupUsers')) {
+            foreach ($request->input('toDeleteSelectedGroupUsers') as $userId) {
+                GruppaUser::where('gruppa_id', $group->id)->where('user_id', $userId)->delete();
+            }
+        }
+        if ($request->input('toAdminSelectedGroupUsers')) {
+            foreach ($request->input('toAdminSelectedGroupUsers') as $userId) {
+                GruppaUser::where('gruppa_id', $group->id)->where('user_id', $userId)->update([
+                    'is_admin' => 1,
+                ]);
+            }
+        }
 
         return redirect()->back();
     }

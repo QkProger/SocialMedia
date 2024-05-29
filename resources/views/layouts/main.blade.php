@@ -209,7 +209,7 @@
                     <a href="{{ route('courses.index') }}"
                         class="menu-item {{ request()->routeIs('courses.index') ? 'active' : '' }}">
                         <span><i class="uil uil-book-open"></i></span>
-                        <h3>Курстар</h3>
+                        <h3>Материалдар</h3>
                     </a>
                     @if (Route::currentRouteName() == 'user.index')
                         <a href="{{ route('logout') }}" class="menu-item"
