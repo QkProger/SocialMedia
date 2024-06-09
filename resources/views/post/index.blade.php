@@ -9,9 +9,9 @@
                 <div class="feed">
                     <div class="head">
                         <div class="user">
-                            <div class="profile-photo">
+                            <a href="{{ route('user.profile', $post->user->id) }}" class="profile-photo">
                                 <img src="{{ asset($post->user->avatar) }}" class="avaChat">
-                            </div>
+                            </a>
                             <div class="info">
                                 <h3>{{ $post->user->name }} {{ $post->user->surname }}</h3>
                                 <small>

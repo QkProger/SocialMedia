@@ -251,9 +251,21 @@
                                                 class="message-data {{ $message->user_id == Auth::id() ? 'text-right' : '' }}">
                                                 <span class="message-data-time">
                                                     @if ($groupp->id == 1 && Auth::user()->admin != 1)
+                                                        <img src="/{{ $groupp->image }}" class="avaChat">
                                                         {{ $groupp->name }}
                                                     @else
-                                                        {{ $message->user->name }} {{ $message->user->surname }}
+                                                        <a href="{{ route('user.profile', $message->user->id) }}">
+                                                            @if ($message->user->id != auth()->id())
+                                                                @if ($message->user->avatar)
+                                                                    <img src="/{{ $message->user->avatar }}"
+                                                                        class="avaChat">
+                                                                @else
+                                                                    <img src="{{ asset('images/profile-1.jpg') }}"
+                                                                        class="avaChat">
+                                                                @endif
+                                                            @endif
+                                                            {{ $message->user->name }} {{ $message->user->surname }}
+                                                        </a>
                                                     @endif
                                                 </span>
                                             </div>
@@ -289,7 +301,18 @@
                                                     @if ($groupp->id == 1 && Auth::user()->admin != 1)
                                                         {{ $groupp->name }}
                                                     @else
-                                                        {{ $message->user->name }} {{ $message->user->surname }}
+                                                        <a href="{{ route('user.profile', $message->user->id) }}">
+                                                            @if ($message->user->id != auth()->id())
+                                                                @if ($message->user->avatar)
+                                                                    <img src="/{{ $message->user->avatar }}"
+                                                                        class="avaChat">
+                                                                @else
+                                                                    <img src="{{ asset('images/profile-1.jpg') }}"
+                                                                        class="avaChat">
+                                                                @endif
+                                                            @endif
+                                                            {{ $message->user->name }} {{ $message->user->surname }}
+                                                        </a>
                                                     @endif
                                                 </span>
                                             </div>
@@ -297,10 +320,14 @@
                                                 class="message {{ $message->user_id == Auth::id() ? 'other-message float-right' : 'my-message' }}">
                                                 <a href="{{ route('groups.download', ['id' => $message->id]) }}"
                                                     class="d-f file_input_message">
-                                                    {!! $message->svg !!}
-                                                    <div class="d-f a-e">
-                                                        {{ $message->file_name }}
-                                                    </div>
+                                                    @if ($message->extension == 'jpg' || $message->extension == 'png' || $message->extension == 'jpeg')
+                                                        <img src="{{ url('group_chat_files/' . $message->file_name) }}" style="max-width: 200px">
+                                                    @else
+                                                        <div class="d-f a-e">
+                                                            {!! $message->svg !!}
+                                                            {{ $message->file_name }}
+                                                        </div>
+                                                    @endif
                                                 </a>
                                             </div>
                                             <span class="edit edit-msg">

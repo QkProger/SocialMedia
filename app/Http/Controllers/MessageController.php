@@ -60,6 +60,7 @@ class MessageController extends Controller
             ->get();
         foreach ($messages as $message) {
             $message->svg = $message->getSvgIcon();
+            $message->extension = strtolower(pathinfo($message->file_name, PATHINFO_EXTENSION));
         }
         return view('chats.chat', compact('messages', 'user', 'friends'));
     }

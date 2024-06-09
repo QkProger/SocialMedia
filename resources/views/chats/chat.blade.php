@@ -31,18 +31,18 @@
                 </div>
                 <div class="chat" id="user-chat-container">
                     @if (!empty($messages))
-                        <div class="chat-header clearfix">
+                        <a href="{{ route('user.profile', $user->id) }}" class="chat-header clearfix">
                             <div class="row">
                                 <div class="col-lg-6 d-f a-c">
-                                    <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                    <div>
                                         <img src="/{{ $user->avatar }}" class="avaChat">
-                                    </a>
+                                    </div>
                                     <div class="chat-about">
                                         <h6 class="m-b-0">{{ $user->name }} {{ $user->surname }}</h6>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                         <div class="chat-history">
                             <ul class="m-b-0">
                                 @foreach ($messages as $message)
@@ -138,10 +138,14 @@
                                                 class="message {{ $message->user_id == Auth::id() ? 'other-message float-right' : 'my-message' }}">
                                                 <a href="{{ route('chats.download', ['id' => $message->id]) }}"
                                                     class="d-f file_input_message">
-                                                    {!! $message->svg !!}
-                                                    <div class="d-f a-e">
-                                                        {{ $message->file_name }}
-                                                    </div>
+                                                    @if ($message->extension == 'jpg' || $message->extension == 'png' || $message->extension == 'jpeg')
+                                                        <img src="{{ url('chat_files/' . $message->file_name) }}" style="max-width: 200px">
+                                                    @else
+                                                        <div class="d-f a-e">
+                                                            {!! $message->svg !!}
+                                                            {{ $message->file_name }}
+                                                        </div>
+                                                    @endif
                                                 </a>
                                             </div>
                                         </li>

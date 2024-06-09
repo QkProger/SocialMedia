@@ -72,14 +72,14 @@
                             </Link>
                         </li>
                     </template>
-                    <!--
+
                     <li class="nav-item">
                         <a class="nav-link" :href="route('logout')">
                             <i class="nav-icon fas fa-sign-out-alt"></i>
                             <p>Шығу</p>
                         </a>
                     </li>
--->
+
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->
@@ -101,15 +101,33 @@ export default {
             menu_items: [
                 {
                     name: "Посттар",
-                    font: "fa-cogs",
+                    font: "fa-list",
                     route_name: "admin.posts.index",
                     menu_active: ["admin.posts"],
                 },
                 {
                     name: "Қолданушылар",
-                    font: "fa-cogs",
+                    font: "fa-bars",
                     route_name: "admin.users.index",
                     menu_active: ["admin.users"],
+                },
+                {
+                    name: "Материалдар",
+                    font: "fa-book",
+                    route_name: "admin.material.index",
+                    menu_active: ["admin.material"],
+                },
+                {
+                    name: "Хабарламалар",
+                    font: "fa-envelope",
+                    route_name: "admin.message.index",
+                    menu_active: ["admin.message"],
+                },
+                {
+                    name: "Группалар хабарламалары",
+                    font: "fa-envelope",
+                    route_name: "admin.group_message.index",
+                    menu_active: ["admin.group_message"],
                 },
             ],
         }

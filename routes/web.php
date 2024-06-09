@@ -15,6 +15,8 @@ use App\Http\Controllers\UserPostRelationshipController;
 use App\Http\Controllers\GroupController;
 use App\Models\FriendRequests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 
 use Inertia\Inertia;
 
@@ -75,6 +77,9 @@ Route::get('/user/index', [UserController::class, 'index'])->name('user.index');
 Route::get('/user/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
 Route::post('/user/{user_id}', [UserController::class, 'update'])->name('user.update');
 
+Route::get('/user/profile/{user_id}', [UserController::class, 'profile'])->name('user.profile');
+Route::post('/authUser/deleteFriend', [UserController::class, 'deleteFriend']);
+
 
 Route::post('/sendLike', [UserPostRelationshipController::class, 'like_send'])->name('user.like_send');
 Route::post('/savePost', [UserPostRelationshipController::class, 'post_save'])->name('user.post_save');
@@ -110,10 +115,41 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [AdminAuthController::class, 'adminLoginForm'])->name('adminLoginForm');
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Auth::routes(['login' => false]);
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes(['login' => false, 'logout' => false]);
 Route::post('/login', [AdminAuthController::class, 'adminLoginForm'])->name('adminLoginForm');
+Route::get('/logout', [AdminAuthController::class, 'logout'])->name('logout');
 
+Route::get('group_chat_files/{filename}', function ($filename) {
+    $path = storage_path('app/group_chat_files/' . $filename);
 
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
+
+Route::get('chat_files/{filename}', function ($filename) {
+    $path = storage_path('app/chat_files/' . $filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+});
 
 

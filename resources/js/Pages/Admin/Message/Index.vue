@@ -1,13 +1,13 @@
 <template>
 
     <head>
-        <title>Админ панель | Пост</title>
+        <title>Админ панель | Хабарламалар</title>
     </head>
     <AdminLayout>
         <template #breadcrumbs>
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Посттар тізімі</h1>
+                    <h1 class="m-0">Хабарламалар тізімі</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -18,7 +18,7 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item active">
-                            Посттар тізімі
+                            Хабарламалар тізімі
                         </li>
                     </ol>
                 </div>
@@ -26,11 +26,7 @@
         </template>
         <template #header>
             <div class="buttons d-flex align-items-center">
-                <Link class="btn btn-primary mr-2" :href="route('admin.posts.create')">
-                <i class="fa fa-plus"></i> Қосу
-                </Link>
-
-                <Link class="btn btn-danger" :href="route('admin.posts.index')">
+                <Link class="btn btn-danger mr-3" :href="route('admin.message.index')">
                 <i class="fa fa-trash"></i> Фильтрді тазалау
                 </Link>
                 <div v-if="loading" class="spinner-border text-primary mx-3" role="status">
@@ -47,49 +43,29 @@
                                 <thead>
                                     <tr role="row">
                                         <th>№</th>
-                                        <th>Авторы</th>
-                                        <th>Аты</th>
-                                        <th>Контент</th>
-                                        <th>Сипаттамасы</th>
-                                        <th>Суреті</th>
-                                        <!-- <th>Бейнебаяны</th> -->
+                                        <th>Жіберуші</th>
+                                        <th>Қабылдаушы</th>
+                                        <th>Хабарлама</th>
+                                        <th>Файл</th>
                                         <th>Әрекет</th>
-                                    </tr>
-                                    <tr class="filters">
-                                        <td></td>
-                                        <!-- <td>
-                                            <input v-model="filter.name" class="form-control" placeholder="Іздеу..."
-                                                @keyup.enter="search" />
-                                        </td> -->
-                                        <td></td>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="odd" v-for="(post, index) in posts.data" :key="'post' + post.id">
+                                    <tr class="odd" v-for="(message, index) in message.data" :key="'message' + message.id">
                                         <td>
-                                            {{
-                                                post.from
-                                                    ? post.from + index
-                                                    : index + 1
-                                            }}
+                                            {{ message.from ? message.from + index : index + 1 }}
                                         </td>
-                                        <td>{{ post.user.fio }}</td>
-                                        <td>{{ post.title }}</td>
-                                        <td>{{ post.content }}</td>
-                                        <td>{{ post.description }}</td>
-                                        <td><img :src="'/' + post.image" class="img-fluid"
-                                                :style="['max-width: 120px']"></td>
-                                        <!-- <td>{{ post.video }}</td> -->
+                                        <td>{{ message.user.fio }}</td>
+                                        <td>{{ message.user2.fio }}</td>
+                                        <td v-if="message.message">{{ message.message }}</td>
+                                        <td v-else>Жоқ</td>
+                                        <td v-if="message.file_name">
+                                            <div class="c-p hover_file" @click.prevent="download(message.file_name, message.id)">{{ message.file_name }}</div>
+                                        </td>
+                                        <td v-else>Жоқ</td>
                                         <td>
                                             <div class="btn-group btn-group-sm">
-                                                <Link :href="route(
-                                                    'admin.posts.edit',
-                                                    post)
-                                                    " class="btn btn-primary" title="Изменить">
-                                                <i class="fas fa-edit"></i>
-                                                </Link>
-
-                                                <button @click.prevent="deleteData(post.id)" class="btn btn-danger"
+                                                <button @click.prevent="deleteData(message.id)" class="btn btn-danger"
                                                     title="Жою">
                                                     <i class="fas fa-times"></i>
                                                 </button>
@@ -100,16 +76,16 @@
                             </table>
                         </div>
                     </div>
-                    <Pagination :links="posts.links" />
+                    <Pagination :links="message.links" />
                 </div>
             </div>
         </div>
     </AdminLayout>
 </template>
 <script>
-import AdminLayout from "@/Layouts/AdminLayout.vue";
+import AdminLayout from "../../../Layouts/AdminLayout.vue";
 import { Link, Head } from "@inertiajs/inertia-vue3";
-import Pagination from "@/Components/Pagination.vue";
+import Pagination from "../../../Components/Pagination.vue";
 export default {
     components: {
         AdminLayout,
@@ -117,16 +93,28 @@ export default {
         Pagination,
         Head
     },
-    props: ["posts"],
+    props: ["message"],
     data() {
         return {
-            filter: {
-                name: route().params.name ? route().params.name : null,
-            },
             loading: 0,
         };
     },
     methods: {
+        download(filename, id) {
+            axios.get(`/admin/download?url=/chat_files/${filename}`, {
+                responseType: 'blob',
+            }).then(response => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', id + '.png');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }).catch(error => {
+                console.error('An error occurred:', error);
+            });
+        },
         deleteData(id) {
             Swal.fire({
                 title: "Жоюға сенімдісіз бе?",
@@ -139,17 +127,23 @@ export default {
                 cancelButtonText: "Жоқ",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.$inertia.delete(route('admin.posts.destroy', id))
+                    this.$inertia.delete(route('admin.message.destroy', id))
                 }
             });
-
-
-        },
-        search() {
-            this.loading = 1
-            const params = this.clearParams(this.filter);
-            this.$inertia.get(route('admin.posts.index'), params)
         },
     }
 };
 </script>
+<style>
+.c-p {
+    cursor: pointer;
+}
+
+.hover_file {
+    font-weight: bold;
+}
+
+.hover_file:hover {
+    text-decoration: underline;
+}
+</style>

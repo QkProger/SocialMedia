@@ -73,8 +73,16 @@ class GroupController extends Controller
 
         foreach ($messages as $message) {
             $message->svg = $message->getSvgIcon();
+            $message->extension = strtolower(pathinfo($message->file_name, PATHINFO_EXTENSION));
         }
-        $groups = GruppaUser::where('user_id', $userId)->with('groups')->first();
+        $groups = GruppaUser::where('user_id', $userId)
+            ->with(['groups' => function ($query) {
+                $query->orderBy('id', 'desc');
+            }])->first();
+
+        // $groups = User::with('userGroups.group')->find($userId);
+
+
         $users = User::whereDoesntHave('groups', function ($query) use ($gruppaId) {
             $query->where('gruppa_id', $gruppaId);
         })->get();
@@ -108,7 +116,7 @@ class GroupController extends Controller
             }
             $file = $request->file('file_name');
             $fileName = $file->getClientOriginalName();
-            $file->storeAs('chat_files', $fileName);
+            $file->storeAs('group_chat_files', $fileName);
 
             $data['file_name'] = $fileName;
         } else {
@@ -129,7 +137,7 @@ class GroupController extends Controller
     {
         $file = GruppaMessage::findOrFail($id);
 
-        $filePath = storage_path('app/chat_files/' . $file->file_name);
+        $filePath = storage_path('app/group_chat_files/' . $file->file_name);
 
         return response()->download($filePath, $file->file_name);
     }

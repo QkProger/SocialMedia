@@ -9,9 +9,9 @@
                 <div class="feed">
                     <div class="head">
                         <div class="user">
-                            <div class="profile-photo">
+                            <a href="{{ route('user.profile', $bookmark->post->user->id) }}" class="profile-photo">
                                 <img src="{{ asset($bookmark->post->user->avatar) }}">
-                            </div>
+                            </a>
                             <div class="info">
                                 <h3>{{ $bookmark->post->user->name }} {{ $bookmark->post->user->surname }}</h3>
                                 <small>

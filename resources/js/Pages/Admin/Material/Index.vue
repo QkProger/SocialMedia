@@ -1,13 +1,13 @@
 <template>
 
     <head>
-        <title>Админ панель | Пост</title>
+        <title>Админ панель | Материалдар</title>
     </head>
     <AdminLayout>
         <template #breadcrumbs>
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Посттар тізімі</h1>
+                    <h1 class="m-0">Материалдар тізімі</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -18,7 +18,7 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item active">
-                            Посттар тізімі
+                            Материалдар тізімі
                         </li>
                     </ol>
                 </div>
@@ -26,11 +26,11 @@
         </template>
         <template #header>
             <div class="buttons d-flex align-items-center">
-                <Link class="btn btn-primary mr-2" :href="route('admin.posts.create')">
+                <Link class="btn btn-primary mr-2" :href="route('admin.material.create')">
                 <i class="fa fa-plus"></i> Қосу
                 </Link>
 
-                <Link class="btn btn-danger" :href="route('admin.posts.index')">
+                <Link class="btn btn-danger" :href="route('admin.material.index')">
                 <i class="fa fa-trash"></i> Фильтрді тазалау
                 </Link>
                 <div v-if="loading" class="spinner-border text-primary mx-3" role="status">
@@ -47,12 +47,8 @@
                                 <thead>
                                     <tr role="row">
                                         <th>№</th>
-                                        <th>Авторы</th>
                                         <th>Аты</th>
-                                        <th>Контент</th>
-                                        <th>Сипаттамасы</th>
-                                        <th>Суреті</th>
-                                        <!-- <th>Бейнебаяны</th> -->
+                                        <th>Файлы</th>
                                         <th>Әрекет</th>
                                     </tr>
                                     <tr class="filters">
@@ -65,31 +61,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="odd" v-for="(post, index) in posts.data" :key="'post' + post.id">
+                                    <tr class="odd" v-for="(material, index) in material.data"
+                                        :key="'material' + material.id">
                                         <td>
                                             {{
-                                                post.from
-                                                    ? post.from + index
+                                                material.from
+                                                    ? material.from + index
                                                     : index + 1
                                             }}
                                         </td>
-                                        <td>{{ post.user.fio }}</td>
-                                        <td>{{ post.title }}</td>
-                                        <td>{{ post.content }}</td>
-                                        <td>{{ post.description }}</td>
-                                        <td><img :src="'/' + post.image" class="img-fluid"
-                                                :style="['max-width: 120px']"></td>
-                                        <!-- <td>{{ post.video }}</td> -->
+                                        <td>{{ material.title }}</td>
+                                        <td>
+                                            <div class="c-p hover_file"
+                                                @click.prevent="download(material.file_name, material.id)">{{
+                                                material.file_name }}</div>
+                                        </td>
                                         <td>
                                             <div class="btn-group btn-group-sm">
                                                 <Link :href="route(
-                                                    'admin.posts.edit',
-                                                    post)
+                                                    'admin.material.edit',
+                                                    material)
                                                     " class="btn btn-primary" title="Изменить">
                                                 <i class="fas fa-edit"></i>
                                                 </Link>
 
-                                                <button @click.prevent="deleteData(post.id)" class="btn btn-danger"
+                                                <button @click.prevent="deleteData(material.id)" class="btn btn-danger"
                                                     title="Жою">
                                                     <i class="fas fa-times"></i>
                                                 </button>
@@ -100,7 +96,7 @@
                             </table>
                         </div>
                     </div>
-                    <Pagination :links="posts.links" />
+                    <Pagination :links="material.links" />
                 </div>
             </div>
         </div>
@@ -117,7 +113,7 @@ export default {
         Pagination,
         Head
     },
-    props: ["posts"],
+    props: ["material"],
     data() {
         return {
             filter: {
@@ -127,6 +123,21 @@ export default {
         };
     },
     methods: {
+        download(filename, id) {
+            axios.get(`/admin/download?url=/course_files/${filename}`, {
+                responseType: 'blob',
+            }).then(response => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', id + '.png');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }).catch(error => {
+                console.error('An error occurred:', error);
+            });
+        },
         deleteData(id) {
             Swal.fire({
                 title: "Жоюға сенімдісіз бе?",
@@ -139,7 +150,7 @@ export default {
                 cancelButtonText: "Жоқ",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.$inertia.delete(route('admin.posts.destroy', id))
+                    this.$inertia.delete(route('admin.material.destroy', id))
                 }
             });
 
@@ -148,8 +159,21 @@ export default {
         search() {
             this.loading = 1
             const params = this.clearParams(this.filter);
-            this.$inertia.get(route('admin.posts.index'), params)
+            this.$inertia.get(route('admin.material.index'), params)
         },
     }
 };
 </script>
+<style>
+.c-p {
+    cursor: pointer;
+}
+
+.hover_file {
+    font-weight: bold;
+}
+
+.hover_file:hover {
+    text-decoration: underline;
+}
+</style>

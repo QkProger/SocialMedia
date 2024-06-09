@@ -46,17 +46,17 @@
                                 <thead>
                                     <tr role="row">
                                         <th>№</th>
-                                        <th>Аты</th>
-                                        <th>Әкесі</th>
-                                        <th>Фамилиясы</th>
+                                        <th>Суреті</th>
+                                        <th>Аты-жөні</th>
                                         <th>Псеводоним</th>
                                         <th>Поштасы</th>
-                                        <th>Құпия сөз</th>
+                                        <th>ИИН</th>
                                         <th>Туған-күні</th>
                                         <th>Облыс</th>
                                         <th>Қала</th>
                                         <th>Мамандық</th>
                                         <th>Телефон нөмірі</th>
+                                        <th>Админ</th>
                                         <th>Әрекет</th>
                                     </tr>
                                     <tr class="filters">
@@ -89,17 +89,19 @@
                                                 : index + 1
                                             }}
                                         </td>
-                                        <td>{{ user.name }}</td>
-                                        <td>{{ user.lastname }}</td>
-                                        <td>{{ user.surname }}</td>
+                                        <td><img :src="'/' + user.avatar" class="img-fluid"
+                                                :style="['max-width: 100px']"></td>
+                                        <td>{{ user.fio }}</td>
                                         <td>{{ user.nickname }}</td>
                                         <td>{{ user.email }}</td>
-                                        <td>{{ user.real_password }}</td>
+                                        <td>{{ user.iin }}</td>
                                         <td>{{ user.birthday }}</td>
                                         <td>{{ user.oblys }}</td>
                                         <td>{{ user.qala }}</td>
                                         <td>{{ user.mamandyq }}</td>
                                         <td>{{ user.phone }}</td>
+                                        <td v-if="user.admin">Ия</td>
+                                        <td v-else>Жоқ</td>
                                         <td>
                                             <div class="btn-group btn-group-sm">
                                                 <Link :href="route(

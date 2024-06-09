@@ -35,11 +35,7 @@ class CourseController extends Controller
         try {
             $data = request()->validate([
                 'title' => 'string',
-                'description' => 'string',
-                'type' => 'string',
-                'file_name' => 'file|max:102400', // Валидация файла
-                'language' => 'string',
-                'price' => 'int',
+                'file_name' => 'file|max:102400',
             ]);
 
             // Создаем курс
@@ -81,11 +77,7 @@ class CourseController extends Controller
         try {
             $data = request()->validate([
                 'title' => 'nullable|string',
-                'description' => 'nullable|string',
-                'type' => 'nullable|string',
                 'file_name' => 'file|max:102400',
-                'language' => 'nullable|string',
-                'price' => 'nullable|int',
             ]);
 
             // Если загружен новый файл, обновляем информацию о файле

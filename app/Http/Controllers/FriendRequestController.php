@@ -50,10 +50,8 @@ class FriendRequestController extends Controller
     {
         $data['user_id'] = auth()->id();
         $data['receiver_user_id'] = $request->receiver_user_id;
-        // Создание новой записи в базе данных
         $userRequests = FriendRequests::create($data);
-
-        // Возвращение JSON-ответа
+        
         return response()->json(['success' => 'Сообщение успешно отправлено!', 'userRequests' => $userRequests]);
     }
 

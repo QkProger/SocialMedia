@@ -1,13 +1,13 @@
 <template>
 
     <head>
-        <title>Админ панель | Пост</title>
+        <title>Админ панель | Группалар хабарламалары</title>
     </head>
     <AdminLayout>
         <template #breadcrumbs>
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Посттар тізімі</h1>
+                    <h1 class="m-0">Группалар хабарламалары</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -18,7 +18,7 @@
                             </a>
                         </li>
                         <li class="breadcrumb-item active">
-                            Посттар тізімі
+                            Группалар хабарламалары
                         </li>
                     </ol>
                 </div>
@@ -26,11 +26,11 @@
         </template>
         <template #header>
             <div class="buttons d-flex align-items-center">
-                <Link class="btn btn-primary mr-2" :href="route('admin.posts.create')">
+                <Link class="btn btn-primary mr-2" :href="route('admin.group_message.create')">
                 <i class="fa fa-plus"></i> Қосу
                 </Link>
 
-                <Link class="btn btn-danger" :href="route('admin.posts.index')">
+                <Link class="btn btn-danger mr-3" :href="route('admin.group_message.index')">
                 <i class="fa fa-trash"></i> Фильтрді тазалау
                 </Link>
                 <div v-if="loading" class="spinner-border text-primary mx-3" role="status">
@@ -47,50 +47,33 @@
                                 <thead>
                                     <tr role="row">
                                         <th>№</th>
-                                        <th>Авторы</th>
-                                        <th>Аты</th>
-                                        <th>Контент</th>
-                                        <th>Сипаттамасы</th>
-                                        <th>Суреті</th>
-                                        <!-- <th>Бейнебаяны</th> -->
+                                        <th>Группа</th>
+                                        <th>Қолданушы</th>
+                                        <th>Хабарлама</th>
+                                        <th>Файл</th>
                                         <th>Әрекет</th>
-                                    </tr>
-                                    <tr class="filters">
-                                        <td></td>
-                                        <!-- <td>
-                                            <input v-model="filter.name" class="form-control" placeholder="Іздеу..."
-                                                @keyup.enter="search" />
-                                        </td> -->
-                                        <td></td>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="odd" v-for="(post, index) in posts.data" :key="'post' + post.id">
+                                    <tr class="odd" v-for="(group_message, index) in group_message.data"
+                                        :key="'group_message' + group_message.id">
                                         <td>
-                                            {{
-                                                post.from
-                                                    ? post.from + index
-                                                    : index + 1
-                                            }}
+                                            {{ group_message.from ? group_message.from + index : index + 1 }}
                                         </td>
-                                        <td>{{ post.user.fio }}</td>
-                                        <td>{{ post.title }}</td>
-                                        <td>{{ post.content }}</td>
-                                        <td>{{ post.description }}</td>
-                                        <td><img :src="'/' + post.image" class="img-fluid"
-                                                :style="['max-width: 120px']"></td>
-                                        <!-- <td>{{ post.video }}</td> -->
+                                        <td>{{ group_message.group.name }}</td>
+                                        <td>{{ group_message.user.fio }}</td>
+                                        <td v-if="group_message.message">{{ group_message.message }}</td>
+                                        <td v-else>Жоқ</td>
+                                        <td v-if="group_message.file_name">
+                                            <div class="c-p hover_file"
+                                                @click.prevent="download(group_message.file_name, group_message.id)">{{
+                                                    group_message.file_name }}</div>
+                                        </td>
+                                        <td v-else>Жоқ</td>
                                         <td>
                                             <div class="btn-group btn-group-sm">
-                                                <Link :href="route(
-                                                    'admin.posts.edit',
-                                                    post)
-                                                    " class="btn btn-primary" title="Изменить">
-                                                <i class="fas fa-edit"></i>
-                                                </Link>
-
-                                                <button @click.prevent="deleteData(post.id)" class="btn btn-danger"
-                                                    title="Жою">
+                                                <button @click.prevent="deleteData(group_message.id)"
+                                                    class="btn btn-danger" title="Жою">
                                                     <i class="fas fa-times"></i>
                                                 </button>
                                             </div>
@@ -100,16 +83,16 @@
                             </table>
                         </div>
                     </div>
-                    <Pagination :links="posts.links" />
+                    <Pagination :links="group_message.links" />
                 </div>
             </div>
         </div>
     </AdminLayout>
 </template>
 <script>
-import AdminLayout from "@/Layouts/AdminLayout.vue";
+import AdminLayout from "../../../Layouts/AdminLayout.vue";
 import { Link, Head } from "@inertiajs/inertia-vue3";
-import Pagination from "@/Components/Pagination.vue";
+import Pagination from "../../../Components/Pagination.vue";
 export default {
     components: {
         AdminLayout,
@@ -117,16 +100,28 @@ export default {
         Pagination,
         Head
     },
-    props: ["posts"],
+    props: ["group_message"],
     data() {
         return {
-            filter: {
-                name: route().params.name ? route().params.name : null,
-            },
             loading: 0,
         };
     },
     methods: {
+        download(filename, id) {
+            axios.get(`/admin/download?url=/group_chat_files/${filename}`, {
+                responseType: 'blob',
+            }).then(response => {
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', id + '.png');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }).catch(error => {
+                console.error('An error occurred:', error);
+            });
+        },
         deleteData(id) {
             Swal.fire({
                 title: "Жоюға сенімдісіз бе?",
@@ -139,17 +134,23 @@ export default {
                 cancelButtonText: "Жоқ",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.$inertia.delete(route('admin.posts.destroy', id))
+                    this.$inertia.delete(route('admin.group_message.destroy', id))
                 }
             });
-
-
-        },
-        search() {
-            this.loading = 1
-            const params = this.clearParams(this.filter);
-            this.$inertia.get(route('admin.posts.index'), params)
         },
     }
 };
 </script>
+<style>
+.c-p {
+    cursor: pointer;
+}
+
+.hover_file {
+    font-weight: bold;
+}
+
+.hover_file:hover {
+    text-decoration: underline;
+}
+</style>

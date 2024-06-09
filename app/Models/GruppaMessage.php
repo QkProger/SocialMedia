@@ -12,9 +12,9 @@ class GruppaMessage extends Model
 
     public function group()
     {
-        return $this->belongsTo(Gruppa::class);
+        return $this->belongsTo(Gruppa::class, 'gruppa_id');
     }
-
+    
     public function user()
     {
         return $this->belongsTo(User::class);

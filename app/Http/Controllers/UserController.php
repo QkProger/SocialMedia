@@ -9,6 +9,7 @@ use App\Models\Friend;
 use App\Models\UserPostRelationship as ModelsUserPostRelationship;
 use Illuminate\Http\Request;
 use App\Http\Requests\profileSaveRequest;
+use App\Models\FriendRequests;
 
 class UserController extends Controller
 {
@@ -30,15 +31,15 @@ class UserController extends Controller
         $data = [];
 
         if ($request->hasFile('avatar')) {
-            // Если пользователь загружает новое изображение, обработайте его и обновите запись
             $image = $request->file('avatar');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $image->storeAs('public/images', $imageName);
             $data['avatar'] = 'storage/images/' . $imageName;
         }
-
-        // Обновление записи пользователя
-        User::findOrFail($user_id)->update(array_merge($request->except('avatar'), $data));
+        $data['password'] = Hash('sha1', $request['password']);
+        $data['real_password'] = $request['password'];
+        
+        User::findOrFail($user_id)->update(array_merge($request->except(['avatar', 'password', 'real_password']), $data));
 
         return redirect('/');
     }
@@ -56,5 +57,41 @@ class UserController extends Controller
         $likedOthers = User::latest()
             ->get();
         return view('user.bookmarks', compact('bookmarkedPosts', 'likedFriends', 'likedOthers'));
+    }
+
+    public function profile($user_id)
+    {
+        $user = User::find($user_id);
+        $posts = Post::where('user_id', $user_id)->orderBy('created_at', 'desc')->get();
+
+        $friendRequests = FriendRequests::where('user_id', auth()->id())
+            ->where('is_waiting', 1)
+            ->get();
+
+        $me = auth()->guard('web')->user();
+        $is_friend = Friend::where('user1_id', $me->id)
+            ->where('user2_id', $user_id)
+            ->exists();
+        return view('user.profile', compact('user', 'posts', 'friendRequests', 'is_friend'));
+    }
+
+    public function deleteFriend(Request $request)
+    {
+        $friendId = $request->input('friend_id');
+        $friendship = Friend::where('user1_id', auth()->id())
+            ->where('user2_id', $friendId)
+            ->orWhere(function ($query) use ($friendId) {
+                $query->where('user1_id', $friendId)
+                    ->where('user2_id', auth()->id());
+            })
+            ->delete();
+        FriendRequests::where('user_id', auth()->id())
+            ->where('receiver_user_id', $friendId)
+            ->orWhere(function ($query) use ($friendId) {
+                $query->where('receiver_user_id', $friendId)
+                    ->where('user_id', auth()->id());
+            })
+            ->delete();
+        return response()->json(['message' => 'Friend deleted succesfully!'], 200);
     }
 }

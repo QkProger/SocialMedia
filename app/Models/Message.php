@@ -16,6 +16,11 @@ class Message extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function user2()
+    {
+        return $this->belongsTo(User::class, 'sendler_user_id');
+    }
+
     public function getSvgIcon()
     {
         if ($this->file_name) {

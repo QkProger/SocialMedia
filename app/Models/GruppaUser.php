@@ -9,7 +9,7 @@ class GruppaUser extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    
+
     public function groups()
     {
         return $this->belongsToMany(Gruppa::class, 'gruppa_users', 'user_id', 'gruppa_id');
@@ -20,4 +20,8 @@ class GruppaUser extends Model
         return $this->belongsTo(User::class);
     }
 
+    // public function group()
+    // {
+    //     return $this->belongsTo(Gruppa::class, 'gruppa_id');
+    // }
 }

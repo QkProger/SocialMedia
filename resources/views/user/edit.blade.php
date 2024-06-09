@@ -69,6 +69,17 @@
                 <div class="row">
                     <div class="col-25">
                         <label for="name">
+                            <h4>ИИН</h4>
+                        </label>
+                    </div>
+                    <div class="col-75">
+                        <input type="text" name="iin" value="{{ $user->iin }}">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label for="name">
                             <h4>Почта</h4>
                         </label>
                     </div>

@@ -11,12 +11,105 @@
                                 <h3>{{ $user->nickname }}</h3>
                                 <p class="text-muted mb-1">{{ $user->mamandyq }}</p>
                                 <p class="text-muted font-size-sm mb-3">{{ $user->oblys }}, {{ $user->qala }}</p>
+                                @if ($user->id != auth()->id())
+                                    @if ($is_friend)
+                                        <form class="deleteForm">
+                                            <input type="hidden" value="{{ $user->id }}" class="friend_id">
+                                            <button type="submit" class="addFriendButton no-btn">
+                                                <div class="btn btn-danger mr-5 deleteFriend mb-2">Өшіру</div>
+                                                <div class="ma-0 waiting is_deleted">
+                                                    Жойылды...
+                                                </div>
+                                            </button>
+                                        </form>
+                                    @else
+                                        <form class="form">
+                                            <input type="hidden" value="{{ $user->id }}" class="user_id">
+                                            <button type="submit" class="addFriendButton no-btn">
+                                                @if ($friendRequests->where('receiver_user_id', $user->id)->count() > 0)
+                                                    <div class="ma-0 waiting">
+                                                        Жауап күтілуде...
+                                                    </div>
+                                                @else
+                                                    <div class="btn btn-primary mr-5 addToFriend mb-2">Тіркелу</div>
+                                                    <div class="ma-0 waiting checkmark">
+                                                        Жауап күтілуде...
+                                                    </div>
+                                                @endif
+                                            </button>
+                                        </form>
+                                    @endif
+                                    <a href="{{ route('chats.load-chat', $user->id) }}" class="user-link">
+                                        <button class="btn">Хабарлама</button>
+                                    </a>
+                                @endif
                             </div>
                         </div>
                         <br>
                     </div>
                 </div>
             </div>
+            <style>
+                .form {
+                    width: 100%;
+                }
+
+                .waiting {
+                    cursor: default;
+                    margin-bottom: 10px;
+                }
+            </style>
+            <script>
+                $('.deleteForm').on('submit', function(event) {
+                    event.preventDefault();
+                    var form = $(this);
+                    var formDataArray = form.serializeArray();
+                    formDataArray.push({
+                        name: 'friend_id',
+                        value: $(this).find(".friend_id").val()
+                    });
+                    formDataArray.push({
+                        name: '_token',
+                        value: "{{ csrf_token() }}"
+                    });
+
+                    var formData = $.param(formDataArray);
+                    console.log(formData);
+                    $.ajax({
+                        url: "/authUser/deleteFriend",
+                        type: "POST",
+                        data: formData,
+                        success: function(response) {
+                            form.find('.deleteFriend').hide();
+                            form.closest('.deleteForm').find('.is_deleted').show();
+                        },
+                    });
+                });
+                $('.form').on('submit', function(event) {
+                    event.preventDefault();
+                    var form = $(this);
+                    var formDataArray = form.serializeArray();
+                    formDataArray.push({
+                        name: 'receiver_user_id',
+                        value: $(this).find(".user_id").val()
+                    });
+                    formDataArray.push({
+                        name: '_token',
+                        value: "{{ csrf_token() }}"
+                    });
+
+                    var formData = $.param(formDataArray);
+                    $.ajax({
+                        url: "/userRequests/request",
+                        type: "POST",
+                        data: formData,
+                        success: function(response) {
+                            form.find('.addToFriend').hide();
+                            form.closest('.form').find('.checkmark').show();
+                        }
+                    });
+                });
+            </script>
             <div class="col-md-8">
                 <div class="card mb-3">
                     <div class="card-body">
@@ -64,12 +157,6 @@
                                 {{ $user->email }}
                             </div>
                         </div>
-                        <hr>
-                        <div class="row">
-                            <a href="{{ route('user.edit', $user->id) }}" class="mt-2 mb-2"><button
-                                    class="btn btn-primary">Өңдеу</button></a>
-
-                        </div>
                     </div>
                 </div>
             </div>
@@ -86,11 +173,7 @@
                                 <img src="{{ asset($user->avatar) }}" class="avaChat">
                             </div>
                             <div class="info">
-                                @if (Auth::user())
-                                    <h3>{{ Auth::user()->name }} {{ Auth::user()->surname }}</h3>
-                                @else
-                                    <h3>Guest Guest</h3>
-                                @endif
+                                <h3>{{ $user->name }} {{ $user->surname }}</h3>
                                 <small>
                                     @php
                                         $publishedDate = Carbon\Carbon::parse($post->published_at);
@@ -111,63 +194,10 @@
 
                             </div>
                         </div>
-                        <a href="{{ route('post.edit', $post->id) }}"><button
-                                class="btn btn-success mt-2 mb-2">Өңдеу</button></a>
-                        <form action="{{ route('post.delete', $post->id) }}" method="post">
-                            @csrf
-                            @method('delete')
-                            <input type="submit" value="Жою" class="btn btn-danger mt-2 mb-2">
-                        </form>
-                        <span class="edit">
-                            <i class="uil uil-ellipsis-h" id="post-popup-triggerr"></i>
-                            <div class="post-popup" id="post-action-popupp">
-                                <a href="{{ route('post.edit', $post->id) }}"><button
-                                        class="btn btn-success mt-2 mb-2">Өңдеу</button></a>
-                                <form action="{{ route('post.delete', $post->id) }}" method="post">
-                                    @csrf
-                                    @method('delete')
-                                    <input type="submit" value="Жою" class="btn btn-danger mt-2 mb-2">
-                                </form>
-                            </div>
-                        </span>
                     </div>
                     <div class="photo">
                         <img src="{{ asset($post->image) }}">
                     </div>
-                    {{-- <div class="action-buttons">
-                        <div class="interaction-buttons">
-                            <span><i class="uil uil-heart"></i></span>
-                            <span><i class="uil uil-comment-dots"></i></span>
-                            <span><i class="uil uil-share-alt"></i></span>
-                        </div>
-                        <div class="bookmarks">
-                            <span><i class="uil uil-bookmark-full"></i></span>
-                        </div>
-                    </div> --}}
-                    {{-- <div class="liked-by">
-                        <span>
-                            <img src="{{ asset('images/profile-1.jpg') }}">
-                        </span>
-                        <span>
-                            <img src="{{ asset('images/profile-1.jpg') }}">
-                        </span>
-                        <span>
-                            <img src="{{ asset('images/profile-1.jpg') }}">
-                        </span>
-                        <p>Liked by <b>Ernest Achiever</b> and <b>2,323 others</b></p>
-                    </div> --}}
-                    {{-- <div class="caption">
-                        <p>
-                            @if (Auth::user())
-                                <b>{{ Auth::user()->name }} {{ Auth::user()->surname }}</b> {{ $post->description }}
-                            @else
-                                guest
-                            @endif
-                            <span class="harsh-tag">#lifestyle</span>
-                        </p>
-                    </div>
-                    <div class="comments text-muted">View all 277 comments</div>
-                </div> --}}
             @endforeach
             {{-- END OF FEED --}}
         </div>

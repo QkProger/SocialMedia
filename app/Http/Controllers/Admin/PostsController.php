@@ -11,7 +11,7 @@ class PostsController extends Controller
 {
     public function index(Request $request)
     {
-        $posts = Post::paginate($request->input('per_page', 20))
+        $posts = Post::with('user')->paginate($request->input('per_page', 20))
         ->appends($request->except('page'));;
         
         return Inertia::render('Admin/Posts/Index', [
@@ -73,10 +73,7 @@ class PostsController extends Controller
         ]);
 
         if ($request->updateImage) {
-            // Получите старый путь к изображению
             $oldImagePath = asset($post->image);
-
-            // Если старый путь существует, удалите старое изображение
             if ($oldImagePath && Storage::exists($oldImagePath)) {
                 Storage::delete($oldImagePath);
             }

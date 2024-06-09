@@ -218,7 +218,7 @@
                             <span><i class="uil uil-sign-out-alt"></i></span>
                             <h3>Шығу</h3>
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        <form id="logout-form" action="{{ route('logout') }}" method="get" class="d-none">
                             @csrf
                         </form>
                     @endif
@@ -237,6 +237,7 @@
             @yield('content')
             {{-- END OF MIDDLE --}}
             @if (Route::currentRouteName() == 'user.index' ||
+                    Route::currentRouteName() == 'user.profile' ||
                     Route::currentRouteName() == 'user.edit' ||
                     Route::currentRouteName() == 'chats.chat' ||
                     Route::currentRouteName() == 'chats.load-chat' ||

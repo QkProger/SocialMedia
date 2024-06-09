@@ -17,6 +17,12 @@ class User extends Authenticatable
         return $this->belongsToMany(Gruppa::class, 'gruppa_users', 'user_id', 'gruppa_id');
     }
 
+    // public function userGroups()
+    // {
+    //     return $this->hasMany(GruppaUser::class);
+    // }
+
+
     public function posts()
     {
         return $this->hasMany(Post::class);
