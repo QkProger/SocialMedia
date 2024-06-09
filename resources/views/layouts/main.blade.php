@@ -41,7 +41,7 @@
                 @if (Auth::user())
                     <a href="{{ route('user.index') }}">
                         <div class="profile-photo">
-                            <img src="{{ asset(Auth::user()->avatar) }}" class="avaChat">
+                            <img src="/storage/{{ Auth::user()->avatar }}" class="avaChat">
                         </div>
                     </a>
                 @else
@@ -64,7 +64,7 @@
                     <div class="profile-photo">
                         @if (Auth::user())
                             <a href="{{ route('user.index') }}">
-                                <img src="{{ asset(Auth::user()->avatar) }}" class="avaChat">
+                                <img src="/storage/{{ Auth::user()->avatar }}" class="avaChat">
                             </a>
                         @else
                             <img src="{{ asset('images/default-avatar.jpg') }}" class="avaChat">
@@ -183,6 +183,11 @@
                             <span><i class="uil uil-bookmark"></i></span>
                             <h3>Сақталғандар</h3>
                         </a>
+                        <a href="{{ route('courses.index') }}"
+                            class="menu-item {{ request()->routeIs('courses.index') ? 'active' : '' }}">
+                            <span><i class="uil uil-book-open"></i></span>
+                            <h3>Материалдар</h3>
+                        </a>
                     @else
                         <a href="{{ route('adminLoginForm') }}"
                             class="menu-item {{ request()->routeIs('chats.messanger') ? 'active' : '' }}">
@@ -205,12 +210,12 @@
                             <span><i class="uil uil-bookmark"></i></span>
                             <h3>Сақталғандар</h3>
                         </a>
+                        <a href="{{ route('adminLoginForm') }}"
+                            class="menu-item {{ request()->routeIs('courses.index') ? 'active' : '' }}">
+                            <span><i class="uil uil-book-open"></i></span>
+                            <h3>Материалдар</h3>
+                        </a>
                     @endif
-                    <a href="{{ route('courses.index') }}"
-                        class="menu-item {{ request()->routeIs('courses.index') ? 'active' : '' }}">
-                        <span><i class="uil uil-book-open"></i></span>
-                        <h3>Материалдар</h3>
-                    </a>
                     @if (Route::currentRouteName() == 'user.index')
                         <a href="{{ route('logout') }}" class="menu-item"
                             onclick="event.preventDefault();
@@ -277,10 +282,14 @@
                             {{-- MESSAGE --}}
                             <a href="{{ route('chats.load-chat', $friendUser) }}" class="user-link"
                                 data-user-id="{{ $friendUser->id }}">
-                                <div class="message">
+                                <div class="message align-items-center">
                                     <div class="profile-photo">
-                                        <img src="/{{ $friendUser->avatar }}" class="avaChat">
-                                        <div class="active"></div>
+                                        @if ($friendUser->avatar)
+                                            <img src="/storage/{{ $friendUser->avatar }}" class="avaChat">
+                                        @else
+                                            <img src="{{ asset('images/profile-1.jpg') }}" class="avaChat">
+                                        @endif
+                                        {{-- <div class="active"></div> --}}
                                     </div>
                                     <div class="message-body">
                                         <h5>{{ $friendUser->name }} {{ $friendUser->surname }}</h5>
@@ -311,7 +320,11 @@
                                 <div class="request">
                                     <div class="info">
                                         <div class="profile-photo">
-                                            <img src="{{ asset('images/profile-1.jpg') }}" class="avaChat">
+                                            @if ($ur->user->avatar)
+                                                <img src="/storage/{{ $ur->user->avatar }}" class="avaChat">
+                                            @else
+                                                <img src="{{ asset('images/profile-1.jpg') }}" class="avaChat">
+                                            @endif
                                         </div>
                                         <div>
                                             <h5>{{ $ur->user->surname }} {{ $ur->user->name }}</h5>
@@ -329,7 +342,7 @@
                                         <form class="Decline" action="{{ route('decline_update', $ur->user_id) }}"
                                             method="post">
                                             @csrf
-                                            <button type="submit" class="btn">Қабылдамау</button>
+                                            <button type="submit" class="btn btn-danger">Қабылдамау</button>
                                         </form>
                                     </div>
                                 </div>
@@ -350,6 +363,17 @@
         </div>
     </main>
     <script src="{{ asset('js/index.js') }}"></script>
+    <style>
+        .action {
+            gap: 0.5rem !important;
+        }
+
+        @media screen and (max-width: 992px) {
+            main .container .right {
+                /* display: contents !important; */
+            }
+        }
+    </style>
 </body>
 
 </html>

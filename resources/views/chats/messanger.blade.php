@@ -100,9 +100,15 @@
                                                         <input type="checkbox" name="selectedUsers[]"
                                                             value="{{ $friendUser->id }}" id="friend-{{ $friendUser->id }}">
                                                         <label for="friend-{{ $friendUser->id }}" class="user-link">
-                                                            <div class="message">
+                                                            <div class="message align-items-center">
                                                                 <div class="profile-photo">
-                                                                    <img src="/{{ $friendUser->avatar }}" class="avaChat">
+                                                                    @if ($friendUser->avatar)
+                                                                        <img src="/{{ $friendUser->avatar }}"
+                                                                            class="avaChat">
+                                                                    @else
+                                                                        <img src="{{ asset('images/profile-1.jpg') }}"
+                                                                            class="avaChat">
+                                                                    @endif
                                                                     {{-- <div class="active"></div> --}}
                                                                 </div>
                                                                 <div class="message-body">
@@ -129,7 +135,13 @@
                                                         <label for="otherUser-{{ $otherUser->id }}" class="user-link">
                                                             <div class="message">
                                                                 <div class="profile-photo">
-                                                                    <img src="/{{ $otherUser->avatar }}" class="avaChat">
+                                                                    @if ($otherUser->avatar)
+                                                                        <img src="/{{ $otherUser->avatar }}"
+                                                                            class="avaChat">
+                                                                    @else
+                                                                        <img src="{{ asset('images/profile-1.jpg') }}"
+                                                                            class="avaChat">
+                                                                    @endif
                                                                     {{-- <div class="active"></div> --}}
                                                                 </div>
                                                                 <div class="message-body">
@@ -201,9 +213,15 @@
                     {{-- MESSAGE --}}
                     <a href="{{ route('chats.load-chat', $friendUser) }}" class="user-link"
                         data-user-id="{{ $friendUser->id }}">
-                        <div class="message">
+                        <div class="message align-items-center">
                             <div class="profile-photo">
-                                <img src="/{{ $friendUser->avatar }}" class="avaChat">
+                                @if ($friendUser->avatar)
+                                    <img src="/{{ $friendUser->avatar }}"
+                                        class="avaChat">
+                                @else
+                                    <img src="{{ asset('images/profile-1.jpg') }}"
+                                        class="avaChat">
+                                @endif
                                 <div class="active"></div>
                             </div>
                             <div class="message-body">

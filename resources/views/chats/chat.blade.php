@@ -18,7 +18,11 @@
                             <a href="{{ route('chats.load-chat', $friend->user2->id) }}" class="user-link">
                                 <li
                                     class="clearfix {{ $currentRouteName === 'chats.load-chat' && $currentId == $friend->user2->id ? ' chat-active' : '' }}">
-                                    <img src="/{{ $friend->user2->avatar }}" class="avaChat">
+                                    @if ($friend->user2->avatar)
+                                        <img src="/{{ $friend->user2->avatar }}" class="avaChat">
+                                    @else
+                                        <img src="{{ asset('images/profile-1.jpg') }}" class="avaChat">
+                                    @endif
                                     <div class="about">
                                         <div class="name">
                                             <p>{{ $friend->user2->name }} <br> {{ $friend->user2->surname }}</p>
@@ -35,7 +39,11 @@
                             <div class="row">
                                 <div class="col-lg-6 d-f a-c">
                                     <div>
-                                        <img src="/{{ $user->avatar }}" class="avaChat">
+                                        @if ($user->avatar)
+                                            <img src="/{{ $user->avatar }}" class="avaChat">
+                                        @else
+                                            <img src="{{ asset('images/profile-1.jpg') }}" class="avaChat">
+                                        @endif
                                     </div>
                                     <div class="chat-about">
                                         <h6 class="m-b-0">{{ $user->name }} {{ $user->surname }}</h6>
@@ -139,7 +147,8 @@
                                                 <a href="{{ route('chats.download', ['id' => $message->id]) }}"
                                                     class="d-f file_input_message">
                                                     @if ($message->extension == 'jpg' || $message->extension == 'png' || $message->extension == 'jpeg')
-                                                        <img src="{{ url('chat_files/' . $message->file_name) }}" style="max-width: 200px">
+                                                        <img src="{{ url('chat_files/' . $message->file_name) }}"
+                                                            style="max-width: 200px">
                                                     @else
                                                         <div class="d-f a-e">
                                                             {!! $message->svg !!}

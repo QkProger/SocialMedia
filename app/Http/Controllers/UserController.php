@@ -10,6 +10,7 @@ use App\Models\UserPostRelationship as ModelsUserPostRelationship;
 use Illuminate\Http\Request;
 use App\Http\Requests\profileSaveRequest;
 use App\Models\FriendRequests;
+use App\Services\FileService;
 
 class UserController extends Controller
 {
@@ -27,22 +28,40 @@ class UserController extends Controller
 
     public function update(Request $request, $user_id)
     {
-        // Инициализация массива $data
+        $user = User::find($user_id);
         $data = [];
 
+        $oldAvatar = basename($user->image);
         if ($request->hasFile('avatar')) {
             $image = $request->file('avatar');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('public/images', $imageName);
-            $data['avatar'] = 'storage/images/' . $imageName;
+            $image_name = FileService::saveFile($image, "/avatars", $oldAvatar);
+            $data['avatar'] = 'avatars/' . $image_name;
         }
         $data['password'] = Hash('sha1', $request['password']);
         $data['real_password'] = $request['password'];
         
-        User::findOrFail($user_id)->update(array_merge($request->except(['avatar', 'password', 'real_password']), $data));
+        $user->update(array_merge($request->except(['avatar', 'password', 'real_password']), $data));
 
         return redirect('/');
     }
+
+    // public function update(Request $request, $user_id)
+    // {
+    //     $data = [];
+
+    //     if ($request->hasFile('avatar')) {
+    //         $image = $request->file('avatar');
+    //         $imageName = time() . '_' . $image->getClientOriginalName();
+    //         $image->storeAs('public/images', $imageName);
+    //         $data['avatar'] = 'storage/images/' . $imageName;
+    //     }
+    //     $data['password'] = Hash('sha1', $request['password']);
+    //     $data['real_password'] = $request['password'];
+        
+    //     User::findOrFail($user_id)->update(array_merge($request->except(['avatar', 'password', 'real_password']), $data));
+
+    //     return redirect('/');
+    // }
 
     public function bookmarks()
     {
