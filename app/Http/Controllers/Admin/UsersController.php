@@ -77,6 +77,12 @@ class UsersController extends Controller
             'real_password' => $request['real_password'],
             'admin' => $request['admin'] ? 1 : 0,
         ]);
+        GruppaUser::where('gruppa_id', Gruppa::first()->id)->where('user_id', $user->id)->delete();
+        GruppaUser::create([
+            'gruppa_id' => Gruppa::first()->id,
+            'user_id' => $user->id,
+            'is_admin' => $user->admin,
+        ]);
         return redirect()->route('admin.users.index')->withSuccess("Сәтті сақталды!");
     }
 

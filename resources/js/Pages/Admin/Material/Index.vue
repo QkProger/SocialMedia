@@ -124,7 +124,7 @@ export default {
     },
     methods: {
         download(filename, id) {
-            axios.get(`/admin/download?url=/course_files/${filename}`, {
+            axios.get(`/admin/download/material?url=/storage/${filename}`, {
                 responseType: 'blob',
             }).then(response => {
                 const url = window.URL.createObjectURL(new Blob([response.data]));

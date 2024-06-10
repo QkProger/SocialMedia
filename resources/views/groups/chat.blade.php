@@ -19,7 +19,7 @@
                                 data-user-id="{{ $group->id }}">
                                 <li
                                     class="clearfix d-f a-c {{ $currentRouteName === 'groups.load-chat' && $currentId == $group->id ? ' chat-active' : '' }}">
-                                    <img src="/{{ $group->image }}" class="avaChat">
+                                    <img src="/storage/{{ $group->image }}" class="avaChat">
                                     <div class="about">
                                         <div class="name">
                                             <p><b>{{ $group->name }}</b></p>
@@ -63,7 +63,7 @@
                             <div class="row">
                                 <div class="col-lg-6 d-f a-c">
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                        <img src="/{{ $groupp->image }}" class="avaChat">
+                                        <img src="/storage/{{ $groupp->image }}" class="avaChat">
                                     </a>
                                     <div class="chat-about">
                                         <h6 class="m-b-0">{{ $groupp->name }}</h6>
@@ -108,7 +108,7 @@
                                                                     class="user-link w-100">
                                                                     <div class="message">
                                                                         <div class="profile-photo">
-                                                                            <img src="/{{ $user->avatar }}"
+                                                                            <img src="/storage/{{ $user->avatar }}"
                                                                                 class="avaChat">
                                                                         </div>
                                                                         <div class="message-body">
@@ -147,7 +147,7 @@
                                                                                     class="user-link w-100">
                                                                                     <div class="message">
                                                                                         <div class="profile-photo">
-                                                                                            <img src="/{{ $groupUser->user->avatar }}"
+                                                                                            <img src="/storage/{{ $groupUser->user->avatar }}"
                                                                                                 class="avaChat">
                                                                                         </div>
                                                                                         <div class="message-body">
@@ -188,7 +188,7 @@
                                                                                     class="user-link w-100">
                                                                                     <div class="message">
                                                                                         <div class="profile-photo">
-                                                                                            <img src="/{{ $groupUser->user->avatar }}"
+                                                                                            <img src="/storage/{{ $groupUser->user->avatar }}"
                                                                                                 class="avaChat">
                                                                                         </div>
                                                                                         <div class="message-body">
@@ -213,7 +213,7 @@
                                     <div class="row">
                                         <div class="col-25">
                                             <label for="image">Суреті</label>
-                                            <img src="/{{ $groupp->image }}" class="avaChat">
+                                            <img src="/storage/{{ $groupp->image }}" class="avaChat">
                                         </div>
                                         <div class="col-75">
                                             <input type="file" id="image" name="image">
@@ -251,13 +251,13 @@
                                                 class="message-data {{ $message->user_id == Auth::id() ? 'text-right' : '' }}">
                                                 <span class="message-data-time">
                                                     @if ($groupp->id == 1 && Auth::user()->admin != 1)
-                                                        <img src="/{{ $groupp->image }}" class="avaChat">
+                                                        <img src="/storage/{{ $groupp->image }}" class="avaChat">
                                                         {{ $groupp->name }}
                                                     @else
                                                         <a href="{{ route('user.profile', $message->user->id) }}">
                                                             @if ($message->user->id != auth()->id())
                                                                 @if ($message->user->avatar)
-                                                                    <img src="/{{ $message->user->avatar }}"
+                                                                    <img src="/storage/{{ $message->user->avatar }}"
                                                                         class="avaChat">
                                                                 @else
                                                                     <img src="{{ asset('images/profile-1.jpg') }}"
@@ -304,7 +304,7 @@
                                                         <a href="{{ route('user.profile', $message->user->id) }}">
                                                             @if ($message->user->id != auth()->id())
                                                                 @if ($message->user->avatar)
-                                                                    <img src="/{{ $message->user->avatar }}"
+                                                                    <img src="/storage/{{ $message->user->avatar }}"
                                                                         class="avaChat">
                                                                 @else
                                                                     <img src="{{ asset('images/profile-1.jpg') }}"
@@ -321,7 +321,8 @@
                                                 <a href="{{ route('groups.download', ['id' => $message->id]) }}"
                                                     class="d-f file_input_message">
                                                     @if ($message->extension == 'jpg' || $message->extension == 'png' || $message->extension == 'jpeg')
-                                                        <img src="{{ url('group_chat_files/' . $message->file_name) }}" style="max-width: 200px">
+                                                        <img src="{{ url('group_chat_files/' . $message->file_name) }}"
+                                                            style="max-width: 200px">
                                                     @else
                                                         <div class="d-f a-e">
                                                             {!! $message->svg !!}

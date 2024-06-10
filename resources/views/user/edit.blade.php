@@ -4,7 +4,7 @@
         <div class="card" style="max-height: 430px">
             <div class="card-body">
                 <div class="d-flex flex-column align-items-center text-center">
-                    <img src="{{ asset($user->avatar) }}" alt="Admin" class="rounded-circle" width="150">
+                    <img src="/storage/{{ $user->avatar }}" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
                         <h3>{{ $user->nickname }}</h3>
                         <p class="text-muted mb-1">{{ $user->mamandyq }}</p>

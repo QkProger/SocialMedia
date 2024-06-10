@@ -77,7 +77,7 @@
                                         <td>{{ post.title }}</td>
                                         <td>{{ post.content }}</td>
                                         <td>{{ post.description }}</td>
-                                        <td><img :src="'/' + post.image" class="img-fluid"
+                                        <td><img :src="'/storage/' + post.image" class="img-fluid"
                                                 :style="['max-width: 120px']"></td>
                                         <!-- <td>{{ post.video }}</td> -->
                                         <td>

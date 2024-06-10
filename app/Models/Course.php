@@ -10,4 +10,5 @@ class Course extends Model
     use HasFactory;
     protected $table = 'courses';
     protected  $guarded = false;
+    public $timestamps = false;
 }

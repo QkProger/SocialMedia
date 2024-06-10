@@ -54,7 +54,7 @@
                             <label for="image">Суреті</label>
                             <input type="file" class="form-control" @change="handleImageChange" name="image" />
                             <br>
-                            <img v-if="imageUrl" :src="imageUrl" alt="Current Image" style="max-width: 10%;" />
+                            <img :src="'/storage/' + post.image" alt="Current Image" style="max-width: 10%;" />
                             <validation-error :field="'image'" />
                         </div>
 
@@ -110,7 +110,6 @@ export default {
         handleImageChange(event) {
             const file = event.target.files[0];
             this.post.image = file;
-            this.post.updateImage = true;
         },
     },
 };

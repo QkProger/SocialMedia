@@ -82,13 +82,6 @@
                             <div class="middle">
                                 <div class="d-b">
                                     <div class="filter-friend">
-                                        {{-- <form action="{{ route('chats.List') }}" method="get">
-                                            <div class="search-bar main-search">
-                                                <i class="uil uil-search"></i>
-                                                <input type="search" name="query" placeholder="Қолданушыларды іздеу...">
-                                                <button type="submit"><i class="uil uil-search"></i></button>
-                                            </div>
-                                        </form> --}}
                                         <div class="messages modal-messages">
                                             <h3 class="friend-title">Достар</h3>
                                             <div class="user-list">
@@ -103,7 +96,7 @@
                                                             <div class="message align-items-center">
                                                                 <div class="profile-photo">
                                                                     @if ($friendUser->avatar)
-                                                                        <img src="/{{ $friendUser->avatar }}"
+                                                                        <img src="/storage/{{ $friendUser->avatar }}"
                                                                             class="avaChat">
                                                                     @else
                                                                         <img src="{{ asset('images/profile-1.jpg') }}"
@@ -136,7 +129,7 @@
                                                             <div class="message">
                                                                 <div class="profile-photo">
                                                                     @if ($otherUser->avatar)
-                                                                        <img src="/{{ $otherUser->avatar }}"
+                                                                        <img src="/storage/{{ $otherUser->avatar }}"
                                                                             class="avaChat">
                                                                     @else
                                                                         <img src="{{ asset('images/profile-1.jpg') }}"
@@ -216,11 +209,9 @@
                         <div class="message align-items-center">
                             <div class="profile-photo">
                                 @if ($friendUser->avatar)
-                                    <img src="/{{ $friendUser->avatar }}"
-                                        class="avaChat">
+                                    <img src="/storage/{{ $friendUser->avatar }}" class="avaChat">
                                 @else
-                                    <img src="{{ asset('images/profile-1.jpg') }}"
-                                        class="avaChat">
+                                    <img src="{{ asset('images/profile-1.jpg') }}" class="avaChat">
                                 @endif
                                 <div class="active"></div>
                             </div>

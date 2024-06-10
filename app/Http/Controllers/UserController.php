@@ -73,7 +73,7 @@ class UserController extends Controller
         $likedFriends = Friend::where('user1_id', auth()->id())
             ->with('user2')
             ->get();
-        $likedOthers = User::latest()
+        $likedOthers = User::latest('id')
             ->get();
         return view('user.bookmarks', compact('bookmarkedPosts', 'likedFriends', 'likedOthers'));
     }

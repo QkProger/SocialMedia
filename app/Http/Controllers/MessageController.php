@@ -12,10 +12,8 @@ class MessageController extends Controller
 {
     public function create()
     {
-        // $messages = null;
-        $users = User::whereNot('id', auth()->id())->orderBy('created_at', 'desc')->get();
+        $users = User::whereNot('id', auth()->id())->orderBy('id', 'desc')->get();
         $user = User::latest('id')->first();
-        // return view('chats.chat', compact('messages', 'users', 'user'));
         $friends = Friend::where('user1_id', auth()->id())
             ->with('user2')
             ->get();

@@ -10,7 +10,7 @@
                     <div class="head">
                         <div class="user">
                             <a href="{{ route('user.profile', $post->user->id) }}" class="profile-photo">
-                                <img src="{{ asset($post->user->avatar) }}" class="avaChat">
+                                <img src="/storage/{{ $post->user->avatar }}" class="avaChat">
                             </a>
                             <div class="info">
                                 <h3>{{ $post->user->name }} {{ $post->user->surname }}</h3>
@@ -39,7 +39,7 @@
                         </span>
                     </div>
                     <div class="photo">
-                        <img src="{{ asset($post->image) }}">
+                        <img src="/storage/{{ $post->image }}">
                     </div>
                     <div class="action-buttons">
                         <div class="interaction-buttons d-f">

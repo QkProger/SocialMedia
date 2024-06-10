@@ -7,17 +7,18 @@ use App\Models\Post;
 use App\Models\UserPostRelationship;
 use App\Models\Friend;
 use App\Models\User;
+use App\Services\FileService;
 use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::with('likes.user')->withCount('likes')->orderBy('created_at', 'desc')->get();
+        $posts = Post::with('likes.user')->withCount('likes')->orderBy('id', 'desc')->get();
         $likedFriends = Friend::where('user1_id', auth()->id())
             ->with('user2')
             ->get();
-        $likedOthers = User::latest()
+        $likedOthers = User::orderBy('id', 'desc')
             ->get();
         return view('post.index', compact('posts', 'likedFriends', 'likedOthers'));
     }
@@ -40,19 +41,10 @@ class PostController extends Controller
         $data['user_id'] = auth()->id();
 
         if ($request->hasFile('image')) {
-            // Получаем загруженный файл
-            $image = $request->file('image');
-
-            // Генерируем уникальное имя для файла
-            $imageName = time() . '_' . $image->getClientOriginalName();
-
-            // Сохраняем файл на сервер
-            $image->storeAs('public/images', $imageName);
-
-            // Сохраняем путь к файлу в базу данных
-            $data['image'] = 'storage/images/' . $imageName;
+            $post_image = $request->file('image');
+            $file_name = FileService::saveFile($post_image, "/posts");
+            $data['image'] = 'posts/' . $file_name;
         }
-
         Post::create($data);
         return redirect()->route('user.index');
     }
@@ -77,19 +69,11 @@ class PostController extends Controller
             'video' => '',
         ]);
 
+        $oldPostImage = basename($post->image);
         if ($request->hasFile('image')) {
-            // Получите старый путь к изображению
-            $oldImagePath = asset($post->image);
-
-            // Если старый путь существует, удалите старое изображение
-            if ($oldImagePath && Storage::exists($oldImagePath)) {
-                Storage::delete($oldImagePath);
-            }
-
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('public/images', $imageName);
-            $data['image'] = 'storage/images/' . $imageName;
+            $post_image = $request->file('image');
+            $file_name = FileService::saveFile($post_image, "/posts", $oldPostImage);
+            $data['image'] = 'posts/' . $file_name;
         }
         $post->update($data);
         return redirect()->route('user.index');

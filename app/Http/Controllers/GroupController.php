@@ -8,6 +8,7 @@ use App\Models\GruppaMessage;
 use App\Models\GruppaUser;
 use App\Models\Message;
 use App\Models\User;
+use App\Services\FileService;
 use Illuminate\Support\Facades\Storage;
 use PHPUnit\TextUI\XmlConfiguration\Group;
 
@@ -27,11 +28,9 @@ class GroupController extends Controller
 
 
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('public/images', $imageName);
-            $data['image'] = 'storage/images/' . $imageName;
-            $group->image = $data['image'];
+            $group_ava = $request->file('image');
+            $file_name = FileService::saveFile($group_ava, "/groupsAvatars");
+            $data['image'] = 'groupsAvatars/' . $file_name;
         }
 
         $group->save();
@@ -57,7 +56,7 @@ class GroupController extends Controller
 
     public function create()
     {
-        $groups = Gruppa::orderBy('created_at', 'desc')->get();
+        $groups = Gruppa::orderBy('id', 'desc')->get();
         $group = Gruppa::latest('id')->first();
         return view('groups.chat', compact('groups', 'group'));
     }
@@ -68,7 +67,7 @@ class GroupController extends Controller
         $userId = auth()->id();
 
         $messages = GruppaMessage::where('gruppa_id', $gruppaId)
-            ->orderBy('created_at')
+            ->orderBy('id')
             ->get();
 
         foreach ($messages as $message) {
@@ -152,11 +151,11 @@ class GroupController extends Controller
 
         $group = Gruppa::find($groupId);
 
+        $oldGroupAva = basename($group->image);
         if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('public/images', $imageName);
-            $data['image'] = 'storage/images/' . $imageName;
+            $group_ava = $request->file('image');
+            $file_name = FileService::saveFile($group_ava, "/groupsAvatars", $oldGroupAva);
+            $data['image'] = 'groupsAvatars/' . $file_name;
         }
         $data['status'] = !$request->status ? 0 : 1;
         $group->update($data);

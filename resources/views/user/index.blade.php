@@ -6,7 +6,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="{{ asset($user->avatar) }}" alt="Admin" class="rounded-circle" width="150">
+                            <img src="/storage/{{ $user->avatar }}" alt="Admin" class="rounded-circle" width="150">
                             <div class="mt-3">
                                 <h3>{{ $user->nickname }}</h3>
                                 <p class="text-muted mb-1">{{ $user->mamandyq }}</p>
@@ -83,7 +83,7 @@
                     <div class="head">
                         <div class="user">
                             <div class="profile-photo">
-                                <img src="{{ asset($user->avatar) }}" class="avaChat">
+                                <img src="/storage/{{ $user->avatar }}" class="avaChat">
                             </div>
                             <div class="info">
                                 @if (Auth::user())
@@ -132,7 +132,7 @@
                         </span>
                     </div>
                     <div class="photo">
-                        <img src="{{ asset($post->image) }}">
+                        <img src="/storage/{{ $post->image }}">
                     </div>
                     {{-- <div class="action-buttons">
                         <div class="interaction-buttons">

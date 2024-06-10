@@ -83,7 +83,7 @@ export default {
         },
         handleFileChange(event) {
             const file = event.target.files[0];
-            this.material.file = file;
+            this.material.file_name = file;
         },
     },
 };

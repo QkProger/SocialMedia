@@ -14,8 +14,8 @@
                                 data-user-id="{{ $friendUser->id }}">
                                 <div class="message">
                                     <div class="profile-photo">
-                                        <img src="/{{ $friendUser->avatar }}" class="avaChat">
-                                        <div class="active"></div>
+                                        <img src="/storage/{{ $friendUser->avatar }}" class="avaChat">
+                                        {{-- <div class="active"></div> --}}
                                     </div>
                                     <div class="message-body">
                                         <h5>{{ $friendUser->name }} {{ $friendUser->surname }}</h5>
@@ -36,8 +36,8 @@
                                 data-user-id="{{ $otherUser->id }}">
                                 <div class="message">
                                     <div class="profile-photo">
-                                        <img src="/{{ $otherUser->avatar }}" class="avaChat">
-                                        <div class="active"></div>
+                                        <img src="/storage/{{ $otherUser->avatar }}" class="avaChat">
+                                        {{-- <div class="active"></div> --}}
                                     </div>
                                     <div class="message-body">
                                         <h5>{{ $otherUser->name }} {{ $otherUser->surname }}</h5>

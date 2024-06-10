@@ -20,12 +20,8 @@ return new class extends Migration
             $table->string('surname');
             $table->string('nickname');
             $table->string('email')->unique();
-            $table->string('email_rastalgan')->unique()->nullable();
             $table->string('password');
             $table->string('real_password');
-            $table->string('auth_key')->nullable();
-            $table->boolean('status')->default(false);
-            $table->integer('balance')->nullable();
             $table->date('birthday')->nullable();
             $table->string('oblys')->nullable();
             $table->string('qala')->nullable();

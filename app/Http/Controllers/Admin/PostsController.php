@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Services\FileService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Storage;
@@ -36,17 +37,9 @@ class PostsController extends Controller
         $data['user_id'] = auth()->id();
 
         if ($request->hasFile('image')) {
-            // Получаем загруженный файл
-            $image = $request->file('image');
-
-            // Генерируем уникальное имя для файла
-            $imageName = time() . '_' . $image->getClientOriginalName();
-
-            // Сохраняем файл на сервер
-            $image->storeAs('public/images', $imageName);
-
-            // Сохраняем путь к файлу в базу данных
-            $data['image'] = 'storage/images/' . $imageName;
+            $post_image = $request->file('image');
+            $file_name = FileService::saveFile($post_image, "/posts");
+            $data['image'] = 'posts/' . $file_name;
         }
 
         Post::create($data);
@@ -57,7 +50,6 @@ class PostsController extends Controller
     {
         return Inertia::render('Admin/Posts/Edit', [
             'post' => $post,
-            'imageUrl' => asset($post->image),
         ]);
     }
     
@@ -72,16 +64,11 @@ class PostsController extends Controller
             'video' => '',
         ]);
 
-        if ($request->updateImage) {
-            $oldImagePath = asset($post->image);
-            if ($oldImagePath && Storage::exists($oldImagePath)) {
-                Storage::delete($oldImagePath);
-            }
-
-            $image = $request->file('image');
-            $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->storeAs('public/images', $imageName);
-            $data['image'] = 'storage/images/' . $imageName;
+        $oldPostImage = basename($post->image);
+        if ($request->hasFile('image')) {
+            $post_image = $request->file('image');
+            $file_name = FileService::saveFile($post_image, "/posts", $oldPostImage);
+            $data['image'] = 'posts/' . $file_name;
         }
         $post->update($data);
         return redirect()->back()->withSuccess("Сәтті сақталды!");

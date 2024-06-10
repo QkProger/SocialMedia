@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Services\FileService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -32,11 +33,9 @@ class MaterialController extends Controller
         ];
 
         if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $fileName = $file->getClientOriginalName();
-            $file->storeAs('course_files', $fileName);
-            $data['file_name'] = $fileName;
-            $data['file_mime'] = $file->getMimeType();
+            $course_file = $request->file('file');
+            $file_name = FileService::saveFile($course_file, "/courses");
+            $data['file_name'] = 'courses/' . $file_name;
         }
         Course::create($data);
         return redirect()->route('admin.material.index')->withSuccess("Материал қосылды!");
@@ -56,27 +55,29 @@ class MaterialController extends Controller
             'title' => $request['title'],
         ];
         
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $fileName = $file->getClientOriginalName();
-            $file->storeAs('course_files', $fileName);
-            $data['file_name'] = $fileName;
-            $data['file_mime'] = $file->getMimeType();
+        $oldCourseFile = basename($material->file_name);
+        if ($request->hasFile('file_name')) {
+            $course_file = $request->file('file_name');
+            $file_name = FileService::saveFile($course_file, "/courses", $oldCourseFile);
+            $data['file_name'] = 'courses/' . $file_name;
         }
         $material->update($data);
         return redirect()->route('admin.material.index')->withSuccess("Сәтті сақталды!");
     }
 
-    public function destroy(Course $material)
-    {
-        $material->delete();
-        return redirect()->back()->withSuccess("Сәтті жойылды!");
-    }
-
     public function downloadFile(Request $request)
     {
         $filePath = $request->input('url');
-        $filePath = storage_path('app/' . $filePath);
-        return response()->download($filePath);
+        $pathToPublicFolder = public_path();
+        $fileFullPath = $pathToPublicFolder . DIRECTORY_SEPARATOR . DIRECTORY_SEPARATOR . $filePath;
+        return response()->download($fileFullPath);
+    }
+
+    public function destroy(Course $material)
+    {
+        $baseName = basename($material->file_name);
+        FileService::deleteFile($baseName, "/courses");
+        $material->delete();
+        return redirect()->back()->withSuccess('Сәтті жойылды!');
     }
 }

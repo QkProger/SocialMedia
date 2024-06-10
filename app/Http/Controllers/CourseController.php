@@ -5,24 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Course;
+use App\Services\FileService;
 
 class CourseController extends Controller
 {
     public function index()
     {
-        $courses = Course::orderBy('created_at', 'desc')->get();
+        $courses = Course::orderBy('id', 'desc')->get();
         return view('courses.index', compact('courses'));
     }
 
     public function downloadFile($id)
     {
         $course = Course::findOrFail($id);
-
-        $filePath = storage_path('app/course_files/' . $course->file_name);
-
-        return response()->download($filePath, $course->file_name, [
-            'Content-Type' => $course->file_mime,
-        ]);
+        $filePath = public_path('storage/' . $course->file_name);
+        $filePath = str_replace('/', DIRECTORY_SEPARATOR, $filePath);
+        return response()->download($filePath);
     }
 
     public function create()
@@ -32,34 +30,17 @@ class CourseController extends Controller
 
     public function store(Request $request)
     {
-        try {
-            $data = request()->validate([
-                'title' => 'string',
-                'file_name' => 'file|max:102400',
-            ]);
+        $data = [
+            'title' => $request['title'],
+        ];
 
-            // Создаем курс
-            $course = Course::create($data);
-
-            // Если загружен файл
-            if ($request->hasFile('file_name')) {
-                $file = $request->file('file_name');
-                $fileName = $file->getClientOriginalName();
-                $file->storeAs('course_files', $fileName);
-
-                // Обновляем модель Course с информацией о файле
-                $course->update([
-                    'file_name' => $fileName,
-                    'file_mime' => $file->getMimeType(),
-                ]);
-            }
-
-            // Возвращаемся на страницу со списком курсов
-            return redirect()->route('courses.index')->with('success', 'Курс успешно создан.');
-        } catch (\Exception $e) {
-            // Обработка ошибок
-            return redirect()->back()->withInput()->withErrors(['error' => 'Произошла ошибка при сохранении файла.']);
+        if ($request->hasFile('file_name')) {
+            $course_file = $request->file('file_name');
+            $file_name = FileService::saveFile($course_file, "/courses");
+            $data['file_name'] = 'courses/' . $file_name;
         }
+        Course::create($data);
+        return redirect()->route('courses.index');
     }
 
     public function show(Course $course)
@@ -73,38 +54,19 @@ class CourseController extends Controller
     }
 
     public function update(Request $request, Course $course)
-    {        
-        try {
-            $data = request()->validate([
-                'title' => 'nullable|string',
-                'file_name' => 'file|max:102400',
-            ]);
+    {
+        $data = [
+            'title' => $request['title'],
+        ];
 
-            // Если загружен новый файл, обновляем информацию о файле
-            if ($request->hasFile('file_name')) {
-                $file = $request->file('file_name');
-                $fileName = $file->getClientOriginalName();
-                $file->storeAs('course_files', $fileName);
-
-                // Удаляем старый файл, если он существует
-                if ($course->file_name) {
-                    Storage::delete('course_files/' . $course->file_name);
-                }
-
-                // Обновляем модель Course с информацией о новом файле
-                $data['file_name'] = $fileName;
-                $data['file_mime'] = $file->getMimeType();
-            }
-
-            $course->update($data);
-
-            return redirect()->route('courses.index');
-
-        } catch (\Exception $e) {
-            dd($e->getMessage());
-            // Обработка ошибок
-            return redirect()->back()->withInput()->withErrors(['error' => 'Произошла ошибка при обновлении курса.']);
+        $oldCourseFile = basename($course->file_name);
+        if ($request->hasFile('file_name')) {
+            $course_file = $request->file('file_name');
+            $file_name = FileService::saveFile($course_file, "/courses", $oldCourseFile);
+            $data['file_name'] = 'courses/' . $file_name;
         }
+        $course->update($data);
+        return redirect()->route('courses.index');
     }
 
     public function destroy(Course $course)

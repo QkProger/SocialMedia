@@ -27,7 +27,7 @@
                     </div>
                     <div class="col-75">
                         <input type="file" id="image" name="image">
-                        <img src="{{ asset($post->image) }}">
+                        <img src="/storage/{{ $post->image }}">
                     </div>
                 </div>
                 <div class="row">

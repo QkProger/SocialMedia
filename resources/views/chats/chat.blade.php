@@ -19,7 +19,7 @@
                                 <li
                                     class="clearfix {{ $currentRouteName === 'chats.load-chat' && $currentId == $friend->user2->id ? ' chat-active' : '' }}">
                                     @if ($friend->user2->avatar)
-                                        <img src="/{{ $friend->user2->avatar }}" class="avaChat">
+                                        <img src="/storage/{{ $friend->user2->avatar }}" class="avaChat">
                                     @else
                                         <img src="{{ asset('images/profile-1.jpg') }}" class="avaChat">
                                     @endif
@@ -40,7 +40,7 @@
                                 <div class="col-lg-6 d-f a-c">
                                     <div>
                                         @if ($user->avatar)
-                                            <img src="/{{ $user->avatar }}" class="avaChat">
+                                            <img src="/storage/{{ $user->avatar }}" class="avaChat">
                                         @else
                                             <img src="{{ asset('images/profile-1.jpg') }}" class="avaChat">
                                         @endif

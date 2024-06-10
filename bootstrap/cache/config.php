@@ -375,7 +375,7 @@
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\user\\Desktop\\Practice\\Social Media\\storage\\app/public',
+        'root' => 'C:\\Users\\user\\Desktop\\Practice\\Social Media\\public\\storage',
         'url' => 'http://127.0.0.1/storage',
         'visibility' => 'public',
         'throw' => false,

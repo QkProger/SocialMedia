@@ -10,7 +10,8 @@
                     <div class="head">
                         <div class="user">
                             <a href="{{ route('user.profile', $bookmark->post->user->id) }}" class="profile-photo">
-                                <img src="{{ asset($bookmark->post->user->avatar) }}">
+                                <img src="/storage/{{ $bookmark->post->user->avatar }}"
+                                    class="avaChat">
                             </a>
                             <div class="info">
                                 <h3>{{ $bookmark->post->user->name }} {{ $bookmark->post->user->surname }}</h3>
@@ -39,7 +40,7 @@
                         </span>
                     </div>
                     <div class="photo">
-                        <img src="{{ asset($bookmark->post->image) }}">
+                        <img src="/storage/{{ $bookmark->post->image }}">
                     </div>
                     <div class="action-buttons">
                         <div class="interaction-buttons d-f">

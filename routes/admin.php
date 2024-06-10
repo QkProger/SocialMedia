@@ -33,4 +33,5 @@ Route::group(['middleware' => ['admin']], function () {
     Route::get('/download', [GroupMessageController::class, 'downloadFile']);
 
     Route::resource('materials', MaterialController::class)->except(['show'])->names('material');
+    Route::get('/download/material', [MaterialController::class, 'downloadFile']);
 });

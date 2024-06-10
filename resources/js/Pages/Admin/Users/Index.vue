@@ -89,7 +89,7 @@
                                                 : index + 1
                                             }}
                                         </td>
-                                        <td><img :src="'/' + user.avatar" class="img-fluid"
+                                        <td><img :src="'/storage/' + user.avatar" class="img-fluid"
                                                 :style="['max-width: 100px']"></td>
                                         <td>{{ user.fio }}</td>
                                         <td>{{ user.nickname }}</td>

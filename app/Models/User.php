@@ -11,6 +11,7 @@ class User extends Authenticatable
 {
     use HasFactory;
     protected $guarded = [];
+    public $timestamps = false;
 
     public function groups()
     {
