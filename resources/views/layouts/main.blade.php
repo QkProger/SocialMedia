@@ -96,10 +96,6 @@
                         <span><i class="uil uil-home"></i></span>
                         <h3>Басты бет</h3>
                     </a>
-                    {{-- <a class="menu-item">
-                        <span><i class="uil uil-compass"></i></span>
-                        <h3>Explore</h3>
-                    </a> --}}
                     {{-- <a class="menu-item" id="notifications">
                         <span><i class="uil uil-bell"><small class="notification-count">9+</small></i></span>
                         <h3>Notifications</h3>
@@ -161,61 +157,32 @@
                         </div>
                     </a> --}}
 
-                    @if (Auth::user())
-                        <a href="{{ route('chats.messanger') }}"
-                            class="menu-item {{ request()->routeIs('chats.messanger') ? 'active' : '' }}">
-                            {{-- <span><i class="uil uil-envelope-alt"><small class="notification-count">6</small></i></span> --}}
-                            <span><i class="uil uil-envelope-alt"></i></span>
-                            <h3>Достар</h3>
-                        </a>
-                        <a href="{{ route('chats.chat') }}"
-                            class="menu-item {{ request()->routeIs('chats.chat') || request()->is('chats/chat/*') ? 'active' : '' }}">
-                            <span><i class="uil uil-facebook-messenger-alt"></i></span>
-                            <h3>Чаттар</h3>
-                        </a>
-                        <a href="/groups/chat/{{ $last_group_id }}"
-                            class="menu-item {{ request()->routeIs('groups.chat') || request()->is('groups/chat/*') ? 'active' : '' }}">
-                            <span><i class="uil uil-facebook-messenger-alt"></i></span>
-                            <h3>Группалар</h3>
-                        </a>
-                        <a href="{{ route('user.bookmarks') }}"
-                            class="menu-item {{ request()->routeIs('user.bookmarks') ? 'active' : '' }}">
-                            <span><i class="uil uil-bookmark"></i></span>
-                            <h3>Сақталғандар</h3>
-                        </a>
-                        <a href="{{ route('courses.index') }}"
-                            class="menu-item {{ request()->routeIs('courses.index') ? 'active' : '' }}">
-                            <span><i class="uil uil-book-open"></i></span>
-                            <h3>Материалдар</h3>
-                        </a>
-                    @else
-                        <a href="{{ route('adminLoginForm') }}"
-                            class="menu-item {{ request()->routeIs('chats.messanger') ? 'active' : '' }}">
-                            {{-- <span><i class="uil uil-envelope-alt"><small class="notification-count">6</small></i></span> --}}
-                            <span><i class="uil uil-envelope-alt"></i></span>
-                            <h3>Достар</h3>
-                        </a>
-                        <a href="{{ route('adminLoginForm') }}"
-                            class="menu-item {{ request()->routeIs('chats.chat') || request()->is('chats/chat/*') ? 'active' : '' }}">
-                            <span><i class="uil uil-facebook-messenger-alt"></i></span>
-                            <h3>Чаттар</h3>
-                        </a>
-                        <a href="{{ route('adminLoginForm') }}"
-                            class="menu-item {{ request()->routeIs('groups.chat') || request()->is('groups/chat/*') ? 'active' : '' }}">
-                            <span><i class="uil uil-facebook-messenger-alt"></i></span>
-                            <h3>Группалар</h3>
-                        </a>
-                        <a href="{{ route('adminLoginForm') }}"
-                            class="menu-item {{ request()->routeIs('user.bookmarks') ? 'active' : '' }}">
-                            <span><i class="uil uil-bookmark"></i></span>
-                            <h3>Сақталғандар</h3>
-                        </a>
-                        <a href="{{ route('adminLoginForm') }}"
-                            class="menu-item {{ request()->routeIs('courses.index') ? 'active' : '' }}">
-                            <span><i class="uil uil-book-open"></i></span>
-                            <h3>Материалдар</h3>
-                        </a>
-                    @endif
+                    <a href="{{ route('chats.messanger') }}"
+                        class="menu-item {{ request()->routeIs('chats.messanger') ? 'active' : '' }}">
+                        {{-- <span><i class="uil uil-envelope-alt"><small class="notification-count">6</small></i></span> --}}
+                        <span><i class="uil uil-envelope-alt"></i></span>
+                        <h3>Достар</h3>
+                    </a>
+                    <a href="{{ route('chats.chat') }}"
+                        class="menu-item {{ request()->routeIs('chats.chat') || request()->is('chats/chat/*') ? 'active' : '' }}">
+                        <span><i class="uil uil-facebook-messenger-alt"></i></span>
+                        <h3>Чаттар</h3>
+                    </a>
+                    <a href="/groups/chat/{{ $last_group_id }}"
+                        class="menu-item {{ request()->routeIs('groups.chat') || request()->is('groups/chat/*') ? 'active' : '' }}">
+                        <span><i class="uil uil-facebook-messenger-alt"></i></span>
+                        <h3>Группалар</h3>
+                    </a>
+                    <a href="{{ route('user.bookmarks') }}"
+                        class="menu-item {{ request()->routeIs('user.bookmarks') ? 'active' : '' }}">
+                        <span><i class="uil uil-bookmark"></i></span>
+                        <h3>Сақталғандар</h3>
+                    </a>
+                    <a href="{{ route('courses.index') }}"
+                        class="menu-item {{ request()->routeIs('courses.index') ? 'active' : '' }}">
+                        <span><i class="uil uil-book-open"></i></span>
+                        <h3>Материалдар</h3>
+                    </a>
                     @if (Route::currentRouteName() == 'user.index')
                         <a href="{{ route('logout') }}" class="menu-item"
                             onclick="event.preventDefault();

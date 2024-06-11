@@ -405,7 +405,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'admin.generated::bS4RnjAsE4D8GOr7',
+            '_route' => 'admin.generated::UYYdPAyWSRn25gXH',
           ),
           1 => NULL,
           2 => 
@@ -425,27 +425,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::54VVZ1d1jYb6IbcH',
-          ),
-          1 => NULL,
-          2 => 
-          array (
-            'GET' => 0,
-            'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-      ),
-      '/pages/index' => 
-      array (
-        0 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'pages.index',
+            '_route' => 'generated::8JFnf6g6lg5ECpZz',
           ),
           1 => NULL,
           2 => 
@@ -638,7 +618,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::1WuYhrpm5iVvISC0',
+            '_route' => 'generated::y7EHYDhAVk8uI2FB',
           ),
           1 => NULL,
           2 => 
@@ -677,7 +657,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::PznFJBq6i3ASTxqv',
+            '_route' => 'generated::de9q1inn8xUhUrN9',
           ),
           1 => NULL,
           2 => 
@@ -716,7 +696,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::1gTFOFQj3UMMYsSH',
+            '_route' => 'generated::CBbQaJBOffo8l19p',
           ),
           1 => NULL,
           2 => 
@@ -791,7 +771,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::LRDGTNiC8HZhDQl5',
+            '_route' => 'generated::20gtnkNspPqyquqE',
           ),
           1 => NULL,
           2 => 
@@ -804,35 +784,19 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      '/login' => 
+      '/logout' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'adminLoginShow',
+            '_route' => 'logout',
           ),
           1 => NULL,
           2 => 
           array (
             'GET' => 0,
             'HEAD' => 1,
-          ),
-          3 => NULL,
-          4 => false,
-          5 => false,
-          6 => NULL,
-        ),
-        1 => 
-        array (
-          0 => 
-          array (
-            '_route' => 'adminLoginForm',
-          ),
-          1 => NULL,
-          2 => 
-          array (
-            'POST' => 0,
           ),
           3 => NULL,
           4 => false,
@@ -863,7 +827,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::FebaS1glee63FrSR',
+            '_route' => 'generated::Sj5lgUlTz32japa4',
           ),
           1 => NULL,
           2 => 
@@ -954,7 +918,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::2p9rLS3yTtqULPVh',
+            '_route' => 'generated::urUtxj8nH3n3jcWJ',
           ),
           1 => NULL,
           2 => 
@@ -967,19 +931,35 @@ app('router')->setCompiledRoutes(
           6 => NULL,
         ),
       ),
-      '/logout' => 
+      '/login' => 
       array (
         0 => 
         array (
           0 => 
           array (
-            '_route' => 'logout',
+            '_route' => 'adminLoginShow',
           ),
           1 => NULL,
           2 => 
           array (
             'GET' => 0,
             'HEAD' => 1,
+          ),
+          3 => NULL,
+          4 => false,
+          5 => false,
+          6 => NULL,
+        ),
+        1 => 
+        array (
+          0 => 
+          array (
+            '_route' => 'adminLoginForm',
+          ),
+          1 => NULL,
+          2 => 
+          array (
+            'POST' => 0,
           ),
           3 => NULL,
           4 => false,
@@ -1588,7 +1568,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::jXYjwHuaQtUqstNW',
+            '_route' => 'generated::fwhFL031II93xmf0',
           ),
           1 => 
           array (
@@ -1791,7 +1771,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::IZvCClBS6BLWxZ3Y',
+            '_route' => 'generated::h5esNr0SP2CNlmBJ',
           ),
           1 => 
           array (
@@ -3013,7 +2993,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'admin.generated::bS4RnjAsE4D8GOr7' => 
+    'admin.generated::UYYdPAyWSRn25gXH' => 
     array (
       'methods' => 
       array (
@@ -3031,7 +3011,7 @@ app('router')->setCompiledRoutes(
         ),
         'uses' => 'App\\Http\\Controllers\\Admin\\MaterialController@downloadFile',
         'controller' => 'App\\Http\\Controllers\\Admin\\MaterialController@downloadFile',
-        'as' => 'admin.generated::bS4RnjAsE4D8GOr7',
+        'as' => 'admin.generated::UYYdPAyWSRn25gXH',
         'namespace' => NULL,
         'prefix' => 'admin',
         'where' => 
@@ -3052,7 +3032,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::54VVZ1d1jYb6IbcH' => 
+    'generated::8JFnf6g6lg5ECpZz' => 
     array (
       'methods' => 
       array (
@@ -3075,44 +3055,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::54VVZ1d1jYb6IbcH',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
-    'pages.index' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'pages/index',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'uses' => 'App\\Http\\Controllers\\PostController@index',
-        'controller' => 'App\\Http\\Controllers\\PostController@index',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'pages.index',
+        'as' => 'generated::8JFnf6g6lg5ECpZz',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3178,6 +3121,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\PostController@create',
         'controller' => 'App\\Http\\Controllers\\PostController@create',
@@ -3214,6 +3158,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\PostController@store',
         'controller' => 'App\\Http\\Controllers\\PostController@store',
@@ -3251,6 +3196,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\PostController@show',
         'controller' => 'App\\Http\\Controllers\\PostController@show',
@@ -3288,6 +3234,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\PostController@edit',
         'controller' => 'App\\Http\\Controllers\\PostController@edit',
@@ -3324,6 +3271,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\PostController@update',
         'controller' => 'App\\Http\\Controllers\\PostController@update',
@@ -3360,6 +3308,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\PostController@destroy',
         'controller' => 'App\\Http\\Controllers\\PostController@destroy',
@@ -3396,6 +3345,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\UserPostRelationshipController@like_send',
         'controller' => 'App\\Http\\Controllers\\UserPostRelationshipController@like_send',
@@ -3432,6 +3382,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\UserPostRelationshipController@post_save',
         'controller' => 'App\\Http\\Controllers\\UserPostRelationshipController@post_save',
@@ -3469,6 +3420,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\CourseController@index',
         'controller' => 'App\\Http\\Controllers\\CourseController@index',
@@ -3506,6 +3458,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\CourseController@downloadFile',
         'controller' => 'App\\Http\\Controllers\\CourseController@downloadFile',
@@ -3543,6 +3496,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\CourseController@create',
         'controller' => 'App\\Http\\Controllers\\CourseController@create',
@@ -3579,6 +3533,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\CourseController@store',
         'controller' => 'App\\Http\\Controllers\\CourseController@store',
@@ -3616,6 +3571,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\CourseController@show',
         'controller' => 'App\\Http\\Controllers\\CourseController@show',
@@ -3653,6 +3609,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\CourseController@edit',
         'controller' => 'App\\Http\\Controllers\\CourseController@edit',
@@ -3689,6 +3646,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\CourseController@update',
         'controller' => 'App\\Http\\Controllers\\CourseController@update',
@@ -3725,6 +3683,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\CourseController@destroy',
         'controller' => 'App\\Http\\Controllers\\CourseController@destroy',
@@ -3762,6 +3721,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\MessageController@create',
         'controller' => 'App\\Http\\Controllers\\MessageController@create',
@@ -3799,6 +3759,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\MessageController@downloadFile',
         'controller' => 'App\\Http\\Controllers\\MessageController@downloadFile',
@@ -3836,6 +3797,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\MessageController@getAudioFile',
         'controller' => 'App\\Http\\Controllers\\MessageController@getAudioFile',
@@ -3860,7 +3822,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::1WuYhrpm5iVvISC0' => 
+    'generated::y7EHYDhAVk8uI2FB' => 
     array (
       'methods' => 
       array (
@@ -3872,6 +3834,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\MessageController@store',
         'controller' => 'App\\Http\\Controllers\\MessageController@store',
@@ -3880,7 +3843,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::1WuYhrpm5iVvISC0',
+        'as' => 'generated::y7EHYDhAVk8uI2FB',
       ),
       'fallback' => false,
       'defaults' => 
@@ -3908,6 +3871,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\MessageController@update',
         'controller' => 'App\\Http\\Controllers\\MessageController@update',
@@ -3944,6 +3908,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\MessageController@destroy',
         'controller' => 'App\\Http\\Controllers\\MessageController@destroy',
@@ -3981,6 +3946,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\MessageController@loadChat',
         'controller' => 'App\\Http\\Controllers\\MessageController@loadChat',
@@ -4018,6 +3984,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\UserController@index',
         'controller' => 'App\\Http\\Controllers\\UserController@index',
@@ -4055,6 +4022,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\UserController@edit',
         'controller' => 'App\\Http\\Controllers\\UserController@edit',
@@ -4091,6 +4059,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\UserController@update',
         'controller' => 'App\\Http\\Controllers\\UserController@update',
@@ -4128,6 +4097,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\UserController@profile',
         'controller' => 'App\\Http\\Controllers\\UserController@profile',
@@ -4152,7 +4122,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::PznFJBq6i3ASTxqv' => 
+    'generated::de9q1inn8xUhUrN9' => 
     array (
       'methods' => 
       array (
@@ -4164,6 +4134,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\UserController@deleteFriend',
         'controller' => 'App\\Http\\Controllers\\UserController@deleteFriend',
@@ -4172,7 +4143,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::PznFJBq6i3ASTxqv',
+        'as' => 'generated::de9q1inn8xUhUrN9',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4201,6 +4172,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\UserController@bookmarks',
         'controller' => 'App\\Http\\Controllers\\UserController@bookmarks',
@@ -4238,6 +4210,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\FriendRequestController@usersList',
         'controller' => 'App\\Http\\Controllers\\FriendRequestController@usersList',
@@ -4262,7 +4235,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::1gTFOFQj3UMMYsSH' => 
+    'generated::CBbQaJBOffo8l19p' => 
     array (
       'methods' => 
       array (
@@ -4274,6 +4247,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\FriendRequestController@store',
         'controller' => 'App\\Http\\Controllers\\FriendRequestController@store',
@@ -4282,7 +4256,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::1gTFOFQj3UMMYsSH',
+        'as' => 'generated::CBbQaJBOffo8l19p',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4310,6 +4284,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\FriendRequestController@accept_update',
         'controller' => 'App\\Http\\Controllers\\FriendRequestController@accept_update',
@@ -4346,6 +4321,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\FriendRequestController@decline_update',
         'controller' => 'App\\Http\\Controllers\\FriendRequestController@decline_update',
@@ -4383,6 +4359,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\FriendSController@messanger',
         'controller' => 'App\\Http\\Controllers\\FriendSController@messanger',
@@ -4419,6 +4396,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\GroupController@store',
         'controller' => 'App\\Http\\Controllers\\GroupController@store',
@@ -4456,6 +4434,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\GroupController@create',
         'controller' => 'App\\Http\\Controllers\\GroupController@create',
@@ -4493,6 +4472,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\GroupController@loadChat',
         'controller' => 'App\\Http\\Controllers\\GroupController@loadChat',
@@ -4517,7 +4497,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::LRDGTNiC8HZhDQl5' => 
+    'generated::20gtnkNspPqyquqE' => 
     array (
       'methods' => 
       array (
@@ -4529,6 +4509,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\GroupController@groupMessageStore',
         'controller' => 'App\\Http\\Controllers\\GroupController@groupMessageStore',
@@ -4537,7 +4518,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::LRDGTNiC8HZhDQl5',
+        'as' => 'generated::20gtnkNspPqyquqE',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4566,6 +4547,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\GroupController@downloadFile',
         'controller' => 'App\\Http\\Controllers\\GroupController@downloadFile',
@@ -4602,6 +4584,7 @@ app('router')->setCompiledRoutes(
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
         'uses' => 'App\\Http\\Controllers\\GroupController@update',
         'controller' => 'App\\Http\\Controllers\\GroupController@update',
@@ -4626,41 +4609,33 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'adminLoginShow' => 
+    'logout' => 
     array (
       'methods' => 
       array (
         0 => 'GET',
         1 => 'HEAD',
       ),
-      'uri' => 'login',
+      'uri' => 'logout',
       'action' => 
       array (
         'middleware' => 
         array (
           0 => 'web',
-          1 => 'guest',
+          1 => 'auth',
         ),
-        'uses' => '\\Illuminate\\Routing\\ViewController@__invoke',
-        'controller' => '\\Illuminate\\Routing\\ViewController',
+        'uses' => 'App\\Http\\Controllers\\AdminAuthController@logout',
+        'controller' => 'App\\Http\\Controllers\\AdminAuthController@logout',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'adminLoginShow',
+        'as' => 'logout',
       ),
       'fallback' => false,
       'defaults' => 
       array (
-        'view' => 'auth.login',
-        'data' => 
-        array (
-        ),
-        'status' => 200,
-        'headers' => 
-        array (
-        ),
       ),
       'wheres' => 
       array (
@@ -4672,27 +4647,93 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'adminLoginForm' => 
+    'generated::h5esNr0SP2CNlmBJ' => 
     array (
       'methods' => 
       array (
-        0 => 'POST',
+        0 => 'GET',
+        1 => 'HEAD',
       ),
-      'uri' => 'login',
+      'uri' => 'group_chat_files/{filename}',
       'action' => 
       array (
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'auth',
         ),
-        'uses' => 'App\\Http\\Controllers\\AdminAuthController@adminLoginForm',
-        'controller' => 'App\\Http\\Controllers\\AdminAuthController@adminLoginForm',
+        'uses' => 'O:47:"Laravel\\SerializableClosure\\SerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Signed":2:{s:12:"serializable";s:699:"O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:480:"function ($filename) {
+        $path = \\storage_path(\'app/group_chat_files/\' . $filename);
+
+        if (!\\Illuminate\\Support\\Facades\\File::exists($path)) {
+            \\abort(404);
+        }
+
+        $file = \\Illuminate\\Support\\Facades\\File::get($path);
+        $type = \\Illuminate\\Support\\Facades\\File::mimeType($path);
+
+        $response = \\Illuminate\\Support\\Facades\\Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+    }";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000009690000000000000000";}";s:4:"hash";s:44:"LGZhthUsXNbLU9u4adgH31dkNIxhO68741gp2DDhFEk=";}}',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'adminLoginForm',
+        'as' => 'generated::h5esNr0SP2CNlmBJ',
+      ),
+      'fallback' => false,
+      'defaults' => 
+      array (
+      ),
+      'wheres' => 
+      array (
+      ),
+      'bindingFields' => 
+      array (
+      ),
+      'lockSeconds' => NULL,
+      'waitSeconds' => NULL,
+      'withTrashed' => false,
+    ),
+    'generated::fwhFL031II93xmf0' => 
+    array (
+      'methods' => 
+      array (
+        0 => 'GET',
+        1 => 'HEAD',
+      ),
+      'uri' => 'chat_files/{filename}',
+      'action' => 
+      array (
+        'middleware' => 
+        array (
+          0 => 'web',
+          1 => 'auth',
+        ),
+        'uses' => 'O:47:"Laravel\\SerializableClosure\\SerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Signed":2:{s:12:"serializable";s:693:"O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:474:"function ($filename) {
+        $path = \\storage_path(\'app/chat_files/\' . $filename);
+
+        if (!\\Illuminate\\Support\\Facades\\File::exists($path)) {
+            \\abort(404);
+        }
+
+        $file = \\Illuminate\\Support\\Facades\\File::get($path);
+        $type = \\Illuminate\\Support\\Facades\\File::mimeType($path);
+
+        $response = \\Illuminate\\Support\\Facades\\Response::make($file, 200);
+        $response->header("Content-Type", $type);
+
+        return $response;
+    }";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"000000000000096b0000000000000000";}";s:4:"hash";s:44:"vVlzFZQebodZ24ce+6F9g3c/ZdjmpfQtSTg4c48v938=";}}',
+        'namespace' => NULL,
+        'prefix' => '',
+        'where' => 
+        array (
+        ),
+        'as' => 'generated::fwhFL031II93xmf0',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4745,7 +4786,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::FebaS1glee63FrSR' => 
+    'generated::Sj5lgUlTz32japa4' => 
     array (
       'methods' => 
       array (
@@ -4765,7 +4806,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::FebaS1glee63FrSR',
+        'as' => 'generated::Sj5lgUlTz32japa4',
       ),
       'fallback' => false,
       'defaults' => 
@@ -4964,7 +5005,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::2p9rLS3yTtqULPVh' => 
+    'generated::urUtxj8nH3n3jcWJ' => 
     array (
       'methods' => 
       array (
@@ -4984,7 +5025,7 @@ app('router')->setCompiledRoutes(
         'where' => 
         array (
         ),
-        'as' => 'generated::2p9rLS3yTtqULPVh',
+        'as' => 'generated::urUtxj8nH3n3jcWJ',
       ),
       'fallback' => false,
       'defaults' => 
@@ -5000,32 +5041,41 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'logout' => 
+    'adminLoginShow' => 
     array (
       'methods' => 
       array (
         0 => 'GET',
         1 => 'HEAD',
       ),
-      'uri' => 'logout',
+      'uri' => 'login',
       'action' => 
       array (
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'guest',
         ),
-        'uses' => 'App\\Http\\Controllers\\AdminAuthController@logout',
-        'controller' => 'App\\Http\\Controllers\\AdminAuthController@logout',
+        'uses' => '\\Illuminate\\Routing\\ViewController@__invoke',
+        'controller' => '\\Illuminate\\Routing\\ViewController',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'logout',
+        'as' => 'adminLoginShow',
       ),
       'fallback' => false,
       'defaults' => 
       array (
+        'view' => 'auth.login',
+        'data' => 
+        array (
+        ),
+        'status' => 200,
+        'headers' => 
+        array (
+        ),
       ),
       'wheres' => 
       array (
@@ -5037,91 +5087,28 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::IZvCClBS6BLWxZ3Y' => 
+    'adminLoginForm' => 
     array (
       'methods' => 
       array (
-        0 => 'GET',
-        1 => 'HEAD',
+        0 => 'POST',
       ),
-      'uri' => 'group_chat_files/{filename}',
+      'uri' => 'login',
       'action' => 
       array (
         'middleware' => 
         array (
           0 => 'web',
+          1 => 'guest',
         ),
-        'uses' => 'O:47:"Laravel\\SerializableClosure\\SerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Signed":2:{s:12:"serializable";s:659:"O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:440:"function ($filename) {
-    $path = \\storage_path(\'app/group_chat_files/\' . $filename);
-
-    if (!\\Illuminate\\Support\\Facades\\File::exists($path)) {
-        \\abort(404);
-    }
-
-    $file = \\Illuminate\\Support\\Facades\\File::get($path);
-    $type = \\Illuminate\\Support\\Facades\\File::mimeType($path);
-
-    $response = \\Illuminate\\Support\\Facades\\Response::make($file, 200);
-    $response->header("Content-Type", $type);
-
-    return $response;
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000009680000000000000000";}";s:4:"hash";s:44:"hPfI01Z7tiUxUmJ67IklKS0DApb0JGL4m1l/NSGYGzE=";}}',
+        'uses' => 'App\\Http\\Controllers\\AdminAuthController@adminLoginForm',
+        'controller' => 'App\\Http\\Controllers\\AdminAuthController@adminLoginForm',
         'namespace' => NULL,
         'prefix' => '',
         'where' => 
         array (
         ),
-        'as' => 'generated::IZvCClBS6BLWxZ3Y',
-      ),
-      'fallback' => false,
-      'defaults' => 
-      array (
-      ),
-      'wheres' => 
-      array (
-      ),
-      'bindingFields' => 
-      array (
-      ),
-      'lockSeconds' => NULL,
-      'waitSeconds' => NULL,
-      'withTrashed' => false,
-    ),
-    'generated::jXYjwHuaQtUqstNW' => 
-    array (
-      'methods' => 
-      array (
-        0 => 'GET',
-        1 => 'HEAD',
-      ),
-      'uri' => 'chat_files/{filename}',
-      'action' => 
-      array (
-        'middleware' => 
-        array (
-          0 => 'web',
-        ),
-        'uses' => 'O:47:"Laravel\\SerializableClosure\\SerializableClosure":1:{s:12:"serializable";O:46:"Laravel\\SerializableClosure\\Serializers\\Signed":2:{s:12:"serializable";s:653:"O:46:"Laravel\\SerializableClosure\\Serializers\\Native":5:{s:3:"use";a:0:{}s:8:"function";s:434:"function ($filename) {
-    $path = \\storage_path(\'app/chat_files/\' . $filename);
-
-    if (!\\Illuminate\\Support\\Facades\\File::exists($path)) {
-        \\abort(404);
-    }
-
-    $file = \\Illuminate\\Support\\Facades\\File::get($path);
-    $type = \\Illuminate\\Support\\Facades\\File::mimeType($path);
-
-    $response = \\Illuminate\\Support\\Facades\\Response::make($file, 200);
-    $response->header("Content-Type", $type);
-
-    return $response;
-}";s:5:"scope";s:37:"Illuminate\\Routing\\RouteFileRegistrar";s:4:"this";N;s:4:"self";s:32:"00000000000009740000000000000000";}";s:4:"hash";s:44:"9kV+mQpganQs39u2gwJiFcI3ww0rpb6CZRzhim9owwo=";}}',
-        'namespace' => NULL,
-        'prefix' => '',
-        'where' => 
-        array (
-        ),
-        'as' => 'generated::jXYjwHuaQtUqstNW',
+        'as' => 'adminLoginForm',
       ),
       'fallback' => false,
       'defaults' => 

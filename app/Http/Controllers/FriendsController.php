@@ -13,12 +13,9 @@ class FriendsController extends Controller
     public function messanger(Request $request)
     {
         $query = $request->input('query');
-
         $friends = Friend::where('user1_id', auth()->id())
             ->whereHas('user2', function ($innerQuery) use ($query) {
-                $innerQuery->where('name', 'LIKE', "%$query%")
-                    ->orWhere('surname', 'LIKE', "%$query%")
-                    ->orWhere('nickname', 'LIKE', "%$query%");
+                $innerQuery->where('fio', 'LIKE', "%$query%");
             })
             ->with('user2')
             ->get();
@@ -27,13 +24,7 @@ class FriendsController extends Controller
 
         $otherUsers = User::where('id', '!=', auth()->id())
             ->where(function ($userQuery) use ($friendIds, $query) {
-                $userQuery->whereNotIn('id', $friendIds)
-                    ->orWhereNull('id');
-            })
-            ->where(function ($userQuery) use ($query) {
-                $userQuery->where('name', 'LIKE', "%$query%")
-                    ->orWhere('surname', 'LIKE', "%$query%")
-                    ->orWhere('nickname', 'LIKE', "%$query%");
+                $userQuery->whereNotIn('id', $friendIds);
             })
             ->orderBy('id', 'desc')->get();
 
