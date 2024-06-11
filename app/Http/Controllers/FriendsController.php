@@ -23,7 +23,7 @@ class FriendsController extends Controller
         $friendIds = $friends->pluck('user2.id')->toArray();
 
         $otherUsers = User::where('id', '!=', auth()->id())
-            ->where(function ($userQuery) use ($friendIds, $query) {
+            ->where(function ($userQuery) use ($friendIds) {
                 $userQuery->whereNotIn('id', $friendIds);
             })
             ->orderBy('id', 'desc')->get();

@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/chats/chat/{message}', [MessageController::class, 'update'])->name('chats.chat.update');
     Route::delete('/chats/chat/{message}', [MessageController::class, 'destroy'])->name('chats.chat.delete');
     Route::get('/chats/chat/{user}', [MessageController::class, 'loadChat'])->name('chats.load-chat');
+    Route::get('/chats/messanger', [MessageController::class, 'messanger'])->name('chats.messanger');
 
     /*Users*/
     Route::get('/user/index', [UserController::class, 'index'])->name('user.index');
@@ -84,7 +85,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/declineRequests/{id}', [FriendRequestController::class, 'decline_update'])->name('decline_update');
 
     /*Friends */
-    Route::get('/chats/messanger', [FriendsController::class, 'messanger'])->name('chats.messanger');
+
+
+    // Route::get('/chats/messanger', [FriendsController::class, 'messanger'])->name('chats.messanger');
+
+
     Route::post('/group/store', [GroupController::class, 'store'])->name('group.store');
     Route::get('/groups/chat', [GroupController::class, 'create'])->name('groups.chat');
     Route::get('/groups/chat/{group}', [GroupController::class, 'loadChat'])->name('groups.load-chat');

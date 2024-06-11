@@ -19,7 +19,11 @@
                                 data-user-id="{{ $group->id }}">
                                 <li
                                     class="clearfix d-f a-c {{ $currentRouteName === 'groups.load-chat' && $currentId == $group->id ? ' chat-active' : '' }}">
-                                    <img src="/storage/{{ $group->image }}" class="avaChat">
+                                    @if ($group->image)
+                                        <img src="/storage/{{ $group->image }}" class="avaChat">
+                                    @else
+                                        <img src="{{ asset('images/default-avatar.jpg') }}" class="avaChat">
+                                    @endif
                                     <div class="about">
                                         <div class="name">
                                             <p><b>{{ $group->name }}</b></p>
@@ -63,7 +67,11 @@
                             <div class="row">
                                 <div class="col-lg-6 d-f a-c">
                                     <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
-                                        <img src="/storage/{{ $groupp->image }}" class="avaChat">
+                                        @if ($groupp->image)
+                                            <img src="/storage/{{ $groupp->image }}" class="avaChat">
+                                        @else
+                                            <img src="{{ asset('images/default-avatar.jpg') }}" class="avaChat">
+                                        @endif
                                     </a>
                                     <div class="chat-about">
                                         <h6 class="m-b-0">{{ $groupp->name }}</h6>
@@ -213,7 +221,11 @@
                                     <div class="row">
                                         <div class="col-25">
                                             <label for="image">Суреті</label>
-                                            <img src="/storage/{{ $groupp->image }}" class="avaChat">
+                                            @if ($groupp->image)
+                                                <img src="/storage/{{ $groupp->image }}" class="avaChat">
+                                            @else
+                                                <img src="{{ asset('images/default-avatar.jpg') }}" class="avaChat">
+                                            @endif
                                         </div>
                                         <div class="col-75">
                                             <input type="file" id="image" name="image">
@@ -251,7 +263,12 @@
                                                 class="message-data {{ $message->user_id == Auth::id() ? 'text-right' : '' }}">
                                                 <span class="message-data-time">
                                                     @if ($groupp->id == 1 && Auth::user()->admin != 1)
-                                                        <img src="/storage/{{ $groupp->image }}" class="avaChat">
+                                                        @if ($groupp->image)
+                                                            <img src="/storage/{{ $groupp->image }}" class="avaChat">
+                                                        @else
+                                                            <img src="{{ asset('images/default-avatar.jpg') }}"
+                                                                class="avaChat">
+                                                        @endif
                                                         {{ $groupp->name }}
                                                     @else
                                                         <a href="{{ route('user.profile', $message->user->id) }}">

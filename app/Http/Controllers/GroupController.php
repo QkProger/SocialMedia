@@ -31,6 +31,7 @@ class GroupController extends Controller
             $group_ava = $request->file('image');
             $file_name = FileService::saveFile($group_ava, "/groupsAvatars");
             $data['image'] = 'groupsAvatars/' . $file_name;
+            $group->image = $data['image'];
         }
 
         $group->save();
