@@ -14,11 +14,17 @@ class GruppaMessage extends Model
     {
         return $this->belongsTo(Gruppa::class, 'gruppa_id');
     }
-    
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    public function groupUserMessageCheckeds()
+    {
+        return $this->hasMany(GroupUserMessageChecked::class, 'gruppa_message_id');
+    }
+    
     public function getSvgIcon()
     {
         if ($this->file_name) {

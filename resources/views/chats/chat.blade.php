@@ -17,7 +17,7 @@
                         @foreach ($friends as $friend)
                             <a href="{{ route('chats.load-chat', $friend->user2->id) }}" class="user-link">
                                 <li
-                                    class="clearfix {{ $currentRouteName === 'chats.load-chat' && $currentId == $friend->user2->id ? ' chat-active' : '' }}">
+                                    class="clearfix relative {{ $currentRouteName === 'chats.load-chat' && $currentId == $friend->user2->id ? ' chat-active' : '' }}">
                                     @if ($friend->user2->avatar)
                                         <img src="/storage/{{ $friend->user2->avatar }}" class="avaChat">
                                     @else
@@ -28,6 +28,9 @@
                                             <p>{{ $friend->user2->name }} <br> {{ $friend->user2->surname }}</p>
                                         </div>
                                     </div>
+                                    @if ($friend->msg_cnt > 0 && $currentId != $friend->user2_id)
+                                        <small class="notification-count">{{ $friend->msg_cnt }}</small>
+                                    @endif
                                 </li>
                             </a>
                         @endforeach

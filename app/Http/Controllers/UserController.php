@@ -23,7 +23,10 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('user.edit', compact('user'));
+        if ($user->id == auth()->id()) {
+            return view('user.edit', compact('user'));
+        }
+        return redirect()->route('user.index');
     }
 
     public function update(Request $request, $user_id)
@@ -39,29 +42,11 @@ class UserController extends Controller
         }
         $data['password'] = Hash('sha1', $request['password']);
         $data['real_password'] = $request['password'];
-        
+
         $user->update(array_merge($request->except(['avatar', 'password', 'real_password']), $data));
 
         return redirect('/');
     }
-
-    // public function update(Request $request, $user_id)
-    // {
-    //     $data = [];
-
-    //     if ($request->hasFile('avatar')) {
-    //         $image = $request->file('avatar');
-    //         $imageName = time() . '_' . $image->getClientOriginalName();
-    //         $image->storeAs('public/images', $imageName);
-    //         $data['avatar'] = 'storage/images/' . $imageName;
-    //     }
-    //     $data['password'] = Hash('sha1', $request['password']);
-    //     $data['real_password'] = $request['password'];
-        
-    //     User::findOrFail($user_id)->update(array_merge($request->except(['avatar', 'password', 'real_password']), $data));
-
-    //     return redirect('/');
-    // }
 
     public function bookmarks()
     {

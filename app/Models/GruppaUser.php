@@ -20,8 +20,8 @@ class GruppaUser extends Model
         return $this->belongsTo(User::class);
     }
 
-    // public function group()
-    // {
-    //     return $this->belongsTo(Gruppa::class, 'gruppa_id');
-    // }
+    public function group()
+    {
+        return $this->belongsTo(Gruppa::class, 'gruppa_id');
+    }
 }

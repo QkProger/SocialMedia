@@ -14,21 +14,24 @@
                             $currentRouteParams = request()->route()->parameters();
                             $currentId = isset($currentRouteParams['group']) ? $currentRouteParams['group'] : null;
                         @endphp
-                        @foreach ($groups->groups as $group)
-                            <a href="{{ route('groups.load-chat', $group) }}" class="user-link"
-                                data-user-id="{{ $group->id }}">
+                        @foreach ($groups as $groupItem)
+                            <a href="{{ route('groups.load-chat', $groupItem->group) }}" class="user-link"
+                                data-user-id="{{ $groupItem->group->id }}">
                                 <li
-                                    class="clearfix d-f a-c {{ $currentRouteName === 'groups.load-chat' && $currentId == $group->id ? ' chat-active' : '' }}">
-                                    @if ($group->image)
-                                        <img src="/storage/{{ $group->image }}" class="avaChat">
+                                    class="clearfix relative d-f a-c {{ $currentRouteName === 'groups.load-chat' && $currentId == $groupItem->group->id ? ' chat-active' : '' }}">
+                                    @if ($groupItem->group->image)
+                                        <img src="/storage/{{ $groupItem->group->image }}" class="avaChat">
                                     @else
                                         <img src="{{ asset('images/default-avatar.jpg') }}" class="avaChat">
                                     @endif
                                     <div class="about">
                                         <div class="name">
-                                            <p><b>{{ $group->name }}</b></p>
+                                            <p><b>{{ $groupItem->group->name }}</b></p>
                                         </div>
                                     </div>
+                                    @if ($groupItem->group_msg_cnt > 0 && $currentId != $groupItem->gruppa_id)
+                                        <small class="notification-count">{{ $groupItem->group_msg_cnt }}</small>
+                                    @endif
                                 </li>
                             </a>
                         @endforeach

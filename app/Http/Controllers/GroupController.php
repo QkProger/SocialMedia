@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GroupUserMessageChecked;
 use Illuminate\Http\Request;
 use App\Models\Gruppa;
 use App\Models\GruppaMessage;
@@ -76,11 +77,20 @@ class GroupController extends Controller
             $message->extension = strtolower(pathinfo($message->file_name, PATHINFO_EXTENSION));
         }
         $groups = GruppaUser::where('user_id', $userId)
-            ->with(['groups' => function ($query) {
-                $query->orderBy('id', 'desc');
-            }])->first();
+            ->with(['group'])->orderBy('id', 'desc')->get();
 
-        // $groups = User::with('userGroups.group')->find($userId);
+        $groups = $groups->map(function ($groupUser) use ($userId) {
+            $unreadMessagesCount = GruppaMessage::where('gruppa_id', $groupUser->gruppa_id)
+                ->whereDoesntHave('groupUserMessageCheckeds', function ($query) use ($userId) {
+                    $query->where('user_id', $userId)
+                        ->whereColumn('gruppa_messages.id', 'group_user_message_checkeds.gruppa_message_id');
+                })
+                ->count();
+
+            $groupUser->group_msg_cnt = $unreadMessagesCount;
+
+            return $groupUser;
+        });
 
 
         $users = User::whereDoesntHave('groups', function ($query) use ($gruppaId) {
@@ -89,6 +99,12 @@ class GroupController extends Controller
         $is_admin = GruppaUser::where('gruppa_id', $gruppaId)->where('user_id', $userId)->first()->is_admin;
         $group_users = GruppaUser::where('gruppa_id', $gruppaId)->with('user')->get();
 
+        foreach ($messages as $groupMessage) {
+            GroupUserMessageChecked::create([
+                'user_id' => $userId,
+                'gruppa_message_id' => $groupMessage->id,
+            ]);
+        }
         return view('groups.chat', compact(
             'messages',
             'groupp',
@@ -126,10 +142,13 @@ class GroupController extends Controller
             $data['message'] = $request->message;
             $data['file_name'] = '';
         }
-        // Создание новой записи в базе данных
         $messages = GruppaMessage::create($data);
 
-        // Возвращение JSON-ответа
+        GroupUserMessageChecked::create([
+            'user_id' => auth()->id(),
+            'gruppa_message_id' => $messages->id,
+        ]);
+
         return response()->json(['success' => 'Сообщение успешно отправлено!', 'message' => $messages]);
     }
 

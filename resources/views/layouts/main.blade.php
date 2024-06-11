@@ -165,12 +165,23 @@
                     </a>
                     <a href="{{ route('chats.chat') }}"
                         class="menu-item {{ request()->routeIs('chats.chat') || request()->is('chats/chat/*') ? 'active' : '' }}">
-                        <span><i class="uil uil-facebook-messenger-alt"></i></span>
+                        {{-- <span><i class="uil uil-facebook-messenger-alt"></i></span> --}}
+                        @if ($msg_cnt > 0)
+                            <span><i class="uil uil-facebook-messenger-alt"><small
+                                        class="notification-count">{{ $msg_cnt }}</small></i></span>
+                        @else
+                            <span><i class="uil uil-facebook-messenger-alt"></i></span>
+                        @endif
                         <h3>Чаттар</h3>
                     </a>
                     <a href="/groups/chat/{{ $last_group_id }}"
                         class="menu-item {{ request()->routeIs('groups.chat') || request()->is('groups/chat/*') ? 'active' : '' }}">
-                        <span><i class="uil uil-facebook-messenger-alt"></i></span>
+                        @if ($groups_msg_cnt > 0)
+                            <span><i class="uil uil-facebook-messenger-alt"><small
+                                        class="notification-count">{{ $groups_msg_cnt }}</small></i></span>
+                        @else
+                            <span><i class="uil uil-facebook-messenger-alt"></i></span>
+                        @endif
                         <h3>Группалар</h3>
                     </a>
                     <a href="{{ route('user.bookmarks') }}"

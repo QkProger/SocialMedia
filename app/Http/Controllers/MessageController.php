@@ -12,11 +12,19 @@ class MessageController extends Controller
 {
     public function create()
     {
-        $users = User::whereNot('id', auth()->id())->orderBy('id', 'desc')->get();
+        // $users = User::whereNot('id', auth()->id())->orderBy('id', 'desc')->get();
         $user = User::latest('id')->first();
         $friends = Friend::where('user1_id', auth()->id())
             ->with('user2')
-            ->get();
+            ->get()
+            ->map(function ($friend) {
+                $msg_cnt = Message::where('sendler_user_id', auth()->id())
+                    ->where('user_id', $friend->user2_id)
+                    ->where('is_cheked', 0)
+                    ->count();
+                $friend->msg_cnt = $msg_cnt;
+                return $friend;
+            });
         return view('chats.chat', compact('friends', 'user'));
     }
 
@@ -51,15 +59,25 @@ class MessageController extends Controller
         })
             ->orderBy('created_at')
             ->get();
-        // $users = User::whereNot('id', auth()->id())->orderBy('created_at', 'desc')->get();
 
         $friends = Friend::where('user1_id', $me)
             ->with('user2')
-            ->get();
+            ->get()
+            ->map(function ($friend) {
+                $msg_cnt = Message::where('sendler_user_id', auth()->id())
+                    ->where('user_id', $friend->user2_id)
+                    ->where('is_cheked', 0)
+                    ->count();
+                $friend->msg_cnt = $msg_cnt;
+                return $friend;
+            });
         foreach ($messages as $message) {
             $message->svg = $message->getSvgIcon();
             $message->extension = strtolower(pathinfo($message->file_name, PATHINFO_EXTENSION));
         }
+        Message::where('sendler_user_id', $me)->where('is_cheked', 0)->where('user_id', $id)->update([
+            'is_cheked' => 1,
+        ]);
         return view('chats.chat', compact('messages', 'user', 'friends'));
     }
 
@@ -142,7 +160,7 @@ class MessageController extends Controller
         }
         return back()->with('success', 'Сообщение успешно удалено.');
     }
-    
+
     public function messanger(Request $request)
     {
         $query = $request->input('query');
