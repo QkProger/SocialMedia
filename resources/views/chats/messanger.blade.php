@@ -1,12 +1,14 @@
 @extends('layouts.main')
 @section('content')
     <div class="right">
-        <div class="messages">
-            <div class="heading">
-                <h4>Достар</h4>
-                <button class="btn btn-primary group-btn" onclick="openGroupModal()">Группа ашу</button>
+        <div class="friendsBlock">
+            <div class="messages">
+                <div class="heading">
+                    <h4>Достар</h4>
+                    <button class="btn btn-primary group-btn" onclick="openGroupModal()">Группа ашу</button>
+                </div>
                 <div id="overlay" onclick="closeGroupModal()"></div>
-                <div class="create-container">
+                <div class="create-container" id="groupModal-container">
                     <div id="groupModal">
                         <span class="close-btn" onclick="closeGroupModal()">✖</span>
                         <h2>Группа ашу</h2>
@@ -51,7 +53,8 @@
                                                                     {{-- <div class="active"></div> --}}
                                                                 </div>
                                                                 <div class="message-body">
-                                                                    <h5>{{ $friendUser->name }} {{ $friendUser->surname }}
+                                                                    <h5>{{ $friendUser->name }}
+                                                                        {{ $friendUser->surname }}
                                                                     </h5>
                                                                 </div>
                                                             </div>
@@ -85,7 +88,8 @@
                                                                     {{-- <div class="active"></div> --}}
                                                                 </div>
                                                                 <div class="message-body">
-                                                                    <h5>{{ $otherUser->name }} {{ $otherUser->surname }}
+                                                                    <h5>{{ $otherUser->name }}
+                                                                        {{ $otherUser->surname }}
                                                                     </h5>
                                                                 </div>
                                                             </div>
@@ -112,52 +116,53 @@
                         </form>
                     </div>
                 </div>
-            </div>
-            {{-- SEARCH BAR --}}
-            <div class="search-bar d-flex align-items-center">
-                <i class="uil uil-search"></i>
-                {{-- <input type="search" placeholder="Достарды іздеу..." id="message-search"> --}}
-                <form action="{{ route('chats.messanger') }}" method="GET">
-                    <input type="search" name="query" placeholder="Достарды іздеу..." id="message-search">
-                    <button type="submit" style="display: none;"></button>
-                </form>
-            </div>
-            {{-- MESSAGES CATEGORY --}}
-            <div class="category">
-                <h6 class="active"></h6>
-            </div>
-            <div class="friendsList">
-                @foreach ($friends as $friend)
-                    @php
-                        $friendUser = $friend->user2;
-                    @endphp
-                    {{-- MESSAGE --}}
-                    <a href="{{ route('chats.load-chat', $friendUser) }}" class="user-link"
-                        data-user-id="{{ $friendUser->id }}">
-                        <div class="message align-items-center">
-                            <div class="profile-photo">
-                                @if ($friendUser->avatar)
-                                    <img src="/storage/{{ $friendUser->avatar }}" class="avaChat">
-                                @else
-                                    <img src="{{ asset('images/profile-1.jpg') }}" class="avaChat">
-                                @endif
-                                <div class="active"></div>
+                {{-- SEARCH BAR --}}
+                <div class="search-bar d-flex align-items-center">
+                    <i class="uil uil-search"></i>
+                    {{-- <input type="search" placeholder="Достарды іздеу..." id="message-search"> --}}
+                    <form action="{{ route('chats.messanger') }}" method="GET">
+                        <input type="search" name="query" placeholder="Достарды іздеу..." id="message-search">
+                        <button type="submit" style="display: none;"></button>
+                    </form>
+                </div>
+                {{-- MESSAGES CATEGORY --}}
+                <div class="category">
+                    <h6 class="active"></h6>
+                </div>
+                <div class="friendsList">
+                    @foreach ($friends as $friend)
+                        @php
+                            $friendUser = $friend->user2;
+                        @endphp
+                        {{-- MESSAGE --}}
+                        <a href="{{ route('chats.load-chat', $friendUser) }}" class="user-link"
+                            data-user-id="{{ $friendUser->id }}">
+                            <div class="message align-items-center">
+                                <div class="profile-photo">
+                                    @if ($friendUser->avatar)
+                                        <img src="/storage/{{ $friendUser->avatar }}" class="avaChat">
+                                    @else
+                                        <img src="{{ asset('images/profile-1.jpg') }}" class="avaChat">
+                                    @endif
+                                    <div class="active"></div>
+                                </div>
+                                <div class="message-body">
+                                    <h5>{{ $friendUser->name }} {{ $friendUser->surname }}</h5>
+                                </div>
                             </div>
-                            <div class="message-body">
-                                <h5>{{ $friendUser->name }} {{ $friendUser->surname }}</h5>
-                            </div>
-                        </div>
-                    </a>
-                @endforeach
+                        </a>
+                    @endforeach
+                </div>
             </div>
+            {{-- END OF MESSAGES --}}
         </div>
-        {{-- END OF MESSAGES --}}
     </div>
     <script>
         function openGroupModal() {
             document.querySelector('.left').style.zIndex = '0';
             document.querySelector('nav').style.zIndex = '0';
 
+            document.getElementById('groupModal-container').style.display = 'block';
             document.getElementById('groupModal').style.display = 'block';
             document.getElementById('overlay').style.display = 'block';
         }
@@ -201,9 +206,13 @@
             z-index: 999;
         }
 
+        .right .messages .heading {
+            justify-content: space-between;
+        }
+
         .group-btn {
             right: 17px;
-            position: absolute;
+            /* position: absolute; */
         }
 
         .col-75 {
@@ -228,6 +237,44 @@
         .modal-messages {
             max-height: 300px;
             overflow-y: scroll;
+        }
+
+        .create-container {
+            display: none;
+        }
+
+        @media screen and (max-width: 992px) {
+            .container {
+                width: 80%;
+            }
+
+            .friend-requests {
+                margin-top: 15px !important;
+            }
+
+            main .container {
+                grid-template-columns: auto;
+                gap: 0;
+            }
+
+            main .container .right {
+                display: contents !important;
+            }
+        }
+
+        @media screen and (max-width: 500px) {
+            .container {
+                width: 96% !important;
+            }
+
+            .friendsBlock {
+                margin-right: 80px !important;
+            }
+
+            .friend-requests {
+                margin-right: 80px !important;
+
+            }
         }
     </style>
 @endsection

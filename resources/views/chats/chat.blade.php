@@ -2,18 +2,18 @@
 @section('content')
     <div class="row clearfix">
         <div class="col-lg-12">
-            <div class="message-card chat-app">
+            <div class="message-card chat-app adaptive-class">
+                @php
+                    $currentRouteName = Route::currentRouteName();
+                    $currentRouteParams = request()->route()->parameters();
+                    $currentId = isset($currentRouteParams['user']) ? $currentRouteParams['user'] : null;
+                @endphp
                 <div id="plist" class="people-list">
                     <div class="search-bar d-f mb-2">
                         <i class="uil uil-search"></i>
                         <input type="search" placeholder="Қолданушыны іздеу..." id="message-search-general">
                     </div>
                     <ul class="list-unstyled chat-list mt-2 mb-0">
-                        @php
-                            $currentRouteName = Route::currentRouteName();
-                            $currentRouteParams = request()->route()->parameters();
-                            $currentId = isset($currentRouteParams['user']) ? $currentRouteParams['user'] : null;
-                        @endphp
                         @foreach ($friends as $friend)
                             <a href="{{ route('chats.load-chat', $friend->user2->id) }}" class="user-link">
                                 <li
@@ -36,6 +36,7 @@
                         @endforeach
                     </ul>
                 </div>
+                <div class="empty_place"></div>
                 <div class="chat" id="user-chat-container">
                     @if (!empty($messages))
                         <a href="{{ route('user.profile', $user->id) }}" class="chat-header clearfix">
@@ -229,18 +230,6 @@
                                 @endforeach
                             </ul>
                         </div>
-                        <style>
-                            .micro-svg {
-                                position: absolute;
-                                right: 0;
-                                transform: translateX(-45px);
-                                width: 25px;
-                            }
-
-                            .post-popup {
-                                z-index: 1;
-                            }
-                        </style>
                         <div class="create-container">
                             <div class="clearfix">
                                 <div class="input-group mb-0">
@@ -494,6 +483,17 @@
 
 @endsection
 <style>
+    .micro-svg {
+        position: absolute;
+        right: 0;
+        transform: translateX(-45px);
+        width: 25px;
+    }
+
+    .post-popup {
+        z-index: 1;
+    }
+
     .file_input_message {
         gap: 5px;
     }
@@ -538,5 +538,55 @@
 
     .uil-trash:before {
         cursor: pointer;
+    }
+
+    .empty_place {
+        display: none;
+    }
+
+    @media screen and (max-width: 992px) {
+        .container {
+            width: 80% !important;
+        }
+
+        main .container {
+            grid-template-columns: auto !important;
+        }
+
+        .adaptive-class {
+            display: block !important;
+        }
+
+        .empty_place {
+            height: 20px;
+            width: 100%;
+            background: var(--color-light);
+            display: block;
+        }
+
+        div#plist {
+            width: 100%;
+        }
+
+        .message-card {
+            min-height: 0 !important;
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+        .container {
+            width: 96% !important;
+        }
+
+        .row.clearfix {
+            margin-right: 80px;
+        }
+
+        .chat-app .people-list {
+            height: 265px !important;
+            width: 100%;
+            display: block !important;
+            border-radius: var(--card-border-radius);
+        }
     }
 </style>

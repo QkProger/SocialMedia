@@ -2,18 +2,18 @@
 @section('content')
     <div class="row clearfix">
         <div class="col-lg-12">
-            <div class="message-card chat-app">
+            <div class="message-card chat-app adaptive-class">
+                @php
+                    $currentRouteName = Route::currentRouteName();
+                    $currentRouteParams = request()->route()->parameters();
+                    $currentId = isset($currentRouteParams['group']) ? $currentRouteParams['group'] : null;
+                @endphp
                 <div id="plist" class="people-list">
                     <div class="search-bar d-f mb-2">
                         <i class="uil uil-search"></i>
                         <input type="search" placeholder="Группаны іздеу..." id="message-search-general">
                     </div>
                     <ul class="list-unstyled chat-list mt-2 mb-0">
-                        @php
-                            $currentRouteName = Route::currentRouteName();
-                            $currentRouteParams = request()->route()->parameters();
-                            $currentId = isset($currentRouteParams['group']) ? $currentRouteParams['group'] : null;
-                        @endphp
                         @foreach ($groups as $groupItem)
                             <a href="{{ route('groups.load-chat', $groupItem->group) }}" class="user-link"
                                 data-user-id="{{ $groupItem->group->id }}">
@@ -63,6 +63,7 @@
                         document.getElementById('group').submit();
                     }
                 </script>
+                <div class="empty_place"></div>
                 <div class="chat" id="user-chat-container">
                     @if (!empty($messages))
                         <div class="chat-header clearfix c-p" data-is-admin="{{ $is_admin }}"
@@ -254,6 +255,14 @@
                         <div class="chat-history">
                             <ul class="m-b-0">
                                 @foreach ($messages as $message)
+                                    <script>
+                                        var elements = document.getElementsByClassName("chat-history");
+
+                                        for (var i = 0; i < elements.length; i++) {
+                                            var element = elements[i];
+                                            element.scrollTop = element.scrollHeight;
+                                        }
+                                    </script>
                                     @if ($message->message)
                                         <li class="clearfix">
                                             <div
@@ -637,5 +646,54 @@
     .modal-messages {
         max-height: 300px;
         overflow-y: scroll;
+    }
+    .empty_place {
+        display: none;
+    }
+
+    @media screen and (max-width: 992px) {
+        .container {
+            width: 80% !important;
+        }
+
+        main .container {
+            grid-template-columns: auto !important;
+        }
+
+        .adaptive-class {
+            display: block !important;
+        }
+
+        .empty_place {
+            height: 20px;
+            width: 100%;
+            background: var(--color-light);
+            display: block;
+        }
+
+        div#plist {
+            width: 100%;
+        }
+
+        .message-card {
+            min-height: 0 !important;
+        }
+    }
+
+    @media screen and (max-width: 767px) {
+        .container {
+            width: 96% !important;
+        }
+
+        .row.clearfix {
+            margin-right: 80px;
+        }
+
+        .chat-app .people-list {
+            height: 265px !important;
+            width: 100%;
+            display: block !important;
+            border-radius: var(--card-border-radius);
+        }
     }
 </style>
