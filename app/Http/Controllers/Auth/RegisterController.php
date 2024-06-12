@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Gruppa;
+use App\Models\GruppaUser;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -68,7 +70,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'lastname' => $data['lastname'],
             'surname' => $data['surname'],
@@ -79,5 +81,11 @@ class RegisterController extends Controller
             'password' => Hash('sha1', $data['password']),
             'real_password' => $data['password'],
         ]);
+        GruppaUser::create([
+            'gruppa_id' => Gruppa::first()->id,
+            'user_id' => $user->id,
+            'is_admin' => $user->admin,
+        ]);
+        return $user;
     }
 }

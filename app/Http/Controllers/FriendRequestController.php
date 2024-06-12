@@ -50,8 +50,11 @@ class FriendRequestController extends Controller
     {
         $data['user_id'] = auth()->id();
         $data['receiver_user_id'] = $request->receiver_user_id;
-        $userRequests = FriendRequests::create($data);
-        
+        $is_exist = FriendRequests::where('user_id', auth()->id())->where('receiver_user_id', $request->receiver_user_id)->where('is_declined', 0)->first();
+        if (!$is_exist) {
+            $userRequests = FriendRequests::create($data);
+        }
+
         return response()->json(['success' => 'Сообщение успешно отправлено!', 'userRequests' => $userRequests]);
     }
 

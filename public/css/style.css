@@ -181,7 +181,7 @@ img {
 }
 
 .main-search .uil-search {
-    font-size: large;
+    font-size: 15px;
 }
 
 /*SHORT CLASS STYLES*/
@@ -982,10 +982,6 @@ main .container .right {
 
 /* MEDIA QUERIES FOR SMALL TABLETS AND BIG MOBILE PHONES*/
 @media screen and (max-width: 992px) {
-    nav .search-bar {
-        display: none;
-    }
-
     main .container {
         grid-template-columns: 0 auto 5rem;
         gap: 0;

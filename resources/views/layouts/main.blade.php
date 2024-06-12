@@ -27,8 +27,7 @@
             </h2>
             <form action="{{ route('user.usersList') }}" method="GET">
                 <div class="search-bar main-search">
-                    <i class="uil uil-search"></i>
-                    <input type="search" name="query" placeholder="Қолданушыларды іздеу...">
+                    <input type="search" name="query" placeholder="Іздеу...">
                     <button type="submit"><i class="uil uil-search"></i></button>
                 </div>
             </form>
@@ -195,6 +194,13 @@
                         <h3>Материалдар</h3>
                     </a>
                     @if (Route::currentRouteName() == 'user.index')
+                        <a href="{{ route('post.create') }}"
+                            class="menu-item {{ request()->routeIs('courses.index') ? 'active' : '' }}">
+                            <span><i class="uil uil-plus"></i></span>
+                            <h3>Пост салу</h3>
+                        </a>
+                    @endif
+                    @if (Route::currentRouteName() == 'user.index')
                         <a href="{{ route('logout') }}" class="menu-item"
                             onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
@@ -207,11 +213,6 @@
                     @endif
                 </div>
                 {{-- END OF SIDEBAR --}}
-                @if (Route::currentRouteName() == 'user.index')
-                    <a href="{{ route('post.create') }}">
-                        <label for="create-post" class="btn btn-primary">Жаңа пост салу</label>
-                    </a>
-                @endif
             </div>
             {{-- END OF LEFT --}}
 

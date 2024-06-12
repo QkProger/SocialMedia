@@ -89,13 +89,14 @@ class UserController extends Controller
                     ->where('user2_id', auth()->id());
             })
             ->delete();
-        FriendRequests::where('user_id', auth()->id())
-            ->where('receiver_user_id', $friendId)
-            ->orWhere(function ($query) use ($friendId) {
-                $query->where('receiver_user_id', $friendId)
-                    ->where('user_id', auth()->id());
-            })
-            ->delete();
+        FriendRequests::where(function ($query) use ($friendId) {
+            $query->where('user_id', auth()->id())
+                ->where('receiver_user_id', $friendId);
+        })->orWhere(function ($query) use ($friendId) {
+            $query->where('user_id', $friendId)
+                ->where('receiver_user_id', auth()->id());
+        })->delete();
+
         return response()->json(['message' => 'Friend deleted succesfully!'], 200);
     }
 }
