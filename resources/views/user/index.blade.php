@@ -156,18 +156,20 @@
                         </span>
                         <p>Liked by <b>Ernest Achiever</b> and <b>2,323 others</b></p>
                     </div> --}}
-                    {{-- <div class="caption">
+                    <div class="caption">
                         <p>
                             @if (Auth::user())
                                 <b>{{ Auth::user()->name }} {{ Auth::user()->surname }}</b> {{ $post->description }}
                             @else
                                 guest
                             @endif
-                            <span class="harsh-tag">#lifestyle</span>
+                            @if ($post->content)
+                                <span class="harsh-tag">#{{ $post->content }}</span>
+                            @endif
                         </p>
                     </div>
-                    <div class="comments text-muted">View all 277 comments</div>
-                </div> --}}
+                    {{-- <div class="comments text-muted">View all 277 comments</div> --}}
+                </div>
             @endforeach
             {{-- END OF FEED --}}
         </div>

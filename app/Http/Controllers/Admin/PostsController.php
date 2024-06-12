@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\UserPostRelationship;
+use App\Models\UserPostBookmark;
 use App\Services\FileService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -76,6 +78,8 @@ class PostsController extends Controller
 
     public function destroy(Post $post)
     {
+        UserPostBookmark::where('post_id', $post->id)->delete();
+        UserPostRelationship::where('post_id', $post->id)->delete();
         $post->delete();
         return redirect()->back()->withSuccess("Сәтті жойылды!");
     }

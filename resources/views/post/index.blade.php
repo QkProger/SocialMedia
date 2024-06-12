@@ -109,13 +109,13 @@
                         {{-- <span>
                             <img src="{{ asset('images/profile-1.jpg') }}">
                         </span> --}}
-                        <p>Лүпіл басқандар
+                        <p><b>Лүпіл басқандар: {{ $post->likes_count }}</b><br>
                             @php
                                 $likedFriendCount = 0;
                                 $likedOtherCount = 0;
                             @endphp
                             @if ($liked)
-                                <b class="d-on">Сіз және</b>
+                                <b class="d-on">Сіз,</b>
                             @endif
                             @if ($likedFriends->count() > 0)
                                 <b>
@@ -130,19 +130,21 @@
                                             @endphp
                                         @endif
                                         @if ($likedFriendCount == 3)
-                                            @break;
-                                        @endif
-                                    @endforeach
+                                        @break;
+                                    @endif
+                                @endforeach
                             </b>
-                            @endif
+                        @endif
                         @php
-                            $likedRestOtherCount = $post->likes_count - $likedFriendCount;
+                            if ($liked) {
+                                $likedRestOtherCount = $post->likes_count - $likedFriendCount - 1;
+                            } else {
+                                $likedRestOtherCount = $post->likes_count - $likedFriendCount;
+                            }
                         @endphp
-                        <b>{{ $likedRestOtherCount }}
-                            @if ($likedRestOtherCount != $post->likes_count)
-                                басқалар
-                            @else
-                                адам
+                        <b>
+                            @if ($likedRestOtherCount > 0)
+                                және басқалар
                             @endif
                         </b>
                     </p>
@@ -150,7 +152,9 @@
                 <div class="caption">
                     <p>
                         <b>{{ $post->user->name }} {{ $post->user->surname }}</b> {{ $post->description }}
-                        {{-- <span class="harsh-tag">#lifestyle</span> --}}
+                        @if ($post->content)
+                            <span class="harsh-tag">#{{ $post->content }}</span>
+                        @endif
                     </p>
                 </div>
                 <div class="comments text-muted">Барлық пікірді көру</div>
@@ -162,7 +166,7 @@
 </div>
 {{-- END OF MIDDLE --}}
 <script>
-    const displayView = 'Сіз және, ';
+    const displayView = 'Сіз, ';
     $('.likeSendForm').on('submit', function(event) {
         event.preventDefault();
         var form = $(this);

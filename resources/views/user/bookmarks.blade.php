@@ -10,8 +10,7 @@
                     <div class="head">
                         <div class="user">
                             <a href="{{ route('user.profile', $bookmark->post->user->id) }}" class="profile-photo">
-                                <img src="/storage/{{ $bookmark->post->user->avatar }}"
-                                    class="avaChat">
+                                <img src="/storage/{{ $bookmark->post->user->avatar }}" class="avaChat">
                             </a>
                             <div class="info">
                                 <h3>{{ $bookmark->post->user->name }} {{ $bookmark->post->user->surname }}</h3>
@@ -63,7 +62,7 @@
                                 @endif
                             </form>
                             <span><i class="uil uil-comment-dots"></i></span>
-                            <span><i class="uil uil-share-alt"></i></span>
+                            {{-- <span><i class="uil uil-share-alt"></i></span> --}}
                         </div>
                         <div class="bookmarks">
                             <span>
@@ -107,7 +106,7 @@
                         </div>
                     </div>
                     <div class="liked-by">
-                        <p>Лүпіл басқандар
+                        <p><b>Лүпіл басқандар: {{ $bookmark->post->likes_count }}</b><br>
                             @php
                                 $likedFriendCount = 0;
                                 $likedOtherCount = 0;
@@ -128,38 +127,32 @@
                                             @endphp
                                         @endif
                                         @if ($likedFriendCount == 3)
-                                            @break;
-                                        @endif
-                                    @endforeach
-                                </b> және
-                            @endif
-                            
-                            @if ($likedOthers->count() > 0)
-                                <b>
-                                    @foreach ($likedOthers as $likedOther)
-                                        @if ($likedOther->hasLiked($bookmark->post->id))
-                                            @php
-                                                $likedOtherCount++;
-                                            @endphp
-                                        @endif
-                                    @endforeach
-                            @endif
+                                        @break;
+                                    @endif
+                                @endforeach
+                            </b>
+                        @endif
                         @php
-                            $likedRestOtherCount = $likedOtherCount - $likedFriendCount;
+                            if ($liked) {
+                                $likedRestOtherCount = $bookmark->post->likes_count - $likedFriendCount - 1;
+                            } else {
+                                $likedRestOtherCount = $bookmark->post->likes_count - $likedFriendCount;
+                            }
                         @endphp
-                        <b>{{ $likedRestOtherCount }}
-                            @if ($likedRestOtherCount != $likedOtherCount)
-                                басқалар
-                            @else
-                                адамдар 
+                        <b>
+                            @if ($likedRestOtherCount > 0)
+                                және басқалар
                             @endif
                         </b>
                     </p>
                 </div>
                 <div class="caption">
                     <p>
-                        <b>{{ $bookmark->post->user->name }} {{ $bookmark->post->user->surname }}</b> {{ $bookmark->post->description }}
-                        {{-- <span class="harsh-tag">#lifestyle</span> --}}
+                        <b>{{ $bookmark->post->user->name }} {{ $bookmark->post->user->surname }}</b>
+                        {{ $bookmark->post->description }}
+                        @if ($bookmark->post->content)
+                            <span class="harsh-tag">#{{ $bookmark->post->content }}</span>
+                        @endif
                     </p>
                 </div>
                 <div class="comments text-muted">Барлық пікірді көру</div>

@@ -51,7 +51,11 @@ class UserController extends Controller
     public function bookmarks()
     {
         $user = auth()->guard('web')->user();
-        $bookmarkedPosts = User::with('bookmarks.post')->find($user->id);
+        // $bookmarkedPosts = User::with('bookmarks.post')->find($user->id);
+        $bookmarkedPosts = User::with(['bookmarks.post' => function ($query) {
+            $query->withCount('likes');
+        }])->find($user->id);
+
         $bookmarkedPosts->bookmarks = $bookmarkedPosts->bookmarks->sortByDesc(function ($bookmark) {
             return $bookmark->post->created_at;
         });

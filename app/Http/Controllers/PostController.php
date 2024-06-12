@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\UserPostRelationship;
 use App\Models\Friend;
 use App\Models\User;
+use App\Models\UserPostBookmark;
 use App\Services\FileService;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,10 +34,9 @@ class PostController extends Controller
     {
         $data = request()->validate([
             'title' => 'string',
-            'content' => 'string',
+            'content' => '',
             'description' => 'string',
             'image' => 'image',
-            'video' => 'string',
         ]);
         $data['user_id'] = auth()->id();
 
@@ -69,7 +69,6 @@ class PostController extends Controller
             'content' => '',
             'description' => '',
             'image' => 'image',
-            'video' => '',
         ]);
 
         $oldPostImage = basename($post->image);
@@ -84,6 +83,8 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
+        UserPostBookmark::where('post_id', $post->id)->delete();
+        UserPostRelationship::where('post_id', $post->id)->delete();
         $post->delete();
         return redirect()->route('post.index');
     }
