@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FullTestController;
 use App\Http\Controllers\MainController;
@@ -132,6 +133,7 @@ Route::middleware('auth')->group(function () {
 
         return $response;
     });
+    Route::post('/comment/store', [CommentController::class, 'store'])->name('comment.store');
 });
 
 Auth::routes(['login' => false, 'logout' => false]);
@@ -140,4 +142,5 @@ Route::middleware('guest')->group(function () {
     Route::view('/login', 'auth.login')->name('adminLoginShow');
     Route::post('/login', [AdminAuthController::class, 'adminLoginForm'])->name('adminLoginForm');
 });
+
 

@@ -234,6 +234,10 @@ img {
     margin-bottom: 15px;
 }
 
+.mb-500 {
+    margin-bottom: 200px;
+}
+
 .flex-column {
     flex-direction: column !important;
 }
@@ -427,6 +431,7 @@ main .container .left .profile {
     justify-content: center;
     font-style: italic;
 }
+
 .left .sidebar h3 {
     margin-left: 1.5rem;
     font-size: 1rem;
@@ -1566,7 +1571,8 @@ hr {
 #plist::-webkit-scrollbar,
 .chat-history::-webkit-scrollbar,
 #groupModal::-webkit-scrollbar,
-.messages.modal-messages::-webkit-scrollbar {
+.messages.modal-messages::-webkit-scrollbar,
+.comments-section::-webkit-scrollbar {
     width: 5px;
 }
 
@@ -1574,7 +1580,8 @@ hr {
 #plist::-webkit-scrollbar-thumb,
 .chat-history::-webkit-scrollbar-thumb,
 #groupModal::-webkit-scrollbar-thumb,
-.messages.modal-messages::-webkit-scrollbar-thumb {
+.messages.modal-messages::-webkit-scrollbar-thumb,
+.comments-section::-webkit-scrollbar-thumb {
     background-color: var(--color-primary);
     border-radius: 20px;
 }
