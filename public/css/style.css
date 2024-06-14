@@ -234,7 +234,7 @@ img {
     margin-bottom: 15px;
 }
 
-.mb-500 {
+.mb-200 {
     margin-bottom: 200px;
 }
 
@@ -950,6 +950,34 @@ main .container .right {
     border: 2px solid var(--color-gray);
     border-radius: 50%;
     margin-right: 1rem;
+}
+
+.form-container {
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+textarea#unique-comment-input {
+    min-height: 80px;
+}
+
+.comments-section {
+    margin-top: 20px;
+    display: none;
+    max-height: 505px;
+    overflow: auto;
+    margin-bottom: 50px;
+}
+
+.show {
+    display: block;
+}
+
+.comment-form-body {
+    padding: 16px;
+    background: var(--color-white);
+    border-radius: var(--card-border-radius);
+    margin-bottom: 10px;
 }
 
 /* MEDIA QUERIES FOR SMALL LAPTOPS AND BIG TABLETS*/

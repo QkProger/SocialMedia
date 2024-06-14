@@ -134,16 +134,17 @@
                     <div class="photo">
                         <img src="/storage/{{ $post->image }}">
                     </div>
-                    {{-- <div class="action-buttons">
+                    <div class="action-buttons">
                         <div class="interaction-buttons">
-                            <span><i class="uil uil-heart"></i></span>
-                            <span><i class="uil uil-comment-dots"></i></span>
-                            <span><i class="uil uil-share-alt"></i></span>
+                            {{-- <span><i class="uil uil-heart"></i></span> --}}
+                            <span data-post-id={{ $post->id }} class="comment-icon c-p"><i
+                                    class="uil uil-comment-dots"></i></span>
+                            {{-- <span><i class="uil uil-share-alt"></i></span> --}}
                         </div>
-                        <div class="bookmarks">
+                        {{-- <div class="bookmarks">
                             <span><i class="uil uil-bookmark-full"></i></span>
-                        </div>
-                    </div> --}}
+                        </div> --}}
+                    </div>
                     {{-- <div class="liked-by">
                         <span>
                             <img src="{{ asset('images/profile-1.jpg') }}">
@@ -170,6 +171,62 @@
                     </div>
                     {{-- <div class="comments text-muted">View all 277 comments</div> --}}
                 </div>
+                <div class="comments-section" data-post-id="{{ $post->id }}">
+                    <h3 class="text-center mb-1">Барлық пікірлер</h3>
+                    @if ($post->comments()->count() > 0)
+                        <div class="comment-form-body">
+                            <div class="form-container" id="form-container-{{ $post->id }}">
+                                <form action="{{ route('comment.store') }}" method="post">
+                                    @csrf
+                                    <textarea id="unique-comment-input" name="content" placeholder="Пікір қалдырыңыз..." required></textarea>
+                                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                    <button class="btn btn-primary" type="submit">Пікір қалдыру</button>
+                                </form>
+                            </div>
+                        </div>
+                        @foreach ($post->comments()->whereNull('parent_id')->get() as $comment)
+                            @include('comments.comment', ['comment' => $comment])
+                        @endforeach
+                    @else
+                        <div class="comment-form-body">
+                            <div class="form-container" id="form-container-{{ $post->id }}">
+                                <form action="{{ route('comment.store') }}" method="post">
+                                    @csrf
+                                    <textarea id="unique-comment-input" name="content" placeholder="Бірінші болып пікір қалдырыңыз..." required></textarea>
+                                    <input type="hidden" name="post_id" value="{{ $post->id }}">
+                                    <button class="btn btn-primary" type="submit">Пікір қалдыру</button>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+                <script>
+                    var commentIcons = document.querySelectorAll('.comment-icon');
+                    var clicked = false;
+                    commentIcons.forEach(function(icon) {
+                        icon.addEventListener('click', function() {
+                            var postId = this.getAttribute('data-post-id'); // Получаем уникальный идентификатор поста
+                            var comments = document.querySelector('.comments-section[data-post-id="' + postId + '"]');
+
+                            if (!clicked) {
+                                clicked = true;
+                                setTimeout(function() {
+                                    clicked = false;
+                                }, 300);
+                                if (comments) {
+                                    comments.classList.toggle('show');
+
+                                    if (comments.classList.contains('show')) {
+                                        comments.scrollIntoView({
+                                            behavior: 'smooth',
+                                            block: 'center'
+                                        });
+                                    }
+                                }
+                            }
+                        });
+                    });
+                </script>
             @endforeach
             {{-- END OF FEED --}}
         </div>

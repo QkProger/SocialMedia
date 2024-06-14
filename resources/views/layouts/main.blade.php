@@ -220,8 +220,9 @@
             {{-- MIDDLE --}}
             @yield('content')
             {{-- END OF MIDDLE --}}
-            @if (Route::currentRouteName() == 'user.index' ||
-                    Route::currentRouteName() == 'user.profile' ||
+            @if (
+                // Route::currentRouteName() == 'user.index' ||
+                Route::currentRouteName() == 'user.profile' ||
                     Route::currentRouteName() == 'user.edit' ||
                     Route::currentRouteName() == 'chats.chat' ||
                     Route::currentRouteName() == 'chats.load-chat' ||

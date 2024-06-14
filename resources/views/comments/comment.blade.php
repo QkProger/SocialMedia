@@ -9,12 +9,16 @@
         <div class="text-muted">{{ $comment->created_at }}</div>
     </div>
     <div>{{ $comment->content }}</div>
-    <span class="reply-button" data-comment-id="{{ $comment->id }}">Жауап қайтару</span>
+    {{-- <span class="reply-button" data-comment-id="{{ $comment->id }}">Жауап қайтару</span> --}}
     <form id="reply-form-{{ $comment->id }}" class="reply-form" action="{{ route('comment.store') }}" method="post">
         @csrf
         <input type="hidden" name="parent_id" value="{{ $comment->id }}">
-        <textarea placeholder="Жауап қайтарыңыз..." name="content"></textarea>
-        <input type="hidden" name="post_id" value="{{ $post->id }}">
+        <textarea placeholder="Жауап қайтарыңыз..." name="content" required></textarea>
+        @if (Route::currentRouteName() == 'user.bookmarks')
+            <input type="hidden" name="post_id" value="{{ $bookmark->post->id }}">
+        @else
+            <input type="hidden" name="post_id" value="{{ $post->id }}">
+        @endif
         <button class="btn btn-primary mb-2" type="submit">Жауап қайтару</button>
     </form>
 

@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
     {{-- MIDDLE --}}
-    <div class="middle">
+    <div class="middle mb-200">
         {{-- FEEDS --}}
         <div class="feeds">
             {{-- FEED 1 --}}
@@ -61,7 +61,9 @@
                                     <button type="submit" class="no-btn"><i class="uil uil-heart"></i></button>
                                 @endif
                             </form>
-                            <span><i class="uil uil-comment-dots"></i></span>
+
+                            <span data-post-id={{ $bookmark->post->id }} class="comment-icon c-p"><i
+                                    class="uil uil-comment-dots"></i></span>
                             {{-- <span><i class="uil uil-share-alt"></i></span> --}}
                         </div>
                         <div class="bookmarks">
@@ -112,7 +114,7 @@
                                 $likedOtherCount = 0;
                             @endphp
                             @if ($liked)
-                                <b class="d-on">Сіз, </b>
+                                <b class="d-on">Сіз... </b>
                             @endif
                             @if ($likedFriends->count() > 0)
                                 <b>
@@ -155,7 +157,63 @@
                         @endif
                     </p>
                 </div>
-                <div class="comments text-muted">Барлық пікірді көру</div>
+                <div class="comments-section" data-post-id="{{ $bookmark->post->id }}">
+                    <h3 class="text-center mb-1">Барлық пікірлер</h3>
+                    @if ($bookmark->post->comments()->count() > 0)
+                        <div class="comment-form-body">
+                            <div class="form-container" id="form-container-{{ $bookmark->post->id }}">
+                                <form action="{{ route('comment.store') }}" method="post">
+                                    @csrf
+                                    <textarea id="unique-comment-input" name="content" placeholder="Пікір қалдырыңыз..." required></textarea>
+                                    <input type="hidden" name="post_id" value="{{ $bookmark->post->id }}">
+                                    <button class="btn btn-primary" type="submit">Пікір қалдыру</button>
+                                </form>
+                            </div>
+                        </div>
+                        @foreach ($bookmark->post->comments()->whereNull('parent_id')->get() as $comment)
+                            @include('comments.comment', ['comment' => $comment])
+                        @endforeach
+                    @else
+                        <div class="comment-form-body">
+                            <div class="form-container" id="form-container-{{ $bookmark->post->id }}">
+                                <form action="{{ route('comment.store') }}" method="post">
+                                    @csrf
+                                    <textarea id="unique-comment-input" name="content" placeholder="Бірінші болып пікір қалдырыңыз..." required></textarea>
+                                    <input type="hidden" name="post_id" value="{{ $bookmark->post->id }}">
+                                    <button class="btn btn-primary" type="submit">Пікір қалдыру</button>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+                <script>
+                    var commentIcons = document.querySelectorAll('.comment-icon');
+                    var clicked = false;
+                    commentIcons.forEach(function(icon) {
+                        icon.addEventListener('click', function() {
+                            var postId = this.getAttribute('data-post-id'); // Получаем уникальный идентификатор поста
+                            var comments = document.querySelector('.comments-section[data-post-id="' + postId + '"]');
+
+                            if (!clicked) {
+                                clicked = true;
+                                setTimeout(function() {
+                                    clicked = false;
+                                }, 300);
+                                if (comments) {
+                                    comments.classList.toggle('show');
+
+                                    if (comments.classList.contains('show')) {
+                                        comments.scrollIntoView({
+                                            behavior: 'smooth',
+                                            block: 'center'
+                                        });
+                                    }
+                                }
+                            }
+                        });
+                    });
+                </script>
+                {{-- <div class="comments text-muted">Барлық пікірді көру</div> --}}
             </div>
         @endforeach
         {{-- END OF FEED --}}
@@ -164,7 +222,7 @@
 </div>
 {{-- END OF MIDDLE --}}
 <script>
-    const displayView = 'Сіз, ';
+    const displayView = 'Сіз... ';
     $('.likeSendForm').on('submit', function(event) {
         event.preventDefault();
         var form = $(this);

@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
     {{-- MIDDLE --}}
-    <div class="middle mb-500">
+    <div class="middle mb-520">
         {{-- FEEDS --}}
         <div class="feeds">
             {{-- FEED 1 --}}
@@ -120,7 +120,7 @@
                                 $likedOtherCount = 0;
                             @endphp
                             @if ($liked)
-                                <b class="d-on">Сіз,</b>
+                                <b class="d-on">Сіз...</b>
                             @endif
                             @if ($likedFriends->count() > 0)
                                 <b>
@@ -163,14 +163,6 @@
                     </p>
                 </div>
                 {{-- <div id="comment-icon" class="comments text-muted">Барлық пікірді көру</div> --}}
-                {{-- <div class="form-container" id="form-container-{{ $post->id }}">
-                    <form action="{{ route('comment.store') }}" method="post">
-                        @csrf
-                        <textarea id="unique-comment-input" name="content" placeholder="Пікір қалдырыңыз..." required></textarea>
-                        <input type="hidden" name="post_id" value="{{ $post->id }}">
-                        <button class="btn btn-primary" type="submit">Пікір қалдыру</button>
-                    </form>
-                </div> --}}
             </div>
             <div class="comments-section" data-post-id="{{ $post->id }}">
                 <h3 class="text-center mb-1">Барлық пікірлер</h3>
@@ -235,7 +227,7 @@
 </div>
 {{-- END OF MIDDLE --}}
 <script>
-    const displayView = 'Сіз, ';
+    const displayView = 'Сіз... ';
     $('.likeSendForm').on('submit', function(event) {
         event.preventDefault();
         var form = $(this);
@@ -322,34 +314,4 @@
         });
     });
 </script>
-
-<style>
-    .form-container {
-        margin-bottom: 10px;
-        margin-top: 10px;
-    }
-
-    textarea#unique-comment-input {
-        min-height: 80px;
-    }
-
-    .comments-section {
-        margin-top: 20px;
-        display: none;
-        max-height: 505px;
-        overflow: auto;
-        margin-bottom: 50px;
-    }
-
-    .show {
-        display: block;
-    }
-
-    .comment-form-body {
-        padding: 16px;
-        background: var(--color-white);
-        border-radius: var(--card-border-radius);
-        margin-bottom: 10px;
-    }
-</style>
 @endsection
