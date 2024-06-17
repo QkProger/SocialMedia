@@ -42,6 +42,7 @@ class UserController extends Controller
         }
         $data['password'] = Hash('sha1', $request['password']);
         $data['real_password'] = $request['password'];
+        $data['fio'] = $request->surname . ' ' . $request->name . ' ' . $request->lastname;
 
         $user->update(array_merge($request->except(['avatar', 'password', 'real_password']), $data));
 
