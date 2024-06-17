@@ -6,7 +6,11 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
-                            <img src="/storage/{{ $user->avatar }}" alt="Admin" class="rounded-circle" width="150">
+                            @if ($user->avatar)
+                                <img src="/storage/{{ $user->avatar }}" class="rounded-circle" width="150">
+                            @else
+                                <img src="{{ asset('images/profile-1.jpg') }}" class="rounded-circle" width="150">
+                            @endif
                             <div class="mt-3">
                                 <h3>{{ $user->nickname }}</h3>
                                 <p class="text-muted mb-1">{{ $user->mamandyq }}</p>
@@ -170,7 +174,11 @@
                     <div class="head">
                         <div class="user">
                             <div class="profile-photo">
-                                <img src="/storage/{{ $user->avatar }}" class="avaChat">
+                                @if ($user->avatar)
+                                    <img src="/storage/{{ $user->avatar }}" class="avaChat">
+                                @else
+                                    <img src="{{ asset('images/profile-1.jpg') }}" class="avaChat">
+                                @endif
                             </div>
                             <div class="info">
                                 <h3>{{ $user->name }} {{ $user->surname }}</h3>

@@ -10,7 +10,11 @@
                     <div class="head">
                         <div class="user">
                             <a href="{{ route('user.profile', $bookmark->post->user->id) }}" class="profile-photo">
-                                <img src="/storage/{{ $bookmark->post->user->avatar }}" class="avaChat">
+                                @if ($bookmark->post->user->avatar)
+                                    <img src="/storage/{{ $bookmark->post->user->avatar }}" class="avaChat">
+                                @else
+                                    <img src="{{ asset('images/profile-1.jpg') }}" class="avaChat">
+                                @endif
                             </a>
                             <div class="info">
                                 <h3>{{ $bookmark->post->user->name }} {{ $bookmark->post->user->surname }}</h3>
