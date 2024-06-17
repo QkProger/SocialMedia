@@ -83,8 +83,12 @@
                                         <td>
                                             <div class="btn-group btn-group-sm">
                                                 <Link :href="route(
-                                                    'admin.posts.edit',
-                                                    post)
+                                                    'admin.post_comment', post.id)
+                                                    " class="btn btn-success" title="Пікірлер">
+                                                <i class="fas fa-list"></i>
+                                                </Link>
+                                                <Link :href="route(
+                                                    'admin.posts.edit', post)
                                                     " class="btn btn-primary" title="Изменить">
                                                 <i class="fas fa-edit"></i>
                                                 </Link>

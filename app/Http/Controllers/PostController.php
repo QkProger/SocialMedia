@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comments;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\UserPostRelationship;
@@ -85,6 +86,7 @@ class PostController extends Controller
     {
         UserPostBookmark::where('post_id', $post->id)->delete();
         UserPostRelationship::where('post_id', $post->id)->delete();
+        Comments::where('post_id', $post->id)->delete();
         $post->delete();
         return redirect()->route('post.index');
     }

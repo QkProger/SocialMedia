@@ -14,8 +14,14 @@ class Comments extends Model
     {
         return $this->hasMany(Comments::class, 'parent_id');
     }
+
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    
+    public function mainComment()
+    {
+        return $this->belongsTo(Comments::class, 'parent_id');
     }
 }

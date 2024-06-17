@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comments;
 use App\Models\Post;
 use App\Models\UserPostRelationship;
 use App\Models\UserPostBookmark;
@@ -80,6 +81,7 @@ class PostsController extends Controller
     {
         UserPostBookmark::where('post_id', $post->id)->delete();
         UserPostRelationship::where('post_id', $post->id)->delete();
+        Comments::where('post_id', $post->id)->delete();
         $post->delete();
         return redirect()->back()->withSuccess("Сәтті жойылды!");
     }

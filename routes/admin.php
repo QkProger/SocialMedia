@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\GroupController;
 use App\Http\Controllers\Admin\GroupMessageController;
 use App\Http\Controllers\Admin\MaterialController;
@@ -25,6 +26,10 @@ Route::group(['middleware' => ['admin']], function () {
     })->name('index');
 
     Route::resource('posts', PostsController::class)->except(['show'])->names('posts');
+    Route::resource('comments', CommentController::class)->only(['destroy'])->names('comments');
+
+    Route::get('/post/comments/{post_id}', [CommentController::class, 'index'])->name('post_comment');
+
     Route::resource('users', UsersController::class)->except(['show'])->names('users');
     Route::post('/group/create', [GroupController::class, 'createGroup'])->name('group.createGroup');
 

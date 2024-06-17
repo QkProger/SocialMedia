@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comments;
 use App\Models\Friend;
 use App\Models\Gruppa;
 use App\Models\GruppaMessage;
@@ -100,6 +101,7 @@ class UsersController extends Controller
             ->delete();
         UserPostRelationship::where('user_id', $user->id)->delete();
         UserPostBookmark::where('user_id', $user->id)->delete();
+        Comments::where('user_id', $user->id)->delete();
         return redirect()->back()->withSuccess("Сәтті жойылды!");
     }
 }
