@@ -193,8 +193,8 @@ img {
     display: block;
 }
 
-.-d-n {
-    display: none;
+.d-n {
+    display: none !important;
 }
 
 .a-c {

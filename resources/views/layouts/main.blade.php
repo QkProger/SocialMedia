@@ -249,7 +249,7 @@
                         {{-- SEARCH BAR --}}
                         <div class="search-bar">
                             <i class="uil uil-search"></i>
-                            <input type="search" placeholder="Іздеу" id="message-search">
+                            <input type="search" placeholder="Іздеу..." id="friend-search-input">
                         </div>
                         {{-- MESSAGES CATEGORY --}}
                         <div class="category">
@@ -260,7 +260,7 @@
                                 $friendUser = $friend->user2;
                             @endphp
                             {{-- MESSAGE --}}
-                            <a href="{{ route('chats.load-chat', $friendUser) }}" class="user-link"
+                            <a href="{{ route('chats.load-chat', $friendUser) }}" class="user-link friend-item"
                                 data-user-id="{{ $friendUser->id }}">
                                 <div class="message align-items-center">
                                     <div class="profile-photo">
@@ -272,12 +272,32 @@
                                         {{-- <div class="active"></div> --}}
                                     </div>
                                     <div class="message-body">
-                                        <h5>{{ $friendUser->name }} {{ $friendUser->surname }}</h5>
+                                        <h5 class="fio">{{ $friendUser->fio }}</h5>
                                     </div>
                                 </div>
                             </a>
                         @endforeach
                     </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const searchInput = document.getElementById('friend-search-input');
+                            const friendItems = document.querySelectorAll('.friend-item');
+
+                            searchInput.addEventListener('input', function() {
+                                const searchTerm = searchInput.value.toLowerCase();
+
+                                friendItems.forEach(function(item) {
+                                    const friendFIO = item.querySelector('.fio').innerText.toLowerCase();
+
+                                    if (friendFIO.includes(searchTerm)) {
+                                        item.style.display = '';
+                                    } else {
+                                        item.style.display = 'none';
+                                    }
+                                });
+                            });
+                        });
+                    </script>
                     {{-- END OF MESSAGES --}}
                 @endif
 

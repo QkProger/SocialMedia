@@ -11,14 +11,14 @@
                 <div id="plist" class="people-list">
                     <div class="search-bar d-f mb-2">
                         <i class="uil uil-search"></i>
-                        <input type="search" placeholder="Группаны іздеу..." id="message-search-general">
+                        <input type="search" placeholder="Группаны іздеу..." id="group-search-input">
                     </div>
-                    <ul class="list-unstyled chat-list mt-2 mb-0">
+                    <ul class="list-unstyled chat-list mt-2 mb-0" id="group-list">
                         @foreach ($groups as $groupItem)
-                            <a href="{{ route('groups.load-chat', $groupItem->group) }}" class="user-link"
-                                data-user-id="{{ $groupItem->group->id }}">
-                                <li
-                                    class="clearfix relative d-f a-c {{ $currentRouteName === 'groups.load-chat' && $currentId == $groupItem->group->id ? ' chat-active' : '' }}">
+                            <li
+                                class="clearfix group-item {{ $currentRouteName === 'groups.load-chat' && $currentId == $groupItem->group->id ? ' chat-active' : '' }}">
+                                <a href="{{ route('groups.load-chat', $groupItem->group) }}" class="user-link d-f a-c"
+                                    data-user-id="{{ $groupItem->group->id }}">
                                     @if ($groupItem->group->image)
                                         <img src="/storage/{{ $groupItem->group->image }}" class="avaChat">
                                     @else
@@ -28,15 +28,41 @@
                                         <div class="name">
                                             <p><b>{{ $groupItem->group->name }}</b></p>
                                         </div>
+                                        <div class="description" style="display: none">
+                                            {{ $groupItem->group->description }}
+                                        </div>
                                     </div>
                                     @if ($groupItem->group_msg_cnt > 0 && $currentId != $groupItem->gruppa_id)
                                         <small class="notification-count">{{ $groupItem->group_msg_cnt }}</small>
                                     @endif
-                                </li>
-                            </a>
+                                </a>
+                            </li>
                         @endforeach
                     </ul>
                 </div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const searchInput = document.getElementById('group-search-input');
+                        const groupItems = document.querySelectorAll('.group-item');
+
+                        searchInput.addEventListener('input', function() {
+                            const searchTerm = searchInput.value.toLowerCase();
+
+                            groupItems.forEach(function(item) {
+                                const groupName = item.querySelector('.name p b').innerText.toLowerCase();
+                                const groupDescription = item.querySelector('.description').innerText
+                                    .toLowerCase();
+
+                                if (groupName.includes(searchTerm) || groupDescription.includes(searchTerm)) {
+                                    item.style.display = '';
+                                } else {
+                                    item.style.display = 'none';
+                                }
+                            });
+                        });
+                    });
+                </script>
+
                 <script>
                     function openGroupModal(element) {
                         var isAdmin = element.dataset.isAdmin;
