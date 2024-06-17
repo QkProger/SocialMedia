@@ -1,8 +1,8 @@
 @extends('layouts.main')
 @section('content')
     <div class="middle forrow">
-        <div class="row gutters-sm">
-            <div class="col-md-4 mb-3">
+        <div class="row gutters-sm adaptive-profile">
+            <div class="col-md-4 mb-3 adaptive-ava-card">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 adaptive-ava-card">
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="row">
@@ -188,7 +188,7 @@
                                     @csrf
                                     <textarea id="unique-comment-input" name="content" placeholder="Пікір қалдырыңыз..." required></textarea>
                                     <input type="hidden" name="post_id" value="{{ $post->id }}">
-                                    <button class="btn btn-primary" type="submit">Пікір қалдыру</button>
+                                    <button class="btn btn-primary user_com_btn" type="submit">Пікір қалдыру</button>
                                 </form>
                             </div>
                         </div>
@@ -202,7 +202,7 @@
                                     @csrf
                                     <textarea id="unique-comment-input" name="content" placeholder="Бірінші болып пікір қалдырыңыз..." required></textarea>
                                     <input type="hidden" name="post_id" value="{{ $post->id }}">
-                                    <button class="btn btn-primary" type="submit">Пікір қалдыру</button>
+                                    <button class="btn btn-primary user_com_btn" type="submit">Пікір қалдыру</button>
                                 </form>
                             </div>
                         </div>
@@ -241,3 +241,14 @@
         {{-- END OF FEEDS --}}
     </div>
 @endsection
+<style>
+    .user_com_btn {
+        margin-top: 8px;
+    }
+
+    @media screen and (max-width: 600px) {
+        .row {
+            display: block !important;
+        }
+    }
+</style>

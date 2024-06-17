@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
-    <div class="middle edit-profile-grid">
-        <div class="card" style="max-height: 430px">
+    <div class="middle edit-profile-grid adaptive-profile">
+        <div class="card adaptive-profile-card" style="max-height: 430px">
             <div class="card-body">
                 <div class="d-flex flex-column align-items-center text-center">
                     <img src="/storage/{{ $user->avatar }}" alt="Admin" class="rounded-circle" width="150">
@@ -14,11 +14,6 @@
                 <br>
             </div>
         </div>
-        <style>
-            .col-25 {
-                margin-right: 0rem;
-            }
-        </style>
         <div class="create-container">
             <form action="{{ route('user.update', $user->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
@@ -173,3 +168,28 @@
         </div>
     </div>
 @endsection
+<style>
+    .col-25 {
+        margin-right: 0rem;
+    }
+
+    @media screen and (max-width: 867px) {
+        .adaptive-profile {
+            display: flex !important;
+            flex-direction: column !important;
+            width: 80% !important;
+        }
+
+        img.rounded-circle {
+            width: 25% !important;
+        }
+
+        .adaptive-profile-card {
+            margin-bottom: 15px;
+        }
+
+        .adaptive-ava-card {
+            width: 100% !important;
+        }
+    }
+</style>

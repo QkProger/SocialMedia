@@ -1692,6 +1692,16 @@ hr {
     }
 }
 
+@media screen and (max-width: 767px) {
+    .adaptive-profile {
+        display: block !important;
+    }
+
+    .adaptive-ava-card {
+        width: 100% !important;
+    }
+}
+
 /*User list*/
 .svg-plus {
     width: 35px;

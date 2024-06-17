@@ -19,7 +19,7 @@
         @else
             <input type="hidden" name="post_id" value="{{ $post->id }}">
         @endif
-        <button class="btn btn-primary mb-2" type="submit">Жауап қайтару</button>
+        <button class="btn btn-primary mb-2 user_com_btn" type="submit">Жауап қайтару</button>
     </form>
 
     <div class="subcomments">
