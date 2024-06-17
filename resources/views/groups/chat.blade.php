@@ -108,7 +108,7 @@
                                             <div class="filter-friend">
                                                 <div class="messages modal-messages">
                                                     @if ($users->count() != 0)
-                                                        <h3 class="friend-title">Қолданушылар</h3>
+                                                        <h3 class="friend-title">Жаңа адам қосу</h3>
                                                     @endif
                                                     <div class="user-list">
                                                         @foreach ($users as $user)
@@ -120,8 +120,13 @@
                                                                     class="user-link w-100">
                                                                     <div class="message">
                                                                         <div class="profile-photo">
-                                                                            <img src="/storage/{{ $user->avatar }}"
-                                                                                class="avaChat">
+                                                                            @if ($user->avatar)
+                                                                                <img src="/storage/{{ $user->avatar }}"
+                                                                                    class="avaChat">
+                                                                            @else
+                                                                                <img src="{{ asset('images/profile-1.jpg') }}"
+                                                                                    class="avaChat">
+                                                                            @endif
                                                                         </div>
                                                                         <div class="message-body">
                                                                             <h5>
@@ -159,8 +164,13 @@
                                                                                     class="user-link w-100">
                                                                                     <div class="message">
                                                                                         <div class="profile-photo">
-                                                                                            <img src="/storage/{{ $groupUser->user->avatar }}"
-                                                                                                class="avaChat">
+                                                                                            @if ($groupUser->user->avatar)
+                                                                                                <img src="/storage/{{ $groupUser->user->avatar }}"
+                                                                                                    class="avaChat">
+                                                                                            @else
+                                                                                                <img src="{{ asset('images/profile-1.jpg') }}"
+                                                                                                    class="avaChat">
+                                                                                            @endif
                                                                                         </div>
                                                                                         <div class="message-body">
                                                                                             <h5>
@@ -200,8 +210,13 @@
                                                                                     class="user-link w-100">
                                                                                     <div class="message">
                                                                                         <div class="profile-photo">
-                                                                                            <img src="/storage/{{ $groupUser->user->avatar }}"
-                                                                                                class="avaChat">
+                                                                                            @if ($groupUser->user->avatar)
+                                                                                                <img src="/storage/{{ $groupUser->user->avatar }}"
+                                                                                                    class="avaChat">
+                                                                                            @else
+                                                                                                <img src="{{ asset('images/profile-1.jpg') }}"
+                                                                                                    class="avaChat">
+                                                                                            @endif
                                                                                         </div>
                                                                                         <div class="message-body">
                                                                                             <h5>
@@ -647,6 +662,7 @@
         max-height: 300px;
         overflow-y: scroll;
     }
+
     .empty_place {
         display: none;
     }

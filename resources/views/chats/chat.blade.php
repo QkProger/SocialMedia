@@ -9,10 +9,15 @@
                     $currentId = isset($currentRouteParams['user']) ? $currentRouteParams['user'] : null;
                 @endphp
                 <div id="plist" class="people-list">
-                    <div class="search-bar d-f mb-2">
+                    {{-- <div class="search-bar d-f mb-2">
                         <i class="uil uil-search"></i>
                         <input type="search" placeholder="Қолданушыны іздеу..." id="message-search-general">
-                    </div>
+                    </div> --}}
+                    <form action="{{ route('chats.chat') }}" method="GET" class="search-bar d-f mb-2">
+                        <i class="uil uil-search"></i>
+                        <input type="search" name="friend_fio" placeholder="Қолданушыны іздеу...">
+                        <button type="submit" style="display: none;"></button>
+                    </form>
                     <ul class="list-unstyled chat-list mt-2 mb-0">
                         @foreach ($friends as $friend)
                             <a href="{{ route('chats.load-chat', $friend->user2->id) }}" class="user-link">

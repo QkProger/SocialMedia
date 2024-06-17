@@ -10,11 +10,15 @@ use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
-    public function create()
+    public function create(Request $request)
     {
         // $users = User::whereNot('id', auth()->id())->orderBy('id', 'desc')->get();
+        $friend_fio = $request->friend_fio;
         $user = User::latest('id')->first();
         $friends = Friend::where('user1_id', auth()->id())
+            ->whereHas('user2', function ($innerQuery) use ($friend_fio) {
+                $innerQuery->where('fio', 'LIKE', "%$friend_fio%");
+            })
             ->with('user2')
             ->get()
             ->map(function ($friend) {
