@@ -1,8 +1,8 @@
 @extends('layouts.main')
 @section('content')
     <div class="middle forrow">
-        <div class="row gutters-sm">
-            <div class="col-md-4 mb-3">
+        <div class="row gutters-sm adaptive-profile">
+            <div class="col-md-4 mb-3 adaptive-ava-card">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex flex-column align-items-center text-center">
@@ -114,7 +114,7 @@
                     });
                 });
             </script>
-            <div class="col-md-8">
+            <div class="col-md-8 adaptive-ava-card">
                 <div class="card mb-3">
                     <div class="card-body">
                         <div class="row">
@@ -206,9 +206,21 @@
                     <div class="photo">
                         <img src="/storage/{{ $post->image }}">
                     </div>
+                </div>
             @endforeach
             {{-- END OF FEED --}}
+            {{-- END OF FEEDS --}}
         </div>
-        {{-- END OF FEEDS --}}
-    </div>
-@endsection
+    @endsection
+
+    <style>
+        .user_com_btn {
+            margin-top: 8px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .row {
+                display: block !important;
+            }
+        }
+    </style>
