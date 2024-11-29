@@ -144,7 +144,7 @@
                                     @else
                                         <img src="{{ asset('images/profile-1.jpg') }}" class="avaChat">
                                     @endif
-                                    <div class="active"></div>
+                                    {{-- <div class="active"></div> --}}
                                 </div>
                                 <div class="message-body">
                                     <h5>{{ $friendUser->name }} {{ $friendUser->surname }}</h5>
